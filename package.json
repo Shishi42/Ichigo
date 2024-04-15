@@ -1,0 +1,33 @@
+{
+  "name": "ichigo",
+  "version": "1.0.0",
+  "description": "Discord BOT to Beyblade Community. ",
+  "main": "ichigo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shishi42/Ichigo.git"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "javascript",
+    "community",
+    "beyblade"
+  ],
+  "author": "Shishi42",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Shishi42/Ichigo/issues"
+  },
+  "homepage": "https://github.com/Shishi42/Ichigo#readme",
+  "dependencies": {
+    "cron": "^3.1.7",
+    "discord.js": "^14.10.2",
+    "jsonfile": "^6.1.0",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
+  }
+}
