@@ -9,8 +9,9 @@ const slashcommands_loader = require("./slashcommands_loader")
 
 bot.commands = new Discord.Collection()
 bot.color = "BEF0ED"
+bot.url = "https://discord.gg/afEvCBF9XR"
 
-fs.readdirSync("./events/").filter(f => f.endsWith(".js")).forEach(async file => {
+fs.readdirSync("./events/").filter(f => f.endsWith(".js") && !f.startsWith('.')).forEach(async file => {
   let event = require(`./events/${file}`)
   bot.on(file.split(".js").join(""), event.bind(null, bot))
 })

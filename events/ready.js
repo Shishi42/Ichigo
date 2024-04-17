@@ -11,56 +11,81 @@ module.exports = async bot => {
     storage: "./ichigo.db"
   })
 
-  bot.Tournois = bot.db.define("tournoi", {
-    tournoi_id: {
+  bot.Tournaments = bot.db.define("tournament", {
+    tournament_id: {
       type: Sequelize.STRING,
       allowNull: false,
       primaryKey: true,
       unique: true,
     },
-    tournoi_nom: {
+    tournament_name: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
     },
-    tournoi_status: {
+    tournament_desc: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    tournoi_date: {
-      type: Sequelize.DATE,
-      allowNull: false,
-    },
-    tournoi_place: {
+    tournament_date: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    tournoi_ruleset: {
+    tournament_date_close: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    tournoi_poster: {
+    tournament_ruleset: {
       type: Sequelize.STRING,
+      allowNull: false,
+    },
+    tournament_format: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    tournament_place: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    tournament_channel: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    tournament_message: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    tournament_poster: {
+      type: Sequelize.STRING,
+    },
+    tournament_status: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
   })
-  bot.Joueurs = bot.db.define("joueur", {
-    joueur_id: {
+  bot.Inscriptions = bot.db.define("inscription", {
+    inscription_id: {
       type: Sequelize.STRING,
       allowNull: false,
       primaryKey: true,
-    },
-    tournoi_id: {
-      type: Sequelize.STRING,
-      allowNull: false,
       unique: true,
     },
-    joueur_status: {
+    player_id: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    tournament_id: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    player_status: {
       type: Sequelize.STRING,
       allowNull: false,
     },
   })
 
-  await bot.Tournois.sync()
+  await bot.Tournaments.sync()
+  await bot.Inscriptions.sync()
   console.log("Database Online.")
 
   await slashcommands_loader(bot)
