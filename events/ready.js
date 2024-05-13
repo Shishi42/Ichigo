@@ -62,6 +62,21 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    tournament_challonge: {
+      type: Sequelize.STRING,
+    },
+    tournament_first: {
+      type: Sequelize.STRING,
+    },
+    tournament_second: {
+      type: Sequelize.STRING,
+    },
+    tournament_third: {
+      type: Sequelize.STRING,
+    },
+    tournament_event: {
+      type: Sequelize.STRING,
+    },
   })
   bot.Inscriptions = bot.db.define("inscription", {
     inscription_id: {

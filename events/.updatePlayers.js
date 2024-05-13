@@ -9,8 +9,9 @@ module.exports = {
 
     res = "**__Liste des participants :__**\n"
     for(player of players) res += `- <@${player.dataValues.player_id}>\n`
-    if(!players.length) res += "- Aucun participant pour le moment "
+    if (!players.length) res += "- Aucun participant pour le moment "
 
-    return await bot.channels.fetch(tournament.dataValues.tournament_channel).then(channel => channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({content: res})))
+    if (tournament.dataValues.tournament_status != "Tournoi fini") return await bot.channels.fetch(tournament.dataValues.tournament_channel).then(channel => channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({content: res})))
+    else return await bot.channels.fetch(tournament.dataValues.tournament_channel).then(channel => channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ content: "" })))
   }
 }

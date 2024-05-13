@@ -2,12 +2,12 @@ const config = require("../config.json")
 
 module.exports = async (bot, message) => {
 
-  if(message.author.bot || message.channel.type === "dm") return
+  if (message.author.bot || message.channel.type === "dm") return
 
-  if(message.channel.id == config.chan_prepix){
+  if (message.channel.id == config.chan_prepix){
 
     if (message.content.includes("SauceNAO")){
-      if(message.content.includes("&illust_id")){
+      if (message.content.includes("&illust_id")){
         res = message.content.split("&illust_id=")[1].split(')')[0]
         bot.channels.fetch(config.chan_artworks)
           .then(chan => chan.messages.fetch()
@@ -28,7 +28,7 @@ module.exports = async (bot, message) => {
       }
     } 
 
-    else if(message.content.includes("twitter") || message.content.includes("x.com")) {
+    else if (message.content.includes("twitter") || message.content.includes("x.com")) {
       res = message.content.split(".com/")[1].split('?')[0].split(')')[0]
       bot.channels.fetch(config.chan_sort)
         .then(chan => chan.messages.fetch()
