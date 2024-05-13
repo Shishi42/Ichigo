@@ -20,9 +20,9 @@ module.exports = {
   async run(bot, message, args) {
 
     let command
-    if(args.get("command")){
+    if (args.get("command")){
       command = bot.commands.get(args.get("command").value)
-      if(!command) return message.reply({ content: "No command with this name.", ephemeral : true })
+      if (!command) return message.reply({ content: "No command with this name.", ephemeral : true })
     }
 
     let embed = new Discord.EmbedBuilder()
@@ -31,10 +31,10 @@ module.exports = {
     .setTimestamp()
     .setFooter({text: 'a BOT by @shishi4272', iconURL: 'https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png'})
 
-    if(!command){
+    if (!command){
 
       categories = []
-      bot.commands.forEach(command => { if(!categories.includes(command.category)) categories.push(command.category) })
+      bot.commands.forEach(command => { if (!categories.includes(command.category)) categories.push(command.category) })
       embed.setTitle("BOT Commands List")
       embed.setDescription(`Available commands : \`${bot.commands.size}\` \nAvailable categories : \`${categories.length}\``)
 

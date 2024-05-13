@@ -19,7 +19,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    if(!new RegExp("<[a]{0,1}:.*[a-z]:.*[0-9]>").test(args.get("emoji").value)) return message.reply({content: "Emoji provided is invalid.", ephemeral: true})
+    if (!new RegExp("<[a]{0,1}:.*[a-z]:.*[0-9]>").test(args.get("emoji").value)) return message.reply({content: "Emoji provided is invalid.", ephemeral: true})
 
     emoji = args.get("emoji").value.split(':')
 
