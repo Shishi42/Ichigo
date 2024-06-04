@@ -19,6 +19,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
+    console.log(message.member)
     console.log(message.member.roles)
     if(message.member.roles.has("1227614198075490324")) return message.reply({content: "You are not in the mods team.", ephemeral: true})
 
