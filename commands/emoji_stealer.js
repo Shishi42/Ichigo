@@ -19,7 +19,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    if(message.member.roles.resolve("1227614198075490324")) return message.reply({content: "You are not admin.", ephemeral: true})
+    if(message.member.roles.has("1227614198075490324")) return message.reply({content: "You are not in the mods team.", ephemeral: true})
 
     if (!new RegExp("<[a]{0,1}:.*[a-z]:.*[0-9]>").test(args.get("emoji").value)) return message.reply({content: "Emoji provided is invalid.", ephemeral: true})
 
