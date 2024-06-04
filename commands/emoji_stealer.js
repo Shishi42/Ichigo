@@ -4,7 +4,7 @@ module.exports = {
 
   name: "emoji_stealer",
   description: "Steal an emoji and upload it to server",
-  permission: Discord.PermissionFlagsBits.Administrator,
+  permission: null,
   dm: false,
   category: "Utility",
   options: [
@@ -18,6 +18,8 @@ module.exports = {
   ],
 
   async run(bot, message, args) {
+
+    if(message.member.roles.resolve("1227614198075490324")) return message.reply({content: "You are not adm.", ephemeral: true})
 
     if (!new RegExp("<[a]{0,1}:.*[a-z]:.*[0-9]>").test(args.get("emoji").value)) return message.reply({content: "Emoji provided is invalid.", ephemeral: true})
 
