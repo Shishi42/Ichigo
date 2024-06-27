@@ -9,6 +9,6 @@ module.exports = {
   category: "Utility",
 
   async run(bot, message, args) {
-    return await message.reply({content: Object.keys(bot.tags).join(','), ephemeral: true})
+    return await message.reply({content: `Les tags disponibles : ${Object.keys(bot.tags).join(", ")}`, ephemeral: true})
   }
 }
