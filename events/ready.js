@@ -6,6 +6,20 @@ module.exports = async bot => {
 
   console.log(`Connected as ${bot.user.tag}!`)
 
+  bot.tags = {
+    "discord" : "https://discord.gg/afEvCBF9XR",
+    "tiktok": "https://www.tiktok.com/@sunafterthereign",
+    "instagram": "https://www.instagram.com/sunafterthereign",
+    "twitter": "https://x.com/SunAfterTheBey",
+    "youtube": "https://www.youtube.com/@SunAftertheReign",
+
+    "achats" : "Notre guide d'achat : https://discord.com/channels/1221611301332193371/1230832023459860490/1242931207260475462",
+    "data" : "Notre base de données des produits Beyblade X : https://docs.google.com/spreadsheets/d/1Wshh88T0oDORXXr4F7xVYK0cjBRMXYJE5KzoPjss_no",
+    "tournoi" : "Sun After the Reign organise un tournoi tous les mois, le Beyblade Battle Tournament. Si une date n'est pas encore annoncée, alors ça arrivera bientôt dans https://discord.com/channels/1221611301332193371/1221670844279947316",
+
+    "streaming" : "https://www.streaming-espace.fr",
+  }
+
   bot.db = new Sequelize({
     dialect: "sqlite",
     storage: "./ichigo.db"
