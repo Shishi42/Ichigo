@@ -41,11 +41,11 @@ module.exports = {
     const row = new Discord.ActionRowBuilder().addComponents(
       new Discord.ButtonBuilder()
         .setCustomId(`${tournament.dataValues.tournament_id}_join`)
-        .setLabel("Je m'inscris !")
+        .setLabel("Je viens !")
         .setStyle(Discord.ButtonStyle.Success),
       new Discord.ButtonBuilder()
         .setCustomId(`${tournament.dataValues.tournament_id}_leave`)
-        .setLabel("Je me désinscris.")
+        .setLabel("Je ne viens plus.")
         .setStyle(Discord.ButtonStyle.Danger)
     )
 
