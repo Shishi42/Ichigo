@@ -18,6 +18,7 @@ module.exports = {
   ],
 
   async run(bot, message, args) {
-    return await message.reply(args.get("teams").value.split('\n').map((team) => `${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[0]}\n${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[1]}\n${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[2]}\n`).join('\n'))
+    console.log(args.get("teams").value.split('\n'))
+    //return await message.reply(args.get("teams").value.split('\n').map((team) => `${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[0]}\n${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[1]}\n${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[2]}\n`).join('\n'))
   }
 }
