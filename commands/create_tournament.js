@@ -139,6 +139,7 @@ module.exports = {
           tournament_place: args.get("place").value,
           tournament_channel: args.get("post").value,
           tournament_message: "",
+          tournament_role: "",
           tournament_poster: poster,
           tournament_status: "Inscriptions en cours",
           tournament_challonge: challonge,
@@ -155,8 +156,14 @@ module.exports = {
           entityMetadata: {location: args.get("place").value},
         })
 
+        role = await message.guild.roles.create({
+          name: "Participants "+args.get("title").value,
+          color: "32ECE0",
+          permissions : "0",
+        })
+
         post = await require(`../events/.postEmbed.js`).run(bot, tournament, args.get("post").value)
-        await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id}, { where: { tournament_id: tournament_id }})
+        await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
         await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
 
