@@ -18,9 +18,7 @@ module.exports = {
   ],
 
   async run(bot, message, args) {
-    console.log(args.get("teams").value)
-    console.log(args.get("teams").value.replaceAll(') ','|').replaceAll(' (',"-").replaceAll(' - ',"-").replace(')',''))
-    //console.log(args.get("teams").value.split(") "))
+    console.log(args.get("teams").value.replaceAll(") ",'|').replaceAll(" (",'-').replaceAll(" - ",'-')[:-1])
     //return await message.reply(args.get("teams").value.split('\n').map((team) => `${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[0]}\n${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[1]}\n${team.split(" (")[0]} ${team.split(" (")[1].slice(0,-1).split(" - ")[2]}\n`).join('\n'))
   }
 }
