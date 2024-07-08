@@ -16,7 +16,7 @@ module.exports = async bot => {
     "achats" : "Notre guide d'achat : https://discord.com/channels/1221611301332193371/1230832023459860490/1242931207260475462",
     "data" : "Notre base de données des produits Beyblade X : https://docs.google.com/spreadsheets/d/1Wshh88T0oDORXXr4F7xVYK0cjBRMXYJE5KzoPjss_no",
     "tournoi" : "Sun After the Reign organise un tournoi tous les mois, le Beyblade Battle Tournament. Si une date n'est pas encore annoncée, alors ça arrivera bientôt dans https://discord.com/channels/1221611301332193371/1221670844279947316",
-    "enregistrement" : "N'oubliez pas de valider votre présence au tournoi dans https://discord.com/channels/1221611301332193371/1227020880614260866 sinon on va se tape :chopan_pouce:",
+    "enregistrement" : "N'oubliez pas de valider votre présence au tournoi dans https://discord.com/channels/1221611301332193371/1227020880614260866 sinon on va se tape <:chopan_pouce:1255261127055769700>",
     "picpus" : "https://maps.app.goo.gl/Pqqkx2S8ZfM2xv7J8",
 
     "1on1" : "Le règlement **1 on 1** se joue seul et non en équipe, chaque joueur assemble et ne joue **qu'une seule et même toupie** lors de l'intégralité du tournoi, les matchs sont joués en 4 points avec la règle du gain de point en fonction du finish (xtreme, burst, over, spin). De plus ce règlement est soumis à la limited-list de Takara Tomy (1 point bonus par pièce pour l'adversaire si vous utilisez CobaltDrake, PhoenixWing, WizardRod, 9-60, Orb ou Ball).",
