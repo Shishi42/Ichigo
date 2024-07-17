@@ -132,4 +132,6 @@ module.exports = async bot => {
   await slashcommands_loader(bot)
 
   bot.user.setPresence({activities: [{ name: "Les matchs de la Tour X", type: 3 }], status: "online"})
+
+  bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
 }
