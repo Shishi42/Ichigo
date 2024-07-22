@@ -134,5 +134,19 @@ module.exports = async bot => {
   bot.user.setPresence({activities: [{ name: "Les matchs de la Tour X", type: 3 }], status: "online"})
 
   //bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
-  bot.channels.fetch("1221669438944841811").then(channel => console.log(channel))
+  
+  bot.channels.fetch("1221669438944841811").then(channel => {
+
+    const sum_messages = []
+
+    messages = await channel.messages.fetch()
+    sum_messages.push(messages.array())
+    messages = await channel.messages.fetch({before: messages.last().id})
+    sum_messages.push(messages.array())
+    messages = await channel.messages.fetch({before: messages.last().id})
+    sum_messages.push(messages.array())
+    
+    console.log(sum_messages.size)
+
+  })  
 }
