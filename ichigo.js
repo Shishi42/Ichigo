@@ -19,15 +19,19 @@ new cron.CronJob('00 00 07 * * fri', () => { bot.channels.fetch(config.general).
 
 bot.login(config.token)
 
-sum_messages = []
-let channel = bot.channels.fetch("1221669438944841811")
+async function lots_of_messages_getter() {
+  sum_messages = []
+  let channel = await bot.channels.fetch("1221669438944841811")
 
-messages = await channel.messages.fetch()
-sum_messages.push(messages.array())
-messages = channel.messages.fetch({before: messages.last().id})
-sum_messages.push(messages.array())
-messages = channel.messages.fetch({before: messages.last().id})
-sum_messages.push(messages.array())
+  messages = await channel.messages.fetch()
+  sum_messages.push(messages.array())
+  messages = await channel.messages.fetch({before: messages.last().id})
+  sum_messages.push(messages.array())
+  messages = await channel.messages.fetch({before: messages.last().id})
+  sum_messages.push(messages.array())
 
-console.log(sum_messages.size)
+  return sum_messages
+}
+
+console.log(lots_of_messages_getter().size)
 //bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
