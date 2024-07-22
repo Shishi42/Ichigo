@@ -135,19 +135,23 @@ module.exports = async bot => {
 
   //bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
   
-  bot.channels.fetch("1221669438944841811").then(channel => {
 
-    const sum_messages = []
+  async function lots_of_messages_getter(){
 
-    messages = channel.messages.fetch()
-    console.log(messages)
-    sum_messages.push(messages)
-    messages = channel.messages.fetch({before: messages.last().id})
-    sum_messages.push(messages)
-    messages = channel.messages.fetch({before: messages.last().id})
-    sum_messages.push(messages)
-    
-    console.log(sum_messages.size)
+    bot.channels.fetch("1221669438944841811").then(channel => {
 
-  })  
+      const sum_messages = []
+
+      messages = await channel.messages.fetch()
+      console.log(messages)
+      sum_messages.push(messages)
+      messages = channel.messages.fetch({before: messages.last().id})
+      sum_messages.push(messages)
+      messages = channel.messages.fetch({before: messages.last().id})
+      sum_messages.push(messages)
+      
+      console.log(sum_messages.size)
+
+    })  
+  }
 }
