@@ -22,7 +22,7 @@ bot.login(config.token)
 sum_messages = []
 let channel = bot.channels.fetch("1221669438944841811")
 
-messages = channel.messages.fetch()
+messages = await channel.messages.fetch()
 sum_messages.push(messages.array())
 messages = channel.messages.fetch({before: messages.last().id})
 sum_messages.push(messages.array())
