@@ -140,6 +140,7 @@ module.exports = async bot => {
     const sum_messages = []
 
     messages = channel.messages.fetch()
+    console.log(messages)
     sum_messages.push(messages)
     messages = channel.messages.fetch({before: messages.last().id})
     sum_messages.push(messages)
