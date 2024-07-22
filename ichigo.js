@@ -20,16 +20,18 @@ new cron.CronJob('00 00 07 * * fri', () => { bot.channels.fetch(config.general).
 bot.login(config.token)
 
 async function lots_of_messages_getter() {
-  bot.channels.fetch("1221669438944841811").then({
+  bot.channels.fetch("1221669438944841811").then(channel => {
 
-    messages = await channel.messages.fetch()
+    console.log(channel)
+
+    //messages = await channel.messages.fetch()
     //sum_messages.push(messages.array())
     //messages = await channel.messages.fetch({before: messages.last().id})
     //sum_messages.push(messages.array())
     //messages = await channel.messages.fetch({before: messages.last().id})
     //sum_messages.push(messages.array())
 
-    console.log(messages.size)
+    //console.log(messages.size)
 
   })
 }
