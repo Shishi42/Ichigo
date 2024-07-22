@@ -158,5 +158,5 @@ module.exports = async bot => {
   }
 
   messages = await lots_of_messages_getter(bot.channels.cache.get("1221669438944841811"))
-  messages.forEach((message) => message.reactions.removeAll())
+  messages.forEach((message) => console.log(message))
 }
