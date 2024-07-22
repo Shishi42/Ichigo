@@ -18,3 +18,15 @@ new cron.CronJob('00 00 07 * * wed', () => { bot.channels.fetch(config.general).
 new cron.CronJob('00 00 07 * * fri', () => { bot.channels.fetch(config.general).then(channel => channel.send({ files: [{ attachment: './medias/jus.png' }], content: "Bon vendredi jus la team :call_me:" }))}).start()
 
 bot.login(config.token)
+
+sum_messages = []
+
+messages = await bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch()
+sum_messages.push(messages.array())
+messages = await bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch({before: messages.last().id})
+sum_messages.push(messages.array())
+messages = await bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch({before: messages.last().id})
+sum_messages.push(messages.array())
+
+console.log(sum_messages.size)
+//bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
