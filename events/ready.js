@@ -157,6 +157,6 @@ module.exports = async bot => {
     return sum_messages;
   }
 
-  channel = bot.channels.cache.get("1221669438944841811")
-  console.log(await lots_of_messages_getter(channel).size())
+  messages = await lots_of_messages_getter(bot.channels.cache.get("1221669438944841811"))
+  console.log(messages)
 }
