@@ -19,6 +19,8 @@ new cron.CronJob('00 00 07 * * fri', () => { bot.channels.fetch(config.general).
 
 bot.login(config.token)
 
+console.log(bot.channels)
+
 async function lots_of_messages_getter() {
   bot.channels.fetch("1221669438944841811").then(channel => {
 
