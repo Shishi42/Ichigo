@@ -146,7 +146,6 @@ module.exports = async bot => {
         }
 
         const messages = await channel.messages.fetch(options);
-        console.log(messages)
         sum_messages.push(messages);
         last_id = messages.last().id;
 
