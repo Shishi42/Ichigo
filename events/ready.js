@@ -139,11 +139,11 @@ module.exports = async bot => {
 
     const sum_messages = []
 
-    messages = await channel.messages.fetch()
+    messages = channel.messages.fetch()
     sum_messages.push(messages.array())
-    messages = await channel.messages.fetch({before: messages.last().id})
+    messages = channel.messages.fetch({before: messages.last().id})
     sum_messages.push(messages.array())
-    messages = await channel.messages.fetch({before: messages.last().id})
+    messages = channel.messages.fetch({before: messages.last().id})
     sum_messages.push(messages.array())
     
     console.log(sum_messages.size)
