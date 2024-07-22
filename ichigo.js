@@ -34,5 +34,5 @@ async function lots_of_messages_getter() {
   return sum_messages
 }
 
-console.log(lots_of_messages_getter().size)
+//console.log(lots_of_messages_getter().size)
 //bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
