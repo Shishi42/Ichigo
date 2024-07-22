@@ -20,12 +20,13 @@ new cron.CronJob('00 00 07 * * fri', () => { bot.channels.fetch(config.general).
 bot.login(config.token)
 
 sum_messages = []
+let channel = await bot.channels.fetch("1221669438944841811")
 
-messages = await bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch()
+messages = await channel.messages.fetch()
 sum_messages.push(messages.array())
-messages = await bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch({before: messages.last().id})
+messages = await channel.messages.fetch({before: messages.last().id})
 sum_messages.push(messages.array())
-messages = await bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch({before: messages.last().id})
+messages = await channel.messages.fetch({before: messages.last().id})
 sum_messages.push(messages.array())
 
 console.log(sum_messages.size)
