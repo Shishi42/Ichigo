@@ -135,7 +135,7 @@ module.exports = async bot => {
 
   //bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
   
-  async function lots_of_messages_getter(channel, limit = 500) {
+  async function lots_of_messages_getter(channel, limit = 300) {
     const sum_messages = [];
     let last_id;
 
@@ -146,6 +146,7 @@ module.exports = async bot => {
         }
 
         const messages = await channel.messages.fetch(options);
+        console.log(messages)
         sum_messages.push(...messages.array());
         last_id = messages.last().id;
 
