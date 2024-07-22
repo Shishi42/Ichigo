@@ -21,17 +21,19 @@ bot.login(config.token)
 
 async function lots_of_messages_getter() {
   sum_messages = []
-  let channel = bot.channels.cache.get("1221669438944841811")
-  console.log(channel)
 
-  messages = await channel.messages.fetch()
-  sum_messages.push(messages.array())
-  messages = await channel.messages.fetch({before: messages.last().id})
-  sum_messages.push(messages.array())
-  messages = await channel.messages.fetch({before: messages.last().id})
-  sum_messages.push(messages.array())
+  bot.channels.fetch("1221669438944841811").then({
 
-  return sum_messages
+    messages = await channel.messages.fetch()
+    sum_messages.push(messages.array())
+    messages = await channel.messages.fetch({before: messages.last().id})
+    sum_messages.push(messages.array())
+    messages = await channel.messages.fetch({before: messages.last().id})
+    sum_messages.push(messages.array())
+
+    console.log(sum_messages.size)
+
+  })
 }
 
 lots_of_messages_getter()
