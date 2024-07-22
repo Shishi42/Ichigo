@@ -133,33 +133,5 @@ module.exports = async bot => {
 
   bot.user.setPresence({activities: [{ name: "Les matchs de la Tour X", type: 3 }], status: "online"})
 
-  //bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
-  
-  async function lots_of_messages_getter(channel, limit = 300) {
-    const sum_messages = [];
-    let last_id;
-
-    while (true) {
-        const options = { limit: 100 };
-        if (last_id) {
-            options.before = last_id;
-        }
-
-        const messages = await channel.messages.fetch(options);
-        sum_messages.push(messages);
-        last_id = messages.last().id;
-
-        if (messages.size != 100 || sum_messages >= limit) {
-            break;
-        }
-    }
-
-    return sum_messages;
-  }
-
-  messages = await lots_of_messages_getter(bot.channels.cache.get("1221669438944841811"))
-  messages[0].forEach((message) => message.reactions.removeAll())
-  messages[1].forEach((message) => message.reactions.removeAll())
-  messages[2].forEach((message) => message.reactions.removeAll())
-  messages[3].forEach((message) => message.reactions.removeAll())
+  bot.channels.fetch("1221669438944841811").then(channel => channel.messages.fetch().then(messages => messages.forEach((message) => message.reactions.removeAll())))
 }
