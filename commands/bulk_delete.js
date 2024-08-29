@@ -14,12 +14,14 @@ module.exports = {
       name: "number",
       description: "The number of message to delete",
       required: false,
+      autocomplete: false,
     },
     {
       type: "string",
-      name: "before",
+      name: "after",
       description: "The id of the last message remaining",
       required: false,
+      autocomplete: false,
     },
   ],
 
@@ -27,30 +29,22 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    number = args.get("number").value
-    before = args.get("before").value
+    number = args.get("number")?.value
+    after = args.get("after")?.value
 
-    if ((!number && !before) || (number && before)) return await message.reply({ content: "You need to provide at least a number or the last message id but not both.", ephemeral: true })
-
-    //if (number && number <= 0) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })
-    //if (!before) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })
-  
-    const sum_messages = []
-    
-    while (true) {
-        const options = {}
-        if (number) options.limit = number 
-        if (before) options.before = before
-
-        messages = await channel.messages.fetch(options)
-        sum_messages.push(messages)
-        last_id = messages.last().id
-
-        if (messages.size != 100 || sum_messages >= limit) break
+    if ((!number && !after) || (number && after)) return await message.editReply({ content: "You need to provide at least a number or the last message id but not both.", ephemeral: true })
+    if (number && (isNaN(parseInt(number)) || parseInt(number) <= 0)) return await message.editReply({ content: "The number provided is not valid.", ephemeral: true })
+    if (after){
+      try { await message.channel.messages.fetch(after) }
+      catch { return await message.editReply({ content: "The message provided does not exist.", ephemeral: true }) }
     }
-  
-    messages = await lots_of_messages_getter(bot.channels.cache.get("1221669438944841811"))
+    const sum_messages = []
 
+    if (number) await message.channel.bulkDelete(number)
+    else {
+      messages = await message.channel.messages.fetch({after: after})
+      messages.forEach(element => element.delete())
+    }
     
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
