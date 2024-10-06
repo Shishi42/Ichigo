@@ -16,7 +16,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "format") { choices = ["Double Élimination ", "Simple Élimination", "Round Robin", "Swiss", "Free-for-All"] }
     if (focusedOption.name === "ruleset") { choices = ["Pick 3 Choose 1", "3 on 3", "1 on 1"] }
     if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours", "Tournoi fini"] }
-    if (focusedOption.name === "place") { choices = ["Dernier Bar avant la Fin du Monde", "Square Courteline (Picpus), Paris", "Place de la Nation, Paris"] }
+    if (focusedOption.name === "place") { choices = ["Dernier Bar avant la Fin du Monde", "Square Courteline (Picpus), Paris", "Place de la Nation, Paris", "Baraka Jeux, Marseille"] }
 
     let filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()))
     if (!focusedOption.value) filtered = choices
