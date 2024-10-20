@@ -25,6 +25,8 @@ module.exports = async bot => {
     "double_elim" : "Dans le format **double élimination** il faut perdre 2 matchs pour être éliminé du tournoi.",
 
     "streaming" : "https://www.streaming-espace.fr",
+
+    "salon" : "https://discordapp.com/channels/1221611301332193371/1221669702477021247/1297573105757196320"
   }
 
   bot.db = new Sequelize({
