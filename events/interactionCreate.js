@@ -14,7 +14,7 @@ module.exports = async (bot, interaction) => {
     if (interaction.commandName === "help") { choices = bot.commands.map(cmd => cmd.name) }
     if (focusedOption.name === "tournament_id") { choices = tournaments.map(tournament => `${tournament.dataValues.tournament_id} - ${tournament.dataValues.tournament_name}`) }
     if (focusedOption.name === "format") { choices = ["Double Élimination ", "Simple Élimination", "Round Robin", "Swiss", "Free-for-All"] }
-    if (focusedOption.name === "ruleset") { choices = ["Pick 3 Choose 1", "3 on 3", "1 on 1"] }
+    if (focusedOption.name === "ruleset") { choices = ["3 on 3", "1 on 1", "3 vs 3"] }
     if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours", "Tournoi fini"] }
     if (focusedOption.name === "place") { choices = ["Dernier Bar avant la Fin du Monde", "Square Courteline (Picpus), Paris", "Place de la Nation, Paris"] }
 
