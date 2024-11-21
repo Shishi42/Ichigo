@@ -2,16 +2,16 @@ const Discord = require("discord.js")
 
 module.exports = {
 
-  name: "poll",
-  description: "React to a message with poll emojis",
+  name: "sondage",
+  description: "Ajoute des emojis sur un message pour sondage",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Utility",
+  category: "Utilitaire",
   options: [
     {
       type: "string",
       name: "id",
-      description: "Id of the message to react",
+      description: "id du message",
       required: true,
       autocomplete: false,
     }
@@ -23,11 +23,11 @@ module.exports = {
 
     message.channel.messages.fetch(args.get("id").value)
       .then(function(msg){
-        msg.react("<:check:334046325098414080>")
+        msg.react("✅")
         msg.react("❔")
         msg.react("❌")})
-      .catch((error) => {return message.editReply({content: "Message with this id not found.", ephemeral: true})})
+      .catch((error) => {return message.editReply({content: "Aucun message avec cet id.", ephemeral: true})})
 
-    return await message.editReply({content: "Done.", ephemeral: true})
+    return await message.editReply({content: "C'est bon.", ephemeral: true})
   }
 }

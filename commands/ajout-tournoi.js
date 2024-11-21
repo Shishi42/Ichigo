@@ -3,11 +3,11 @@ const fs = require('fs')
 
 module.exports = {
 
-  name: "create_tournament",
+  name: "ajout-tournoi",
   description: "Create a new tournament on the server",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Tournament",
+  category: "Tournois",
   options: [
     {
       type: "string",
