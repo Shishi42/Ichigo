@@ -85,50 +85,50 @@ module.exports = {
 
     await message.deferReply({ephemeral: true})
 
-    tournament_id = parseInt(await bot.Tournaments.count()) + 1
+    let tournament_id = parseInt(await bot.Tournaments.count()) + 1
 
     let poster = args.get("poster") ? args.get("poster").value : null
     let challonge = args.get("challonge") ? args.get("challonge").value : null
 
     let embed = new Discord.EmbedBuilder()
-    .setColor(bot.color)
-    .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
-    .setTitle(args.get("title").value)
-    .setURL(bot.url)
-    .setDescription(args.get("description").value)
-    .addFields(
-      { name: ':small_blue_diamond: Date', value: `Le <t:${args.get("date").value}:F>`},
-      { name: ':small_blue_diamond: Lieu', value: `${args.get("place").value}`},
-      { name: ':small_blue_diamond: Règlement', value: `${args.get("ruleset").value}`},
-      { name: ':small_blue_diamond: Format', value: `${args.get("format").value}`},
-      { name: ':small_blue_diamond: Statut', value: "Inscriptions en cours"},
-    )
-    .setImage(poster)
-    .setTimestamp()
-    .setFooter({text: `Merci de consulter #📜-règles-tournois avant de vous inscrire.`, iconURL: `${message.guild.iconURL()}`})
-    .setThumbnail(`${message.guild.iconURL()}`)
+      .setColor(bot.color)
+      .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
+      .setTitle(args.get("title").value)
+      .setURL(bot.url)
+      .setDescription(args.get("description").value)
+      .addFields(
+        { name: ':small_blue_diamond: Date', value: `Le <t:${args.get("date").value}:F>`},
+        { name: ':small_blue_diamond: Lieu', value: `${args.get("place").value}`},
+        { name: ':small_blue_diamond: Règlement', value: `${args.get("ruleset").value}`},
+        { name: ':small_blue_diamond: Format', value: `${args.get("format").value}`},
+        { name: ':small_blue_diamond: Statut', value: "Inscriptions en cours"},
+      )
+      .setImage(poster)
+      .setTimestamp()
+      .setFooter({text: `Merci de consulter #📜-règles-tournois avant de vous inscrire.`, iconURL: `${message.guild.iconURL()}`})
+      .setThumbnail(`${message.guild.iconURL()}`)
 
     if (challonge) embed.addFields({ name: ':small_blue_diamond: Challonge', value: `${args.get("challonge").value}` })
     embed.addFields({ name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${args.get("date_close").value}:F>.` })
 
-    const row = new Discord.ActionRowBuilder()
-    .addComponents(
-      new Discord.ButtonBuilder()
-        .setCustomId("confirm")
-        .setLabel("Confirmer")
-        .setStyle(Discord.ButtonStyle.Success),
-      new Discord.ButtonBuilder()
-        .setCustomId("cancel")
-        .setLabel("Annuler")
-        .setStyle(Discord.ButtonStyle.Danger)
-    )
-    const collector = message.channel.createMessageComponentCollector({time: 30000, max: 1})
+    let row = new Discord.ActionRowBuilder()
+      .addComponents(
+        new Discord.ButtonBuilder()
+          .setCustomId("confirm_tournament")
+          .setLabel("Confirmer")
+          .setStyle(Discord.ButtonStyle.Success),
+        new Discord.ButtonBuilder()
+          .setCustomId("cancel_tournament")
+          .setLabel("Annuler")
+          .setStyle(Discord.ButtonStyle.Danger)
+      )
+    let collector = message.channel.createMessageComponentCollector({time: 30000, max: 1})
     message.editReply({embeds: [embed], components: [row]})
 
     collector.on('collect', async i => {
       await i.deferUpdate()
-      if (i.customId === 'confirm') {
-        tournament = await bot.Tournaments.create({
+      if (i.customId === 'confirm_tournament') {
+        let tournament = await bot.Tournaments.create({
           tournament_id: tournament_id,
           tournament_name: args.get("title").value,
           tournament_desc: args.get("description").value,
@@ -145,7 +145,7 @@ module.exports = {
           tournament_challonge: challonge,
         })
 
-        event = await message.guild.scheduledEvents.create({
+        let event = await message.guild.scheduledEvents.create({
           name: args.get("title").value,
           scheduledStartTime: new Date(parseInt(args.get("date").value+"000")),
           scheduledEndTime: new Date(parseInt(args.get("date").value+"000")+10800000),
@@ -156,20 +156,20 @@ module.exports = {
           entityMetadata: {location: args.get("place").value},
         })
 
-        role = await message.guild.roles.create({
+        let role = await message.guild.roles.create({
           name: "Participants "+args.get("title").value,
           color: "32ECE0",
           permissions : "0",
         })
 
-        post = await require(`../events/.postEmbed.js`).run(bot, tournament, args.get("post").value)
+        let post = await require(`../events/.postEmbed.js`).run(bot, tournament, args.get("post").value)
         await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
         await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
 
         return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
 
-      } else if (i.customId === 'cancel') {
+      } else if (i.customId === 'cancel_tournament') {
         return i.editReply({content: 'Tournament creation canceled.', components: [], ephemeral: true})
       }
     })

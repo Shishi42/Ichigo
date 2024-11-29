@@ -38,13 +38,13 @@ module.exports = {
       )
     }
 
-    const row = new Discord.ActionRowBuilder().addComponents(
+    let row = new Discord.ActionRowBuilder().addComponents(
       new Discord.ButtonBuilder()
-        .setCustomId(`${tournament.dataValues.tournament_id}_join`)
+        .setCustomId(`tournament_join_${tournament.dataValues.tournament_id}`)
         .setLabel("Je participe !")
         .setStyle(Discord.ButtonStyle.Success),
       new Discord.ButtonBuilder()
-        .setCustomId(`${tournament.dataValues.tournament_id}_leave`)
+        .setCustomId(`tournament_leave_${tournament.dataValues.tournament_id}`)
         .setLabel("Je ne participe plus.")
         .setStyle(Discord.ButtonStyle.Danger)
     )

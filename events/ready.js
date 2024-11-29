@@ -149,10 +149,6 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    team_captain: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     team_status: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -182,6 +178,10 @@ module.exports = async bot => {
       allowNull: false,
     },
     teammate_status: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    teammate_iscaptain: {
       type: Sequelize.STRING,
       allowNull: false,
     },

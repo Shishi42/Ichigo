@@ -113,7 +113,7 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    id = args.get("tournament_id").value.split(" - ")[0]
+    let id = args.get("tournament_id").value.split(" - ")[0]
 
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
     if (!tournament) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })

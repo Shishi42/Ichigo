@@ -7,7 +7,7 @@ module.exports = {
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id}})
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament_id, player_status: "INSCRIT"}})
 
-    res = "**__Liste des participants :__**"
+    let res = "**__Liste des participants :__**"
     if (players.length) res += ` (${players.length})\n`
     else res += '\n'
     for(player of players) res += `- <@${player.dataValues.player_id}>\n`

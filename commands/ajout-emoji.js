@@ -23,7 +23,7 @@ module.exports = {
 
     if (!new RegExp("<[a]{0,1}:.*[a-z]:.*[0-9]>").test(args.get("emoji").value)) return message.reply({content: "L'emoji n'est pas valide.", ephemeral: true})
 
-    emoji = args.get("emoji").value.split(':')
+    let emoji = args.get("emoji").value.split(':')
 
     return message.guild.emojis.create({ attachment: `https://cdn.discordapp.com/emojis/${emoji[2].slice(0, -1)}.${emoji[0].includes('a') ? "gif" : "png"}`, name: emoji[1] })
       .then(emoji => message.reply({content: `Emoji **${emoji.name}** ajouté avec succès. ${emoji}`, ephemeral: true}))
