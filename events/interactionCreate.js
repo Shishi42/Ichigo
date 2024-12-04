@@ -11,7 +11,7 @@ module.exports = async (bot, interaction) => {
 
     let tournaments = await bot.Tournaments.findAll()
 
-    if (interaction.commandName === "help") { choices = bot.commands.map(cmd => cmd.name) }
+    if (interaction.commandName === "aide") { choices = bot.commands.map(cmd => cmd.name) }
     if (focusedOption.name === "tournament_id") { choices = tournaments.map(tournament => `${tournament.dataValues.tournament_id} - ${tournament.dataValues.tournament_name}`) }
     if (focusedOption.name === "format") { choices = ["Double Élimination ", "Simple Élimination", "Round Robin", "Swiss", "Free-for-All"] }
     if (focusedOption.name === "ruleset") { choices = ["3 on 3", "1 on 1", "3 vs 3"] }

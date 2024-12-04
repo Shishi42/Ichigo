@@ -128,7 +128,7 @@ module.exports = async bot => {
       allowNull: false,
     },
   })
-  bot.Teams = bot.db.define("team", {
+  /*bot.Teams = bot.db.define("team", {
     team_id: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -187,12 +187,12 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-  })
+  })*/
 
   await bot.Tournaments.sync()
   await bot.Inscriptions.sync()
-  await bot.Teams.sync()
-  await bot.Teammates.sync()
+  /*await bot.Teams.sync()
+  await bot.Teammates.sync()*/
   console.log("Database Online.")
 
   await slashcommands_loader(bot)
