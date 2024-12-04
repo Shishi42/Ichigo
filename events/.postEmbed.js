@@ -15,8 +15,7 @@ module.exports = {
       .setURL(bot.url)
       .setDescription(tournament.dataValues.tournament_desc)
       .setImage(tournament.dataValues.tournament_poster)
-      .setTimestamp()
-      .setFooter({text: `Merci de consulter #📜-règles-tournois avant de vous inscrire.`, iconURL: `${channel.guild.iconURL()}`})
+      .setFooter({text: `Merci de consulter le règlement avant de vous inscrire.`, iconURL: `${channel.guild.iconURL()}`})
       .setThumbnail(`${channel.guild.iconURL()}`)
 
     embed.addFields(
