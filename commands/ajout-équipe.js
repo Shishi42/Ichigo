@@ -65,7 +65,7 @@ module.exports = {
     await message.deferReply({ ephemeral: true })
 
     team_id = parseInt(await bot.Teams.count()) + 1
-    pos = message.guild.roles.cache.get(bot.role_capitaine).position-1
+    pos = message.guild.roles.cache.get(bot.role_capitaine).position
 
     let name = args.get("name").value
     let description = args.get("description").value
