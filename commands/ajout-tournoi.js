@@ -67,15 +67,15 @@ module.exports = {
     },
     {
       type: "string",
-      name: "poster",
-      description: "Poster URL to display",
-      required: false,
+      name: "challonge",
+      description: "URL to the challonge",
+      required: true,
       autocomplete: false,
     },
     {
       type: "string",
-      name: "challonge",
-      description: "URL to the challonge",
+      name: "poster",
+      description: "Poster URL to display",
       required: false,
       autocomplete: false,
     },
@@ -88,7 +88,6 @@ module.exports = {
     let tournament_id = parseInt(await bot.Tournaments.count()) + 1
 
     let poster = args.get("poster") ? args.get("poster").value : null
-    let challonge = args.get("challonge") ? args.get("challonge").value : null
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
@@ -96,20 +95,16 @@ module.exports = {
       .setTitle(args.get("title").value)
       .setURL(bot.url)
       .setDescription(args.get("description").value)
+      .setImage(poster)
       .addFields(
         { name: ':small_blue_diamond: Date', value: `Le <t:${args.get("date").value}:F>`},
         { name: ':small_blue_diamond: Lieu', value: `${args.get("place").value}`},
         { name: ':small_blue_diamond: Règlement', value: `${args.get("ruleset").value}`},
         { name: ':small_blue_diamond: Format', value: `${args.get("format").value}`},
         { name: ':small_blue_diamond: Statut', value: "Inscriptions en cours"},
+        { name: ':small_blue_diamond: Challonge', value: `${args.get("challonge").value}` },
+        { name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${args.get("date_close").value}:F>.` },
       )
-      .setImage(poster)
-      .setTimestamp()
-      .setFooter({text: `Merci de consulter #📜-règles-tournois avant de vous inscrire.`, iconURL: `${message.guild.iconURL()}`})
-      .setThumbnail(`${message.guild.iconURL()}`)
-
-    if (challonge) embed.addFields({ name: ':small_blue_diamond: Challonge', value: `${args.get("challonge").value}` })
-    embed.addFields({ name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${args.get("date_close").value}:F>.` })
 
     let row = new Discord.ActionRowBuilder()
       .addComponents(
@@ -142,7 +137,7 @@ module.exports = {
           tournament_role: "",
           tournament_poster: poster,
           tournament_status: "Inscriptions en cours",
-          tournament_challonge: challonge,
+          tournament_challonge: args.get("challonge").value,
         })
 
         let event = await message.guild.scheduledEvents.create({
@@ -162,7 +157,7 @@ module.exports = {
           permissions : "0",
         })
 
-        let post = await require(`../events/.postEmbed.js`).run(bot, tournament, args.get("post").value)
+        let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, args.get("post").value)
         await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
         await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)

@@ -128,7 +128,7 @@ module.exports = async bot => {
       allowNull: false,
     },
   })
-  /*bot.Teams = bot.db.define("team", {
+  bot.Teams = bot.db.define("team", {
     team_id: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -162,7 +162,7 @@ module.exports = async bot => {
     team_role: {
       type: Sequelize.STRING,
       allowNull: false,
-    },
+    }
   })
   bot.Teammates = bot.db.define("teammate", {
     teammate_id: {
@@ -179,24 +179,24 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    teammate_number: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     teammate_status: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    teammate_iscaptain: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-  })*/
+  })
 
   await bot.Tournaments.sync()
   await bot.Inscriptions.sync()
-  /*await bot.Teams.sync()
-  await bot.Teammates.sync()*/
+  await bot.Teams.sync()
+  await bot.Teammates.sync()
   console.log("Database Online.")
 
   await slashcommands_loader(bot)
 
-  bot.user.setPresence({activities: [{ name: "Les matchs de la Tour X", type: 3 }], status: "online"})
+  bot.user.setPresence({activities: [{ name: "les matchs du BBT.", type: 3 }], status: "online"})
 
 }

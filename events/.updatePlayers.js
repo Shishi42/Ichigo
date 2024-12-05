@@ -8,8 +8,8 @@ module.exports = {
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament_id, player_status: "INSCRIT"}})
 
     let res = "**__Liste des participants :__**"
-    if (players.length) res += ` (${players.length})\n`
-    else res += '\n'
+    /*if (players.length) res += ` (${players.length})\n`
+    else */res += '\n'
     for(player of players) res += `- <@${player.dataValues.player_id}>\n`
     if (!players.length) res += "- Aucun participant pour le moment "
 

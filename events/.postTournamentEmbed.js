@@ -25,7 +25,7 @@ module.exports = {
       { name: ':small_blue_diamond: Format', value: `${tournament.dataValues.tournament_format}` },
       { name: ':small_blue_diamond: Statut', value: `${tournament.dataValues.tournament_status}` }
     )
-    if (tournament.dataValues.tournament_challonge && tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_blue_diamond: Challonge', value: `${tournament.dataValues.tournament_challonge}` })
+    if (tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_blue_diamond: Challonge', value: `${tournament.dataValues.tournament_challonge}` })
     if (tournament.dataValues.tournament_status == "Inscriptions en cours") embed.addFields({ name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${tournament.dataValues.tournament_date_close}:F>.` })
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
       embed.addFields(

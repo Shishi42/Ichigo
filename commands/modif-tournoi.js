@@ -118,7 +118,10 @@ module.exports = {
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
     if (!tournament) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })
 
-    if (args.get("title")) bot.Tournaments.update({ tournament_name: args.get("title").value }, { where: { tournament_id: id } })
+    if (args.get("title")){
+      bot.Tournaments.update({ tournament_name: args.get("title").value }, { where: { tournament_id: id } })
+      message.guild.roles.cache.get(tournament.dataValues.tournament_role).setName("Participants " + tournament.dataValues.tournament_name)
+    }
     if (args.get("description")) bot.Tournaments.update({ tournament_desc: args.get("description").value }, { where: { tournament_id: id } })    
     if (args.get("date")) bot.Tournaments.update({ tournament_date: args.get("date").value }, { where: { tournament_id: id } })
     if (args.get("date_close")) bot.Tournaments.update({ tournament_date_close: args.get("date_close").value }, { where: { tournament_id: id } })
@@ -135,7 +138,7 @@ module.exports = {
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
     await require("../events/.updatePlayers.js").run(bot, id)
-    await require(`../events/.postEmbed.js`).run(bot, tournament_updated, null, true)     
+    await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, null, true)     
     
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
