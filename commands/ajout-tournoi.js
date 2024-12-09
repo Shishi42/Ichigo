@@ -7,7 +7,7 @@ module.exports = {
   description: "Create a new tournament on the server",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Tournois",
+  category: "Tournoi",
   options: [
     {
       type: "string",

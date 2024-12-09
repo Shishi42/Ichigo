@@ -184,50 +184,5 @@ module.exports = {
         return i.editReply({ content: 'Team creation canceled.', components: [], ephemeral: true })
       }
     })
-
-    /*let modal = new Discord.ModalBuilder()
-      .setCustomId("team_modal_" + team_id)
-      .setTitle("Formulaire de création d'équipe")
-
-    const teamNameInput = new Discord.TextInputBuilder()
-      .setCustomId('teamNameInput')
-      .setLabel("Quel est le nom de l'équipe ?")
-      .setRequired(true)
-      .setStyle(Discord.TextInputStyle.Short)
-
-    const teamDescInput = new Discord.TextInputBuilder()
-      .setCustomId('teamDescInput')
-      .setLabel("Quelle est la devise de l'équipe ?")
-      .setRequired(true)
-      .setStyle(Discord.TextInputStyle.Paragraph)
-
-    const teamColorInput = new Discord.TextInputBuilder()
-      .setCustomId('teamColorInput')
-      .setLabel("Quelle est la couleur de l'équipe ?")
-      .setRequired(true)
-      .setValue("#000000")
-      .setMinLength(7)
-      .setMaxLength(7)
-      .setStyle(Discord.TextInputStyle.Short)
-    
-    const teamLogoInput = new Discord.TextInputBuilder()
-      .setCustomId('teamLogoInput')
-      .setLabel("Quelle est le logo de l'équipe ?")
-      .setRequired(true)
-      .setPlaceholder("Lien vers l'image du logo.")
-      .setStyle(Discord.TextInputStyle.Short)
-
-    modal.addComponents(new Discord.ActionRowBuilder().addComponents(teamNameInput), new Discord.ActionRowBuilder().addComponents(teamDescInput), new Discord.ActionRowBuilder().addComponents(teamColorInput), new Discord.ActionRowBuilder().addComponents(teamLogoInput))
-
-    await message.showModal(modal)
-
-    bot.on(Events.InteractionCreate, interaction => {
-      if (!interaction.isModalSubmit()) return
-
-      name = interaction.fields.getTextInputValue('teamNameInput')
-      desc = interaction.fields.getTextInputValue('teamDescInput')
-      color = interaction.fields.getTextInputValue('teamColorInput')
-      logo = interaction.fields.getTextInputValue('teamLogoInput')
-    }*/
   }
 }

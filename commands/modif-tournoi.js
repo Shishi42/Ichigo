@@ -7,7 +7,7 @@ module.exports = {
   description: "Modifie un tournoi sur le serveur",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
-  category: "Tournois",
+  category: "Tournoi",
   options: [
     {
       type: "string",

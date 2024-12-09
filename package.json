@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Shishi42/Ichigo#readme",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.65",
     "cron": "^3.1.7",
     "discord.js": "^14.10.2",
     "jsonfile": "^6.1.0",
