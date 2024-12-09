@@ -20,11 +20,12 @@ module.exports = {
         .addFields(
           { name: "🌟 - Nom de l'équipe", value: "Le nom sous lequel votre équipe sera reconnue aux yeux de tous." },
           { name: "💬 - Description", value: "Ça peut être un petit texte présentant l'équipe, votre devise, vos réseaux, vos objectifs ou une déclaration, comme vous voulez." },
-          { name: "📷 - Logo", value: "Un lien vers l'image, vous avez ce guide à votre disposition pour vous aider à créer le logo : https://discord.com/channels/1221611301332193371/1230832023459860490/1268993014840164495" },
+          { name: "📷 - Logo", value: "Un lien vers une simple image carrée, le bot se chargera de générer le logo avec le contour en engrenage." },
           { name: "🎨 - Couleur", value: "Au format HEX, elle sera utilisée pour votre couleur de rôle, pour vous aider vous avez cet outil : https://g.co/kgs/Q1Dt16g" },
           { name: "👥 - Membres", value: "Une équipe est composée de 3 personnes (pas plus, pas moins) __qui doivent être présentes sur le serveur__, merci de ping les deux autres membres dans le message." },
           { name: "⚠️ - Attention", value: "Aucune équipe ne sera enregistré avec des informations manquantes, donc merci de vérifier que toutes les informations sont **complètes** et **correctes**." },
           { name: "⁉️ - En manque d'un joueur ou d'une équipe ?", value: "Rendez-vous sur le https://discord.com/channels/1221611301332193371/1248686050147041303 pour poster une offre de recrutement ou présenter vos talents afin d'être peut-être remarqué par une équipe." },
+          { name: "🔧 - Modification", value: "Pour toute modification de l'équipe, merci de renvoyer un message dans ce salon en fournissant toutes les nouvelles informations." },
         )
 
       await message.channel.send({ embeds: [embed] })
