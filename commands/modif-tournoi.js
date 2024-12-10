@@ -120,7 +120,7 @@ module.exports = {
 
     if (args.get("title")){
       bot.Tournaments.update({ tournament_name: args.get("title").value }, { where: { tournament_id: id } })
-      message.guild.roles.cache.get(tournament.dataValues.tournament_role).setName("Participants " + tournament.dataValues.tournament_name)
+      // message.guild.roles.cache.get(tournament.dataValues.tournament_role).setName("Participants " + tournament.dataValues.tournament_name)
     }
     if (args.get("description")) bot.Tournaments.update({ tournament_desc: args.get("description").value }, { where: { tournament_id: id } })    
     if (args.get("date")) bot.Tournaments.update({ tournament_date: args.get("date").value }, { where: { tournament_id: id } })
