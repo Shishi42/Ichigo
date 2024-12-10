@@ -1,5 +1,5 @@
 const Discord = require("discord.js")
-const config = require("./dev_config.json")
+const config = require("./config.json")
 
 const bot = new Discord.Client({intents: 3276799})
 const fs = require("fs")
