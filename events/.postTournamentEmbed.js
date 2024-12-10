@@ -28,12 +28,17 @@ module.exports = {
     if (tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_blue_diamond: Challonge', value: `${tournament.dataValues.tournament_challonge}` })
     if (tournament.dataValues.tournament_status == "Inscriptions en cours") embed.addFields({ name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${tournament.dataValues.tournament_date_close}:F>.` })
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
+
+      first = /^[0-9]*$/.test(tournament.dataValues.tournament_first) ? `<@${tournament.dataValues.tournament_first}>` : tournament.dataValues.tournament_first
+      second = /^[0-9]*$/.test(tournament.dataValues.tournament_second) ? `<@${tournament.dataValues.tournament_second}>` : tournament.dataValues.tournament_second
+      third = /^[0-9]*$/.test(tournament.dataValues.tournament_third) ? `<@${tournament.dataValues.tournament_third}>` : tournament.dataValues.tournament_third 
+
       embed.addFields(
         { name: '\u200B', value: '\u200B' },
         { name: ':trophy: Résultats', value: '\u200B' },
-        { name: ':first_place: ', value: `<@${tournament.dataValues.tournament_first}>`, inline: true },
-        { name: ':second_place:', value: `<@${tournament.dataValues.tournament_second}>`, inline: true },
-        { name: ':third_place:', value: `<@${tournament.dataValues.tournament_third}>`, inline: true },
+        { name: ':first_place: ', value: first, inline: true },
+        { name: ':second_place:', value: second, inline: true },
+        { name: ':third_place:', value: third, inline: true },
       )
     }
 
