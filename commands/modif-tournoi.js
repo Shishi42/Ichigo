@@ -1,5 +1,6 @@
 const Discord = require("discord.js")
 const fs = require('fs')
+const { request } = require('undici')
 
 module.exports = {
 
@@ -87,21 +88,21 @@ module.exports = {
       autocomplete: false,
     },
     {
-      type: "User",
+      type: "string",
       name: "first",
       description: "First place at the tournament",
       required: false,
       autocomplete: false,
     },
     {
-      type: "User",
+      type: "string",
       name: "second",
       description: "Second place at the tournament",
       required: false,
       autocomplete: false,
     },
     {
-      type: "User",
+      type: "string",
       name: "third",
       description: "Third place at the tournament",
       required: false,
@@ -130,7 +131,11 @@ module.exports = {
     if (args.get("place")) bot.Tournaments.update({ tournament_place: args.get("place").value }, { where: { tournament_id: id } })
     if (args.get("poster")) bot.Tournaments.update({ tournament_poster: args.get("poster").value }, { where: { tournament_id: id } })
     if (args.get("status")) bot.Tournaments.update({ tournament_status: args.get("status").value }, { where: { tournament_id: id } })
-    if (args.get("challonge")) bot.Tournaments.update({ tournament_challonge: args.get("challonge").value }, { where: { tournament_id: id } })
+    if (args.get("challonge")){
+      let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
+      let challonge = await req.body.json()
+      bot.Tournaments.update({ tournament_challonge: challonge.tournament.id }, { where: { tournament_id: id } })
+    } 
     if (args.get("first")) bot.Tournaments.update({ tournament_first: args.get("first").value }, { where: { tournament_id: id } })
     if (args.get("second")) bot.Tournaments.update({ tournament_second: args.get("second").value }, { where: { tournament_id: id } })
     if (args.get("third")) bot.Tournaments.update({ tournament_third: args.get("third").value }, { where: { tournament_id: id } })

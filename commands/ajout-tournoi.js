@@ -1,5 +1,6 @@
 const Discord = require("discord.js")
 const fs = require('fs')
+const { request } = require('undici')
 
 module.exports = {
 
@@ -89,6 +90,9 @@ module.exports = {
 
     let poster = args.get("poster") ? args.get("poster").value : null
 
+    let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
+    let challonge = await req.body.json()
+
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
@@ -102,7 +106,7 @@ module.exports = {
         { name: ':small_blue_diamond: Règlement', value: `${args.get("ruleset").value}`},
         { name: ':small_blue_diamond: Format', value: `${args.get("format").value}`},
         { name: ':small_blue_diamond: Statut', value: "Inscriptions en cours"},
-        { name: ':small_blue_diamond: Challonge', value: `${args.get("challonge").value}` },
+        { name: ':small_blue_diamond: Challonge', value: "https://challonge.com/" + challonge.tournament.url },
         { name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${args.get("date_close").value}:F>.` },
       )
 
@@ -137,7 +141,7 @@ module.exports = {
           tournament_role: "",
           tournament_poster: poster,
           tournament_status: "Inscriptions en cours",
-          tournament_challonge: args.get("challonge").value,
+          tournament_challonge: challonge.tournament.id,
         })
 
         let event = await message.guild.scheduledEvents.create({
