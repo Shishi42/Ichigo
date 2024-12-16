@@ -28,13 +28,15 @@ module.exports = async (bot, interaction) => {
 
   else if (interaction.isButton()) {
 
-    if (interaction.customId.includes("tournament_")) {
+    if (interaction.customId.includes("tournament-")) {
 
       let tournament_id = interaction.customId.split('-')[2]
       let player_id = interaction.user.id
 
       let inscr = await bot.Inscriptions.findOne({ where: { player_id: player_id, tournament_id: tournament_id } })
       let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id } })
+
+      console.log(tournament_id)
 
       if (interaction.customId.includes("join")) {
 
