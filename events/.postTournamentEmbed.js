@@ -46,11 +46,11 @@ module.exports = {
 
     let row = new Discord.ActionRowBuilder().addComponents(
       new Discord.ButtonBuilder()
-        .setCustomId(`tournament_join_${tournament.dataValues.tournament_id}`)
+        .setCustomId(`tournament-join-${tournament.dataValues.tournament_id}`)
         .setLabel("Je participe !")
         .setStyle(Discord.ButtonStyle.Success),
       new Discord.ButtonBuilder()
-        .setCustomId(`tournament_leave_${tournament.dataValues.tournament_id}`)
+        .setCustomId(`tournament-leave-${tournament.dataValues.tournament_id}`)
         .setLabel("Je ne participe plus.")
         .setStyle(Discord.ButtonStyle.Danger)
     )
