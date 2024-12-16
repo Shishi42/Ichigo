@@ -27,7 +27,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    let texte = args.get("texte").value.replace("\\n", "\n")
+    let texte = args.get("texte").value.replaceAll("\\n", "\n")
 
     if (args.get("date")){     
       let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1])

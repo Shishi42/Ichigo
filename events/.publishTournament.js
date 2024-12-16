@@ -22,7 +22,8 @@ module.exports = {
 		
 		let pub = await channel.send(msg)
 		let affiche = await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] })
-		
-    return [pub, affiche]
+
+		pub.crosspost()
+		affiche.crosspost()
 	}
 }

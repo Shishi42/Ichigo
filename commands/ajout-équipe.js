@@ -111,11 +111,11 @@ module.exports = {
     let row = new Discord.ActionRowBuilder()
       .addComponents(
         new Discord.ButtonBuilder()
-          .setCustomId("confirm_team")
+          .setCustomId("confirm-team")
           .setLabel("Confirmer")
           .setStyle(Discord.ButtonStyle.Success),
         new Discord.ButtonBuilder()
-          .setCustomId("cancel_team")
+          .setCustomId("cancel-team")
           .setLabel("Annuler")
           .setStyle(Discord.ButtonStyle.Danger)
       )
@@ -124,7 +124,7 @@ module.exports = {
 
     collector.on('collect', async i => {
       await i.deferUpdate()
-      if (i.customId === 'confirm_team') {
+      if (i.customId === 'confirm-team') {
 
         let team = await bot.Teams.create({
           team_id: team_id,
@@ -180,7 +180,7 @@ module.exports = {
 
         return i.editReply({ content: `Team **${name}** created with id : **${team_id}**.`, components: [], ephemeral: true })
 
-      } else if (i.customId === 'cancel_team') {
+      } else if (i.customId === 'cancel-team') {
         return i.editReply({ content: 'Team creation canceled.', components: [], ephemeral: true })
       }
     })

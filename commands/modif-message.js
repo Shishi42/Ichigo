@@ -26,7 +26,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    let texte = args.get("texte").value.replace("\\n", "\n")
+    let texte = args.get("texte").value.replaceAll("\\n", "\n")
 
     message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit(texte))
 

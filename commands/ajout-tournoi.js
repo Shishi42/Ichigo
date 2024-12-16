@@ -130,11 +130,11 @@ module.exports = {
     let row = new Discord.ActionRowBuilder()
       .addComponents(
         new Discord.ButtonBuilder()
-          .setCustomId("confirm_tournament")
+          .setCustomId("confirm-tournament")
           .setLabel("Confirmer")
           .setStyle(Discord.ButtonStyle.Success),
         new Discord.ButtonBuilder()
-          .setCustomId("cancel_tournament")
+          .setCustomId("cancel-tournament")
           .setLabel("Annuler")
           .setStyle(Discord.ButtonStyle.Danger)
       )
@@ -143,7 +143,7 @@ module.exports = {
 
     collector.on('collect', async i => {
       await i.deferUpdate()
-      if (i.customId === 'confirm_tournament') {
+      if (i.customId === 'confirm-tournament') {
 
         /*heads = {
           api_key: bot.challonge,
@@ -199,19 +199,17 @@ module.exports = {
             permissions : "0",
           })
 
-          let crossposts = await require(`../events/.publishTournament.js`).run(bot, tournament, args.get("post_pub").value)
           let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, args.get("post_inscr").value)
           await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
           await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
 
-          crossposts[0].crosspost()
-          crossposts[1].crosspost()
+          await require(`../events/.publishTournament.js`).run(bot, tournament, args.get("post_pub").value)
 
           return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
         }).start()
 
-      } else if (i.customId === 'cancel_tournament') {
+      } else if (i.customId === 'cancel-tournament') {
         return i.editReply({content: 'Tournament creation canceled.', components: [], ephemeral: true})
       }
     })
