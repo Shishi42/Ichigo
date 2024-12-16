@@ -1,6 +1,7 @@
 const Discord = require("discord.js")
 const fs = require('fs')
 const { request } = require('undici')
+const cron = require("cron")
 
 module.exports = {
 
@@ -10,6 +11,13 @@ module.exports = {
   dm: true,
   category: "Tournoi",
   options: [
+    {
+      type: "string",
+      name: "id",
+      description: "Tournament id",
+      required: true,
+      autocomplete: false,
+    },
     {
       type: "string",
       name: "title",
@@ -28,13 +36,6 @@ module.exports = {
       type: "string",
       name: "date",
       description: "When is the tournament",
-      required: true,
-      autocomplete: false,
-    },
-    {
-      type: "string",
-      name: "date_close",
-      description: "When the tournament inscription are closed",
       required: true,
       autocomplete: false,
     },
@@ -61,8 +62,15 @@ module.exports = {
     },
     {
       type: "Channel",
-      name: "post",
-      description: "Channel to announce the tournament",
+      name: "post_inscr",
+      description: "Channel to open inscriptions of the tournament",
+      required: true,
+      autocomplete: false,
+    },
+    {
+      type: "Channel",
+      name: "post_pub",
+      description: "Channel to publish the tournament",
       required: true,
       autocomplete: false,
     },
@@ -80,18 +88,27 @@ module.exports = {
       required: false,
       autocomplete: false,
     },
+    {
+      type: "string",
+      name: "date_pub",
+      description: "Date to pub the tournament",
+      required: false,
+      autocomplete: false,
+    },
   ],
 
   async run(bot, message, args) {
 
     await message.deferReply({ephemeral: true})
 
-    let tournament_id = parseInt(await bot.Tournaments.count()) + 1
+    let tournament_id = args.get("id").value
 
     let poster = args.get("poster") ? args.get("poster").value : null
 
     let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
     let challonge = await req.body.json()
+
+    let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1])
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
@@ -101,13 +118,13 @@ module.exports = {
       .setDescription(args.get("description").value)
       .setImage(poster)
       .addFields(
-        { name: ':small_blue_diamond: Date', value: `Le <t:${args.get("date").value}:F>`},
+        { name: ':small_blue_diamond: ID', value: tournament_id },
+        { name: ':small_blue_diamond: Date', value: `Le <t:${Math.floor(date)/1000}:F>`},
         { name: ':small_blue_diamond: Lieu', value: `${args.get("place").value}`},
         { name: ':small_blue_diamond: Règlement', value: `${args.get("ruleset").value}`},
         { name: ':small_blue_diamond: Format', value: `${args.get("format").value}`},
         { name: ':small_blue_diamond: Statut', value: "Inscriptions en cours"},
-        { name: ':small_blue_diamond: Challonge', value: "https://challonge.com/" + challonge.tournament.url },
-        { name: '\u200B', value: `:small_blue_diamond: Fin des inscriptions le <t:${args.get("date_close").value}:F>.` },
+        { name: ':small_blue_diamond: Challonge', value: "https://challonge.com/" + tournament_id },
       )
 
     let row = new Discord.ActionRowBuilder()
@@ -127,46 +144,72 @@ module.exports = {
     collector.on('collect', async i => {
       await i.deferUpdate()
       if (i.customId === 'confirm_tournament') {
-        let tournament = await bot.Tournaments.create({
-          tournament_id: tournament_id,
-          tournament_name: args.get("title").value,
-          tournament_desc: args.get("description").value,
-          tournament_date: args.get("date").value,
-          tournament_date_close: args.get("date_close").value,
-          tournament_ruleset: args.get("ruleset").value,
-          tournament_format: args.get("format").value,
-          tournament_place: args.get("place").value,
-          tournament_channel: args.get("post").value,
-          tournament_message: "",
-          tournament_role: "",
-          tournament_poster: poster,
-          tournament_status: "Inscriptions en cours",
-          tournament_challonge: challonge.tournament.id,
-        })
 
-        let event = await message.guild.scheduledEvents.create({
+        /*heads = {
+          api_key: bot.challonge,
           name: args.get("title").value,
-          scheduledStartTime: new Date(parseInt(args.get("date").value+"000")),
-          scheduledEndTime: new Date(parseInt(args.get("date").value+"000")+10800000),
-          privacyLevel: 2,
-          entityType: 3,
-          image: poster,
-          description: args.get("description").value,
-          entityMetadata: {location: args.get("place").value},
-        })
+          tournament_type: "double elimination",
+          url: tournament_id,
+          description: "bite",
+          open_signup: "false",
+          accept_attachments: "true",
+          show_rounds: "true",
+          start_at: date
+        }
 
-        let role = await message.guild.roles.create({
-          name: "Participants "+args.get("title").value,
-          color: "32ECE0",
-          permissions : "0",
-        })
+        let req = await request("https://api.challonge.com/v1/tournaments.json", { method: "POST", headers: heads })
+        let challonge = await req.body.json()*/
 
-        let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, args.get("post").value)
-        await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
+        if (args.get("date_pub")){   
+          prog = new Date(args.get("date_pub").value.split('-')[0].split('/')[2], args.get("date_pub").value.split('-')[0].split('/')[1] - 1, args.get("date_pub").value.split('-')[0].split('/')[0], args.get("date_pub").value.split('-')[1].split(':')[0], args.get("date_pub").value.split('-')[1].split(':')[1])
+          await i.editReply({ content: `Tournament creation confirmed, waiting to post at __<t:${Math.floor(prog) / 1000}:F> (<t:${Math.floor(prog) / 1000}:R>)__.`, components: [], ephemeral: true })
+        } else prog = new Date(parseInt(Math.floor(Date.now()+5)))
 
-        await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
+        new cron.CronJob(prog, async () => {
+          let tournament = await bot.Tournaments.create({
+            tournament_id: tournament_id,
+            tournament_name: args.get("title").value,
+            tournament_desc: args.get("description").value,
+            tournament_date: Math.floor(date) / 1000,
+            tournament_ruleset: args.get("ruleset").value,
+            tournament_format: args.get("format").value,
+            tournament_place: args.get("place").value,
+            tournament_channel: args.get("post_inscr").value,
+            tournament_message: "",
+            tournament_role: "",
+            tournament_poster: poster,
+            tournament_status: "Inscriptions en cours",
+            tournament_challonge: challonge.tournament.id,
+          })
 
-        return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
+          let event = await message.guild.scheduledEvents.create({
+            name: args.get("title").value,
+            scheduledStartTime: new Date(parseInt(Math.floor(date))),
+            scheduledEndTime: new Date(parseInt(Math.floor(date)) + (3600 * 5)),
+            privacyLevel: 2,
+            entityType: 3,
+            image: poster,
+            description: args.get("description").value,
+            entityMetadata: {location: args.get("place").value},
+          })
+
+          let role = await message.guild.roles.create({
+            name: "Participants "+args.get("title").value,
+            color: "32ECE0",
+            permissions : "0",
+          })
+
+          let crossposts = await require(`../events/.publishTournament.js`).run(bot, tournament, args.get("post_pub").value)
+          let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, args.get("post_inscr").value)
+          await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
+
+          await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
+
+          crossposts[0].crosspost()
+          crossposts[1].crosspost()
+
+          return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
+        }).start()
 
       } else if (i.customId === 'cancel_tournament') {
         return i.editReply({content: 'Tournament creation canceled.', components: [], ephemeral: true})
