@@ -30,13 +30,13 @@ module.exports = async (bot, interaction) => {
 
     if (interaction.customId.includes("tournament_")) {
 
-      let tournament_id = interaction.customId.split("_")[2]
-      let player_id = interaction.user.id
-
-      let inscr = await bot.Inscriptions.findOne({ where: { player_id: player_id, tournament_id: tournament_id } })
-      let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id } })
-
       if (interaction.customId.includes("join")) {
+
+        let tournament_id = interaction.customId.split("tournament_join_")[1]
+        let player_id = interaction.user.id
+
+        let inscr = await bot.Inscriptions.findOne({ where: { player_id: player_id, tournament_id: tournament_id } })
+        let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id } })
 
         interaction.member.roles.add(tournament.dataValues.tournament_role)
 
@@ -45,6 +45,12 @@ module.exports = async (bot, interaction) => {
         await interaction.reply({ content: "Tu es désormais inscrit à ce tournoi, merci de consulter <#1221671605348864031> avant de participer.", ephemeral: true })
       }
       else if (interaction.customId.includes("leave")) {
+
+        let tournament_id = interaction.customId.split("tournament_leave_")[1]
+        let player_id = interaction.user.id
+
+        let inscr = await bot.Inscriptions.findOne({ where: { player_id: player_id, tournament_id: tournament_id } })
+        let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id } })
 
         interaction.member.roles.remove(tournament.dataValues.tournament_role)
 
