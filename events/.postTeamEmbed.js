@@ -1,5 +1,4 @@
 const Discord = require("discord.js")
-const { and } = require("sequelize")
 
 module.exports = {
 

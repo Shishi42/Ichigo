@@ -57,10 +57,6 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    tournament_date_close: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     tournament_ruleset: {
       type: Sequelize.STRING,
       allowNull: false,
