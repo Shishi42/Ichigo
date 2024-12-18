@@ -19,6 +19,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "ruleset") { choices = ["3 on 3", "1 on 1", "3 vs 3"] }
     if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours", "Tournoi fini", "ACTIVE", "INACTIVE"] }
     if (focusedOption.name === "place") { choices = ["Dernier Bar avant la Fin du Monde, Paris", "Guyajeux, Marseille", "Baraka Jeux, Marseille"] }
+    if (focusedOption.name === "regles") { choices = Object.keys(bot.regles) }
 
     let filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()))
     if (!focusedOption.value) filtered = choices
