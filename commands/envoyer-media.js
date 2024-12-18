@@ -19,7 +19,7 @@ module.exports = {
     {
       type: "string",
       name: "date",
-      description: "la date à laquel programmer le message",
+      description: "la date à laquel programmer le message, format (DD/MM/YYYY-HH:mm)",
       required: false,
       autocomplete: false,
     },

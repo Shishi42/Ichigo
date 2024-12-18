@@ -35,7 +35,7 @@ module.exports = {
     {
       type: "string",
       name: "date",
-      description: "When is the tournament",
+      description: "When is the tournament, format (DD/MM/YYYY-HH:mm)",
       required: true,
       autocomplete: false,
     },
@@ -91,7 +91,7 @@ module.exports = {
     {
       type: "string",
       name: "date_pub",
-      description: "Date to pub the tournament",
+      description: "Date to pub the tournament, format (DD/MM/YYYY-HH:mm)",
       required: false,
       autocomplete: false,
     },
@@ -145,7 +145,7 @@ module.exports = {
       await i.deferUpdate()
       if (i.customId === 'confirm-tournament') {
 
-        /*heads = {
+        /*let data = {
           api_key: bot.challonge,
           name: args.get("title").value,
           tournament_type: "double elimination",
@@ -157,7 +157,7 @@ module.exports = {
           start_at: date
         }
 
-        let req = await request("https://api.challonge.com/v1/tournaments.json", { method: "POST", headers: heads })
+        let req = await request("https://api.challonge.com/v1/tournaments.json", { method: "POST", body: data })
         let challonge = await req.body.json()*/
 
         if (args.get("date_pub")){   

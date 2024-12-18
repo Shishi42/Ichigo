@@ -34,14 +34,7 @@ module.exports = {
     {
       type: "string",
       name: "date",
-      description: "When is the tournament",
-      required: false,
-      autocomplete: false,
-    },
-    {
-      type: "string",
-      name: "date_close",
-      description: "When the tournament incriptions are closed",
+      description: "When is the tournament, format (DD/MM/YYYY-HH:mm)",
       required: false,
       autocomplete: false,
     },

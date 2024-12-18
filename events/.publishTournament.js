@@ -13,7 +13,7 @@ module.exports = {
 		msg += `Début de l'évènement le <t:${tournament.dataValues.tournament_date}:F> (<t:${tournament.dataValues.tournament_date}:R>)`
 		
 		if (tournament.dataValues.tournament_place == "Dernier Bar avant la Fin du Monde, Paris") msg += " au **DERNIER BAR AVANT LA FIN DU MONDE**, situé au **19 Avenue Victoria, 75001, à Paris** !" + "\n"
-		if (tournament.dataValues.tournament_place == "Guyajeux, Marseille") msg += "à **GUYAJEUX**, situé au **65 Avenue Jules Cantini, 13006, à Marseille** !" + "\n"
+		if (tournament.dataValues.tournament_place == "Guyajeux, Marseille") msg += " à **GUYAJEUX**, situé au **65 Avenue Jules Cantini, 13006, à Marseille** !" + "\n"
 			
 
 		msg += "-# Plus d'infos sur "

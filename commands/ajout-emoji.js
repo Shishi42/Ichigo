@@ -4,7 +4,7 @@ module.exports = {
 
   name: "ajout-emoji",
   description: "Ajoute un emoji sur le serveur",
-  permission: null,
+  permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
   category: "Utilitaire",
   options: [
@@ -18,8 +18,6 @@ module.exports = {
   ],
 
   async run(bot, message, args) {
-
-    if(!message.member.roles.cache.has("1227614198075490324")) return message.reply({content: "Tu ne fais pas partie de l'équipe de modération.", ephemeral: true})
 
     if (!new RegExp("<[a]{0,1}:.*[a-z]:.*[0-9]>").test(args.get("emoji").value)) return message.reply({content: "L'emoji n'est pas valide.", ephemeral: true})
 
