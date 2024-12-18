@@ -24,7 +24,7 @@ module.exports = async bot => {
     "1on1" : "Le règlement **1 on 1** se joue seul et non en équipe, chaque joueur assemble et ne joue **qu'une seule et même toupie** lors de l'intégralité du tournoi, les matchs sont joués en 4 points avec la règle du gain de point en fonction du finish (xtreme, burst, over, spin).",
     "3on3" : "Le règlement **3 on 3** se joue seul et non en équipe, chaque joueur assemble 3 toupies en n'utilisant **aucun composant en double**, lors d'un match le joueur joue un round avec chaque toupie dans l'ordre qu'il le souhaite, les matchs sont joués en 4 points avec la règle du gain de point en fonction du finish (xtreme, burst, over, spin).",
     "3vs3" : "Le règlement **3 vs 3** se joue en équipe de 3 joueurs, chaque joueur assemble et ne joue **qu'une seule et même toupie** lors de l'intégralité du tournoi en n'utilisant **aucun composant en double** dans l'équipe, lors d'un match l'équipe joue 1 round avec chaque joueur dans l'ordre qu'elle le souhaite, les matchs sont joués en 3 points et chaque finish ne rapporte qu'un point.",
-    //"simple_elim" : "Dans le format **simple élimination** il ne suffit de perdre qu'un seul match pour être éliminé du tournoi.",
+    "simple_elim" : "Dans le format **simple élimination** il ne suffit de perdre qu'un seul match pour être éliminé du tournoi.",
     "double_elim" : "Dans le format **double élimination** il faut perdre 2 matchs pour être éliminé du tournoi.",
 
     "streaming" : "https://www.streaming-espace.fr",
