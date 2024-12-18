@@ -97,7 +97,7 @@ module.exports = {
 
     if (args.get("color")){
       bot.Teams.update({ team_color: args.get("color").value }, { where: { team_id: id } })
-      message.guild.roles.cache.get(team.dataValues.team_role).setColor(args.get("color").value)
+      message.guild.roles.fetch(team.dataValues.team_role).then(role => role.setColor(args.get("color").value))
     } 
 
     if (args.get("member0")) {
@@ -110,8 +110,8 @@ module.exports = {
 
       let member0 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "0", teammate_status: "ACTIVE" } })
       bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { teammate_id: member0.dataValues.teammate_id } })
-      message.guild.members.cache.get(member0.dataValues.teammate_discord).roles.remove(team.dataValues.team_role)
-      message.guild.members.cache.get(member0.dataValues.teammate_discord).roles.remove(bot.role_capitaine)
+      message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
+      message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(bot.role_capitaine))
 
       await bot.Teammates.create({
         teammate_id: parseInt(await bot.Teammates.count()) + 1,
@@ -121,8 +121,8 @@ module.exports = {
         teammate_status: "ACTIVE",
       })
 
-      message.guild.members.cache.get(args.get("member0").value).roles.add(team.dataValues.team_role)
-      message.guild.members.cache.get(args.get("member0").value).roles.add(bot.role_capitaine)
+      message.guild.members.fetch(args.get("member0").value).then(member => member.roles.add(team.dataValues.team_role))
+      message.guild.members.fetch(args.get("member0").value).then(member => member.roles.add(bot.role_capitaine))
     } 
 
     if (args.get("member1")) {
@@ -135,7 +135,7 @@ module.exports = {
 
       let member1 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "1", teammate_status: "ACTIVE" } })
       bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { teammate_id: member1.dataValues.teammate_id } })
-      message.guild.members.cache.get(member1.dataValues.teammate_discord).roles.remove(team.dataValues.team_role)
+      message.guild.members.fetch(member1.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
 
       await bot.Teammates.create({
         teammate_id: parseInt(await bot.Teammates.count()) + 1,
@@ -145,7 +145,7 @@ module.exports = {
         teammate_status: "ACTIVE",
       })
 
-      message.guild.members.cache.get(args.get("member1").value).roles.add(team.dataValues.team_role)
+      message.guild.members.fetch(args.get("member1").value).then(member => member.roles.add(team.dataValues.team_role))
     } 
 
     if (args.get("member2")) {
@@ -158,7 +158,7 @@ module.exports = {
 
       let member2 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "2", teammate_status: "ACTIVE" } })
       bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { teammate_id: member2.dataValues.teammate_id } })
-      message.guild.members.cache.get(member2.dataValues.teammate_discord).roles.remove(team.dataValues.team_role)
+      message.guild.members.fetch(member2.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
 
       await bot.Teammates.create({
         teammate_id: parseInt(await bot.Teammates.count()) + 1,
@@ -168,7 +168,7 @@ module.exports = {
         teammate_status: "ACTIVE",
       })
 
-      message.guild.members.cache.get(args.get("member2").value).roles.add(team.dataValues.team_role)
+      message.guild.members.fetch(args.get("member2").value).then(member => member.roles.add(team.dataValues.team_role))
     } 
 
     if (args.get("status")) {
@@ -178,10 +178,10 @@ module.exports = {
 
         let member0 = await bot.Teammates.findOne({ where: { team_id: id, teammate_status: "ACTIVE", teammate_number: "0" }})
 
-        message.guild.members.cache.get(member0.dataValues.teammate_discord).roles.remove(bot.role_capitaine)
+        message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(bot.role_capitaine))
 
-        message.guild.roles.cache.get(team.dataValues.team_role).delete()
-        bot.channels.cache.get(bot.liste_equipe).messages.delete(team.dataValues.team_message)
+        message.guild.roles.fetch(team.dataValues.team_role).then(role => role.delete())
+        bot.channels.fetch(bot.liste_equipe).then(channel => channel.messages.fetch(team.dataValues.team_message).then(message => message.delete()))
 
         bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { team_id: id, teammate_status: "ACTIVE"} })
       }

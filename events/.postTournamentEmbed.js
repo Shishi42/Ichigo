@@ -5,8 +5,10 @@ module.exports = {
 
   async run(bot, tournament, post, update = false) {
 
-    if (post) channel = bot.channels.cache.get(post)
-    else channel = bot.channels.cache.get(tournament.dataValues.tournament_channel)
+    let channel
+
+    if (post) channel = await bot.channels.fetch(post)
+    else channel = await bot.channels.fetch(tournament.dataValues.tournament_channel)
 
     let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?api_key=${bot.challonge}`)
     let challonge = await req.body.json()

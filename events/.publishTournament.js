@@ -4,7 +4,7 @@ module.exports = {
 
 	async run(bot, tournament, post) {
 
-		let channel = bot.channels.cache.get(post)
+		let channel = await bot.channels.fetch(post)
 
 		msg = "-# @everyone" + "\n"
 

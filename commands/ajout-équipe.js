@@ -1,5 +1,4 @@
 const Discord = require("discord.js")
-const fs = require('fs')
 
 module.exports = {
 
@@ -64,8 +63,8 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    team_id = parseInt(await bot.Teams.count()) + 1
-    pos = message.guild.roles.cache.get(bot.role_capitaine).position
+    let team_id = parseInt(await bot.Teams.count()) + 1
+    let pos = await message.guild.roles.fetch(bot.role_capitaine)
 
     let name = args.get("name").value
     let description = args.get("description").value.replaceAll("\\n", "\n")
@@ -165,16 +164,15 @@ module.exports = {
           name: name,
           color: color,
           permissions: "0",
-          position: pos,
+          position: pos.position,
         })   
 
-        channel = bot.channels.cache.get(bot.liste_equipe)
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team)
 
-        message.guild.members.cache.get(member0).roles.add(role)
-        message.guild.members.cache.get(member0).roles.add(bot.role_capitaine)
-        message.guild.members.cache.get(member1).roles.add(role)
-        message.guild.members.cache.get(member2).roles.add(role)
+        message.guild.members.fetch(member0).then(member => member.roles.add(role))
+        message.guild.members.fetch(member0).then(member => member.roles.add(bot.role_capitaine))
+        message.guild.members.fetch(member1).then(member => member.roles.add(role))
+        message.guild.members.fetch(member2).then(member => member.roles.add(role))
        
         await bot.Teams.update({ team_message: post.id, team_role: role.id }, { where: { team_id: team_id } })
 
