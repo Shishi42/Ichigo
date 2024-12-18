@@ -1,7 +1,7 @@
 {
   "name": "ichigo",
-  "version": "2.0.0",
-  "description": "Discord BOT for the Beyblade Community. ",
+  "version": "2.1.0",
+  "description": "Discord BOT for Sun After The Reign, a Beyblade X Community. ",
   "main": "ichigo.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,7 +14,7 @@
   "keywords": [
     "bot",
     "discord",
-    "javascript",
+    "nodejs",
     "community",
     "beyblade"
   ],
