@@ -1,5 +1,3 @@
-const Discord = require("discord.js")
-
 module.exports = {
 
   async run(bot, tournament_id) {

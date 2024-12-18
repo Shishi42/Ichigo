@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize")
 const slashcommands_loader = require("../slashcommands_loader")
-const fs = require("fs")
 
 module.exports = async bot => {
 

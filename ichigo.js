@@ -6,7 +6,7 @@ const fs = require("fs")
 const cron = require("cron")
 
 bot.commands = new Discord.Collection()
-bot.color = config.bot_color
+bot.color = "BEF0ED"
 bot.url = "https://discord.gg/afEvCBF9XR"
 
 bot.liste_equipe = config.liste_equipe

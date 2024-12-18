@@ -1,5 +1,4 @@
 const Discord = require("discord.js")
-const fs = require('fs')
 const { request } = require('undici')
 const cron = require("cron")
 
@@ -118,7 +117,6 @@ module.exports = {
     let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1])
 
     let embed = new Discord.EmbedBuilder()
-      .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
       .setTitle(args.get("title").value)
       .setURL(bot.url)
