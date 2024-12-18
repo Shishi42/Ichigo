@@ -115,7 +115,7 @@ module.exports = {
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
       .setTitle(args.get("title").value)
       .setURL(bot.url)
-      .setDescription(args.get("description").value)
+      .setDescription(args.get("description").value.replaceAll("\\n", "\n"))
       .setImage(poster)
       .addFields(
         { name: ':small_blue_diamond: ID', value: tournament_id },
@@ -169,7 +169,7 @@ module.exports = {
           let tournament = await bot.Tournaments.create({
             tournament_id: tournament_id,
             tournament_name: args.get("title").value,
-            tournament_desc: args.get("description").value,
+            tournament_desc: args.get("description").value.replaceAll("\\n", "\n"),
             tournament_date: Math.floor(date) / 1000,
             tournament_ruleset: args.get("ruleset").value,
             tournament_format: args.get("format").value,
@@ -189,7 +189,7 @@ module.exports = {
             privacyLevel: 2,
             entityType: 3,
             image: poster,
-            description: args.get("description").value,
+            description: args.get("description").value.replaceAll("\\n", "\n"),
             entityMetadata: {location: args.get("place").value},
           })
 

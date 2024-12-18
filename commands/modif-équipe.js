@@ -91,7 +91,7 @@ module.exports = {
       await message.guild.roles.edit(team.dataValues.team_role, { name: args.get("name").value })
     } 
 
-    if (args.get("description")) bot.Teams.update({ team_desc: args.get("description").value }, { where: { team_id: id } })   
+    if (args.get("description")) bot.Teams.update({ team_desc: args.get("description").value.replaceAll("\\n", "\n") }, { where: { team_id: id } })   
 
     if (args.get("logo")) { await bot.Teams.update({ team_logo: args.get("logo").value }, { where: { team_id: team.dataValues.team_id } })} 
 

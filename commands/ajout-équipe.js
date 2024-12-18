@@ -68,7 +68,7 @@ module.exports = {
     pos = message.guild.roles.cache.get(bot.role_capitaine).position
 
     let name = args.get("name").value
-    let description = args.get("description").value
+    let description = args.get("description").value.replaceAll("\\n", "\n")
     let color = args.get("color").value
     let logo = args.get("logo").value
     let member0 = args.get("member0").value
