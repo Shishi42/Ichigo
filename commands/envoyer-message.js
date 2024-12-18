@@ -3,7 +3,7 @@ const cron = require("cron")
 
 module.exports = {
 
-  name: "ajout-message",
+  name: "envoyer-message",
   description: "Envoie un message avec un texte",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,

@@ -3,7 +3,7 @@ const cron = require("cron")
 
 module.exports = {
 
-  name: "ajout-media",
+  name: "envoyer-media",
   description: "Envoie un media depuis un lien",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
