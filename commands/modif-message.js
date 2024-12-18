@@ -26,9 +26,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    let texte = args.get("texte").value.replaceAll("\\n", "\n")
-
-    message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit(texte))
+    message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit(args.get("texte").value.replaceAll("\\n", "\n")))
 
     return await message.reply({ content: "C'est bon.", ephemeral: true })
   }
