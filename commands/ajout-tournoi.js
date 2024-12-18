@@ -75,6 +75,13 @@ module.exports = {
       autocomplete: false,
     },
     {
+      type: "Channel",
+      name: "post_info",
+      description: "Channel to publish the infos",
+      required: true,
+      autocomplete: false,
+    },
+    {
       type: "string",
       name: "challonge",
       description: "URL to the challonge",
@@ -177,6 +184,7 @@ module.exports = {
             tournament_channel: args.get("post_inscr").value,
             tournament_message: "",
             tournament_role: "",
+            tournament_info: args.get("post_info").value,
             tournament_poster: poster,
             tournament_status: "Inscriptions en cours",
             tournament_challonge: challonge.tournament.id,
@@ -204,8 +212,9 @@ module.exports = {
 
           await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
 
+          await require(`../events/.publishInfos.js`).run(bot, tournament)
           await require(`../events/.publishTournament.js`).run(bot, tournament, args.get("post_pub").value)
-
+          
           return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
         }).start()
 

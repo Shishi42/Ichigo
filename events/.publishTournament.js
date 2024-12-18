@@ -26,10 +26,7 @@ module.exports = {
 
 		msg += ", à retrouver sur https://discord.gg/afEvCBF9XR :arrow_down:"
 
-		let pub = await channel.send(msg)
-		let affiche = await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] })
-
-		pub.crosspost()
-		affiche.crosspost()
+		await channel.send(msg).then(message => message.crosspost())
+		if (tournament.dataValues.tournament_poster) await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] }).then(message => message.crosspost())
 	}
 }

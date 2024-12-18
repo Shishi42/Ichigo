@@ -117,8 +117,10 @@ module.exports = {
       // message.guild.roles.cache.get(tournament.dataValues.tournament_role).setName("Participants " + tournament.dataValues.tournament_name)
     }
     if (args.get("description")) bot.Tournaments.update({ tournament_desc: args.get("description").value.replaceAll("\\n", "\n") }, { where: { tournament_id: id } })    
-    if (args.get("date")) bot.Tournaments.update({ tournament_date: args.get("date").value }, { where: { tournament_id: id } })
-    if (args.get("date_close")) bot.Tournaments.update({ tournament_date_close: args.get("date_close").value }, { where: { tournament_id: id } })
+    if (args.get("date")){
+      let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1])
+      bot.Tournaments.update({ tournament_date: Math.floor(date) / 1000 }, { where: { tournament_id: id } })
+    } 
     if (args.get("ruleset")) bot.Tournaments.update({ tournament_ruleset: args.get("ruleset").value }, { where: { tournament_id: id } })      
     if (args.get("format")) bot.Tournaments.update({ tournament_format: args.get("format").value }, { where: { tournament_id: id } })      
     if (args.get("place")) bot.Tournaments.update({ tournament_place: args.get("place").value }, { where: { tournament_id: id } })
@@ -136,6 +138,7 @@ module.exports = {
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
     await require("../events/.updatePlayers.js").run(bot, id)
+    await require(`../events/.publishInfos.js`).run(bot, tournament_updated)
     await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, null, true)     
     
     return await message.editReply({ content: "Done.", ephemeral: true })

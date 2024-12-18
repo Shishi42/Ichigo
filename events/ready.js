@@ -90,6 +90,10 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    tournament_info: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     tournament_poster: {
       type: Sequelize.STRING,
     },
