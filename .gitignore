@@ -2,5 +2,5 @@ node_modules
 package-lock.json
 config.json
 dev_config.json
-data.db
 ichigo.db
+test.js
