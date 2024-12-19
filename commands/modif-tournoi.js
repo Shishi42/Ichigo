@@ -33,7 +33,7 @@ module.exports = {
     {
       type: "string",
       name: "date",
-      description: "When is the tournament, format (DD/MM/YYYY-HH:mm)",
+      description: "When is the tournament, format (DD/MM/YYYY-HH:mm:SS)",
       required: false,
       autocomplete: false,
     },
@@ -117,7 +117,7 @@ module.exports = {
     }
     if (args.get("description")) bot.Tournaments.update({ tournament_desc: args.get("description").value.replaceAll("\\n", "\n") }, { where: { tournament_id: id } })    
     if (args.get("date")){
-      let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1])
+      let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
       bot.Tournaments.update({ tournament_date: Math.floor(date) / 1000 }, { where: { tournament_id: id } })
     } 
     if (args.get("ruleset")) bot.Tournaments.update({ tournament_ruleset: args.get("ruleset").value }, { where: { tournament_id: id } })      

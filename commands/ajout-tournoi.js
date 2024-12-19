@@ -34,7 +34,7 @@ module.exports = {
     {
       type: "string",
       name: "date",
-      description: "When is the tournament, format (DD/MM/YYYY-HH:mm)",
+      description: "When is the tournament, format (DD/MM/YYYY-HH:mm:SS)",
       required: true,
       autocomplete: false,
     },
@@ -97,7 +97,7 @@ module.exports = {
     {
       type: "string",
       name: "date_pub",
-      description: "Date to pub the tournament, format (DD/MM/YYYY-HH:mm)",
+      description: "Date to pub the tournament, format (DD/MM/YYYY-HH:mm:SS)",
       required: false,
       autocomplete: false,
     },
@@ -114,7 +114,7 @@ module.exports = {
     let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
     let challonge = await req.body.json()
 
-    let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1])
+    let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
 
     let embed = new Discord.EmbedBuilder()
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
@@ -166,8 +166,8 @@ module.exports = {
         let challonge = await req.body.json()*/
 
         if (args.get("date_pub")){   
-          prog = new Date(args.get("date_pub").value.split('-')[0].split('/')[2], args.get("date_pub").value.split('-')[0].split('/')[1] - 1, args.get("date_pub").value.split('-')[0].split('/')[0], args.get("date_pub").value.split('-')[1].split(':')[0], args.get("date_pub").value.split('-')[1].split(':')[1])
-          await i.editReply({ content: `Tournament creation confirmed, waiting to post at __<t:${Math.floor(prog) / 1000}:F> (<t:${Math.floor(prog) / 1000}:R>)__.`, components: [], ephemeral: true })
+          prog = new Date(args.get("date_pub").value.split('-')[0].split('/')[2], args.get("date_pub").value.split('-')[0].split('/')[1] - 1, args.get("date_pub").value.split('-')[0].split('/')[0], args.get("date_pub").value.split('-')[1].split(':')[0], args.get("date_pub").value.split('-')[1].split(':')[1], args.get("date_pub").value.split('-')[1].split(':')[2])
+          await i.editReply({ content: `Tournament creation confirmed, waiting to post the __<t:${Math.floor(prog) / 1000}:d> at <t:${Math.floor(prog) / 1000}:T> (<t:${Math.floor(prog) / 1000}:R>)__.`, components: [], ephemeral: true })
         } else prog = new Date(parseInt(Math.floor(Date.now()+5)))
 
         new cron.CronJob(prog, async () => {
