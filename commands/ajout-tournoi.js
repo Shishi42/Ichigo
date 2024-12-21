@@ -1,5 +1,5 @@
 const Discord = require("discord.js")
-const { request } = require('undici')
+const { fetch } = require('undici')
 const cron = require("cron")
 
 module.exports = {
@@ -82,13 +82,6 @@ module.exports = {
     },
     {
       type: "string",
-      name: "challonge",
-      description: "URL to the challonge",
-      required: true,
-      autocomplete: false,
-    },
-    {
-      type: "string",
       name: "poster",
       description: "Poster URL to display",
       required: false,
@@ -110,9 +103,6 @@ module.exports = {
     let tournament_id = args.get("id").value
 
     let poster = args.get("poster") ? args.get("poster").value : null
-
-    let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
-    let challonge = await req.body.json()
 
     let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
 
@@ -150,20 +140,44 @@ module.exports = {
       await i.deferUpdate()
       if (i.customId === 'confirm-tournament') {
 
-        /*let data = {
-          api_key: bot.challonge,
-          name: args.get("title").value,
-          tournament_type: "double elimination",
-          url: tournament_id,
-          description: "bite",
-          open_signup: "false",
-          accept_attachments: "true",
-          show_rounds: "true",
-          start_at: date
-        }
+        let challonge = ""
 
-        let req = await request("https://api.challonge.com/v1/tournaments.json", { method: "POST", body: data })
-        let challonge = await req.body.json()*/
+        if (args.get("format").value != "Training"){
+          let desc_challonge = `<p>${args.get("description").value.replaceAll("\\n", "\n")}</p><br><p>Règlement : ${args.get("ruleset").value} (<a href="https://drive.google.com/file/d/1agZf01RlWYBnfRjCcysJJct4mCZVLnIb/view?usp=drive_link" rel="nofollow">plus de détails ici</a>)</p><p>Format : ${args.get("format").value}</p><p>Horaire : Le ${date.getDate()} ${["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"][date.getMonth()]} à partir de ${date.toTimeString().substr(0,5).replace(':','h')}</p><p>Localisation : `
+          if (args.get("place").value == "Dernier Bar avant la Fin du Monde, Paris") desc_challonge += " Dernier Bar Avant la Fin du Monde, 19 Avenue Victoria, 75001, Paris</p>" + "<p>Accès : RER A+B, Métro 1+4+7+11+14, Bus 21+47+72+85+96</p>"
+          if (args.get("place").value == "Guyajeux, Marseille") desc_challonge += " Guyajeux, 65 Avenue Jules Cantini, 13006, Marseille" + "</p>"
+          desc_challonge += `<br><p>Toutes les informations sont disponibles sur notre <a href="https://discord.gg/afEvCBF9XR" rel="nofollow">Discord</a>.</p>`
+        
+          let data = {
+            api_key: bot.challonge,
+            "tournament[name]": args.get("title").value,
+            "tournament[tournament_type]": args.get("format").value == "Double Élimination" ? "double elimination" : "single elimination",
+            "tournament[url]": tournament_id,
+            "tournament[description]": desc_challonge,
+            "tournament[open_signup]": "false",
+            "tournament[accept_attachments]": "false",
+            "tournament[show_rounds]": "true",
+            "tournament[start_at]": new Date(date),
+            "tournament[game_id]": "337197",
+            "tournament[notify_users_when_matches_open]": "false",
+            "tournament[notify_users_when_the_tournament_ends]": "false",
+            "tournament[ranked_by]": "match wins",
+            "tournament[hide_forum]": "true",
+            "tournament[allow_participant_match_reporting]": "false",
+            "tournament[allow_participant_match_reporting]": "false",
+            "tournament[public_predictions_before_start_time]": "false",
+            "tournament[predict_the_losers_bracket]": "false",
+            "tournament[hide_bracket_preview]": "true",
+            "optional_display_data": { "show_standings":	"1", "show_announcements": "true" },
+          }
+            
+          let body = new URLSearchParams()
+          for (key in data) { body.append(key, data[key]) }
+      
+          let req = await fetch("https://api.challonge.com/v1/tournaments.json", { method: "POST", body: body, headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
+          let json = await req.json()
+          challonge = json.tournament.id
+        }
 
         if (args.get("date_pub")){   
           prog = new Date(args.get("date_pub").value.split('-')[0].split('/')[2], args.get("date_pub").value.split('-')[0].split('/')[1] - 1, args.get("date_pub").value.split('-')[0].split('/')[0], args.get("date_pub").value.split('-')[1].split(':')[0], args.get("date_pub").value.split('-')[1].split(':')[1], args.get("date_pub").value.split('-')[1].split(':')[2])
@@ -185,7 +199,7 @@ module.exports = {
             tournament_info: args.get("post_info").value,
             tournament_poster: poster,
             tournament_status: "Inscriptions en cours",
-            tournament_challonge: challonge.tournament.id,
+            tournament_challonge: challonge,
           })
 
           let event = await message.guild.scheduledEvents.create({

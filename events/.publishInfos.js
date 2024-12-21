@@ -4,7 +4,7 @@ module.exports = {
 
     let channel = await bot.channels.fetch(tournament.dataValues.tournament_info)
 
-    await channel.messages.fetch(channel.lastMessageId).then(ancien_message => ancien_message.delete())
+    //await channel.messages.delete(channel.lastMessageId)
 
     msg = ""
 
