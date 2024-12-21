@@ -5,7 +5,7 @@ module.exports = {
 
   name: "créer-logo-équipe",
   description: "Créer le logo d'une équipe à partir d'une image",
-  permission: null,
+  permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Équipe",
   options: [
