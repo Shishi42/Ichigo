@@ -12,7 +12,7 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    let teams = await bot.Teams.findAll({ where: { teammate_status: "ACTIVE" } })
+    let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
 
     for (team of teams) {
       await require(`../events/.postTeamEmbed.js`).run(bot, team, true)  

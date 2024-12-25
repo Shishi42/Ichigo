@@ -1,2 +1,2 @@
 # Ichigo
-Discord BOT to Beyblade Community.
+Discord BOT for Beyblade Community.
