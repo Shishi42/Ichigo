@@ -1,0 +1,23 @@
+const Discord = require("discord.js")
+
+module.exports = {
+
+  name: "rafraichir-tournoi",
+  description: "Rafraichit les tournois sur le serveur",
+  permission: Discord.PermissionFlagsBits.Administrator,
+  dm: true,
+  category: "Tournoi",
+
+  async run(bot, message, args) {
+
+    await message.deferReply({ ephemeral: true })
+
+    let tournaments = await bot.Tournaments.findAll()
+
+    for (tournament of tournaments) {
+      await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, null, true)  
+    }
+
+    return await message.editReply({ content: "Done.", ephemeral: true })
+  }
+}

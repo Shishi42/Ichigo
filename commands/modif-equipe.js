@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
 
-  name: "modif-équipe",
+  name: "modif-equipe",
   description: "Modifie une équipe sur le serveur.",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
@@ -45,7 +45,7 @@ module.exports = {
     },
     {
       type: "string",
-      name: "status",
+      name: "team_status",
       description: "Team status",
       required: false,
       autocomplete: true,
@@ -170,10 +170,10 @@ module.exports = {
       message.guild.members.fetch(args.get("member2").value).then(member => member.roles.add(team.dataValues.team_role))
     } 
 
-    if (args.get("status")) {
-      bot.Teams.update({ team_status: args.get("status").value }, { where: { team_id: id } })
+    if (args.get("team_status")) {
+      bot.Teams.update({ team_status: args.get("team_status").value }, { where: { team_id: id } })
 
-      if (args.get("status").value == "INACTIVE"){ 
+      if (args.get("team_status").value == "INACTIVE"){ 
 
         let member0 = await bot.Teammates.findOne({ where: { team_id: id, teammate_status: "ACTIVE", teammate_number: "0" }})
 

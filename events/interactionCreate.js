@@ -15,9 +15,10 @@ module.exports = async (bot, interaction) => {
     if (interaction.commandName === "aide") { choices = bot.commands.map(cmd => cmd.name) }
     if (focusedOption.name === "tournament_id") { choices = tournaments.map(tournament => `${tournament.dataValues.tournament_id} - ${tournament.dataValues.tournament_name}`) }
     if (focusedOption.name === "team_id") { choices = teams.map(team => `${team.dataValues.team_id} - ${team.dataValues.team_name}`) }
-    if (focusedOption.name === "format") { choices = ["Double Élimination", "Simple Élimination", "Round Robin", "Swiss", "Free-for-All", "Training"] }
+    if (focusedOption.name === "format") { choices = ["Double Élimination", "Simple Élimination", "Training"] }
     if (focusedOption.name === "ruleset") { choices = ["3on3", "1on1", "3vs3", "Training"] }
-    if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours", "Tournoi fini", "ACTIVE", "INACTIVE"] }
+    if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours", "Tournoi fini"] }
+    if (focusedOption.name === "team_status") { choices = ["ACTIVE", "INACTIVE"] }
     if (focusedOption.name === "place") { choices = ["Dernier Bar avant la Fin du Monde, Paris", "Guyajeux, Marseille"] }
     if (focusedOption.name === "regles") { choices = Object.keys(bot.regles) }
 

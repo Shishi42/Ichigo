@@ -200,6 +200,7 @@ module.exports = {
             tournament_poster: poster,
             tournament_status: "Inscriptions en cours",
             tournament_challonge: challonge,
+            tournament_season: "1",
           })
 
           let event = await message.guild.scheduledEvents.create({

@@ -124,7 +124,13 @@ module.exports = {
     if (args.get("format")) bot.Tournaments.update({ tournament_format: args.get("format").value }, { where: { tournament_id: id } })      
     if (args.get("place")) bot.Tournaments.update({ tournament_place: args.get("place").value }, { where: { tournament_id: id } })
     if (args.get("poster")) bot.Tournaments.update({ tournament_poster: args.get("poster").value }, { where: { tournament_id: id } })
-    if (args.get("status")) bot.Tournaments.update({ tournament_status: args.get("status").value }, { where: { tournament_id: id } })
+    if (args.get("status")){
+      bot.Tournaments.update({ tournament_status: args.get("status").value }, { where: { tournament_id: id } })
+      if (args.get("status") == "Tournoi fini"){
+        message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
+        bot.Tournaments.update({ tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
+      } 
+    } 
     if (args.get("challonge")){
       let req = await request(`https://api.challonge.com/v1/tournaments/${args.get("challonge").value.split("https://challonge.com/")[1]}.json?api_key=${bot.challonge}`)
       let challonge = await req.body.json()

@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
 
-  name: "ajout-équipe",
+  name: "ajout-equipe",
   description: "Ajoute une équipe sur le serveur.",
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: false,
