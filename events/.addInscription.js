@@ -8,7 +8,6 @@ module.exports = {
     let inscr = await bot.Inscriptions.findOne({ where: { player_id: player_id, tournament_id: tournament_id } })
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id } })
 
-
     if (interaction.customId.includes("join")) {
 
       interaction.member.roles.add(tournament.dataValues.tournament_role)
@@ -25,7 +24,7 @@ module.exports = {
       inscr ? await bot.Inscriptions.update({ player_status: "DESINSCRIT" }, { where: { player_id: player_id, tournament_id: tournament_id } }) : await bot.Inscriptions.create({ inscription_id: parseInt(await bot.Inscriptions.count()) + 1, player_id: player_id, tournament_id: tournament_id, player_status: "DESINSCRIT" })
       await interaction.reply({ content: "Tu es désormais désinscrit de ce tournoi, on espère te voir une prochaine fois.", ephemeral: true })
     }
-    return require("./.updatePlayers.js").run(bot, tournament_id)
+    return require(`./.postTournamentEmbed.js`).run(bot, tournament, null, true)   
   }
 
 }

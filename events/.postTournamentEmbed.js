@@ -13,6 +13,8 @@ module.exports = {
     let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?api_key=${bot.challonge}`)
     let challonge = await req.body.json()
 
+    let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
+
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
@@ -28,7 +30,8 @@ module.exports = {
       { name: ':small_blue_diamond: Lieu', value: `${tournament.dataValues.tournament_place}` },
       { name: ':small_blue_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}` },
       { name: ':small_blue_diamond: Format', value: `${tournament.dataValues.tournament_format}` },
-      { name: ':small_blue_diamond: Statut', value: `${tournament.dataValues.tournament_status}` }
+      { name: ':small_blue_diamond: Statut', value: `${tournament.dataValues.tournament_status}` },
+      { name: ':small_blue_diamond: Inscriptions', value: `${players.length}` }
     )
     if (tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_blue_diamond: Challonge', value: "https://challonge.com/" + challonge.tournament.url })
     if (tournament.dataValues.tournament_status == "Tournoi fini") {

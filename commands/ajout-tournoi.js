@@ -223,8 +223,6 @@ module.exports = {
           let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, args.get("post_inscr").value)
           await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
-          await require("../events/.updatePlayers.js").run(bot, tournament.dataValues.tournament_id)
-
           await require(`../events/.publishInfos.js`).run(bot, tournament)
           await require(`../events/.publishTournament.js`).run(bot, tournament, args.get("post_pub").value)
           
