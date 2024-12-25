@@ -60,10 +60,10 @@ module.exports = {
         .setStyle(Discord.ButtonStyle.Danger)
     )
 
-    if (!update) return await channel.send({embeds: [embed], components: [row]})
+    if (!update) return await channel.send({ content: "", embeds: [embed], components: [row]})
     else {
-      if (tournament.dataValues.tournament_status != "Inscriptions en cours") return await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ embeds: [embed], components: [] }))
-      else await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ embeds: [embed], components: [row] }))
+      if (tournament.dataValues.tournament_status != "Inscriptions en cours") return await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ content: "", embeds: [embed], components: [] }))
+      else await channel.messages.fetch(tournament.dataValues.tournament_message).then(message => message.edit({ content: "", embeds: [embed], components: [row] }))
     }
   }
 }
