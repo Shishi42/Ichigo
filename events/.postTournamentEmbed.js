@@ -10,8 +10,12 @@ module.exports = {
     if (post) channel = await bot.channels.fetch(post)
     else channel = await bot.channels.fetch(tournament.dataValues.tournament_channel)
 
-    let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?api_key=${bot.challonge}`)
-    let challonge = await req.body.json()
+    let challonge = ""
+    if (tournament.dataValues.tournament_challonge) {
+      let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?api_key=${bot.challonge}`)
+      body = await req.body.json()
+      challonge = body.tournament.url
+    }
 
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
@@ -25,16 +29,15 @@ module.exports = {
       .setImage(tournament.dataValues.tournament_poster)
       .setFooter({text: `Merci de consulter le règlement avant de vous inscrire.`, iconURL: `${channel.guild.iconURL()}`})
       .setThumbnail(`${channel.guild.iconURL()}`)
-
-    embed.addFields(
-      { name: ':small_orange_diamond: Date', value: `Le <t:${tournament.dataValues.tournament_date}:F>` },
-      { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
-      { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
-      { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
-      { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}` },
-      { name: ':small_orange_diamond: Inscriptions', value: `${players.length}` }
-    )
-    if (tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge.tournament.url })
+      .addFields(
+        { name: ':small_orange_diamond: Date', value: `Le <t:${tournament.dataValues.tournament_date}:F>` },
+        { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
+        { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
+        { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
+        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge },
+        { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
+        { name: ':small_orange_diamond: Inscriptions', value: `${players.length}`, inline: true },
+      )
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 
       first = /^[0-9]*$/.test(tournament.dataValues.tournament_first) ? `<@${tournament.dataValues.tournament_first}>` : tournament.dataValues.tournament_first
