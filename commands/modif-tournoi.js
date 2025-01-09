@@ -142,7 +142,7 @@ module.exports = {
 
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
-    await require(`../events/.publishInfos.js`).run(bot, tournament_updated)
+    if (args.get("title") || args.get("description") || args.get("date") || args.get("ruleset") || args.get("place") || args.get("challonge")) await require(`../events/.publishInfos.js`).run(bot, tournament_updated)
     await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, null, true)     
     
     return await message.editReply({ content: "Done.", ephemeral: true })

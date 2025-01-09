@@ -113,13 +113,13 @@ module.exports = {
       .setDescription(args.get("description").value.replaceAll("\\n", "\n"))
       .setImage(poster)
       .addFields(
-        { name: ':small_blue_diamond: ID', value: tournament_id },
-        { name: ':small_blue_diamond: Date', value: `Le <t:${Math.floor(date)/1000}:F>`},
-        { name: ':small_blue_diamond: Lieu', value: `${args.get("place").value}`},
-        { name: ':small_blue_diamond: Règlement', value: `${args.get("ruleset").value}`},
-        { name: ':small_blue_diamond: Format', value: `${args.get("format").value}`},
-        { name: ':small_blue_diamond: Statut', value: "Inscriptions en cours"},
-        { name: ':small_blue_diamond: Challonge', value: "https://challonge.com/" + tournament_id },
+        { name: ':small_orange_diamond: ID', value: tournament_id },
+        { name: ':small_orange_diamond: Date', value: `Le <t:${Math.floor(date)/1000}:F>`},
+        { name: ':small_orange_diamond: Lieu', value: `${args.get("place").value}`},
+        { name: ':small_orange_diamond: Règlement', value: `${args.get("ruleset").value}`},
+        { name: ':small_orange_diamond: Format', value: `${args.get("format").value}`},
+        { name: ':small_orange_diamond: Statut', value: "Inscriptions en cours"},
+        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + tournament_id },
       )
 
     let row = new Discord.ActionRowBuilder()

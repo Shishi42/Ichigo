@@ -26,14 +26,14 @@ module.exports = {
       .setThumbnail(`${channel.guild.iconURL()}`)
 
     embed.addFields(
-      { name: ':small_blue_diamond: Date', value: `Le <t:${tournament.dataValues.tournament_date}:F>` },
-      { name: ':small_blue_diamond: Lieu', value: `${tournament.dataValues.tournament_place}` },
-      { name: ':small_blue_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}` },
-      { name: ':small_blue_diamond: Format', value: `${tournament.dataValues.tournament_format}` },
-      { name: ':small_blue_diamond: Statut', value: `${tournament.dataValues.tournament_status}` },
-      { name: ':small_blue_diamond: Inscriptions', value: `${players.length}` }
+      { name: ':small_orange_diamond: Date', value: `Le <t:${tournament.dataValues.tournament_date}:F>` },
+      { name: ':small_orange_diamond: Lieu', value: `${tournament.dataValues.tournament_place}` },
+      { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
+      { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
+      { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}` },
+      { name: ':small_orange_diamond: Inscriptions', value: `${players.length}` }
     )
-    if (tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_blue_diamond: Challonge', value: "https://challonge.com/" + challonge.tournament.url })
+    if (tournament.dataValues.tournament_status != "Inscriptions en cours") embed.addFields({ name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge.tournament.url })
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 
       first = /^[0-9]*$/.test(tournament.dataValues.tournament_first) ? `<@${tournament.dataValues.tournament_first}>` : tournament.dataValues.tournament_first
