@@ -28,7 +28,6 @@ module.exports = {
       .setDescription(tournament.dataValues.tournament_desc)
       .setImage(tournament.dataValues.tournament_poster)
       .setFooter({text: `Merci de consulter le règlement avant de vous inscrire.`, iconURL: `${channel.guild.iconURL()}`})
-      .setThumbnail(`${channel.guild.iconURL()}`)
       .addFields(
         { name: ':small_orange_diamond: Date', value: `Le <t:${tournament.dataValues.tournament_date}:F>` },
         { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
