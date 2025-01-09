@@ -11,6 +11,7 @@ module.exports = async (bot, interaction) => {
 
     let tournaments = await bot.Tournaments.findAll()
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
+    let places = await bot.Places.findAll()
 
     if (interaction.commandName === "aide") { choices = bot.commands.map(cmd => cmd.name) }
     if (focusedOption.name === "tournament_id") { choices = tournaments.map(tournament => `${tournament.dataValues.tournament_id} - ${tournament.dataValues.tournament_name}`) }
@@ -19,7 +20,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "ruleset") { choices = ["3on3", "1on1", "3vs3", "Training"] }
     if (focusedOption.name === "status") { choices = ["Inscriptions en cours", "Inscriptions finies", "Tournoi en cours", "Tournoi fini"] }
     if (focusedOption.name === "team_status") { choices = ["ACTIVE", "INACTIVE"] }
-    if (focusedOption.name === "place") { choices = ["Dernier Bar avant la Fin du Monde, Paris", "Guyajeux, Marseille"] }
+    if (focusedOption.name === "place") { choices = places.map(place => place.dataValues.place_id) }
     if (focusedOption.name === "regles") { choices = Object.keys(bot.regles) }
 
     let filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()))

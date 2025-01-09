@@ -188,11 +188,56 @@ module.exports = async bot => {
       allowNull: false,
     },
   })
+  bot.Places = bot.db.define("place", {
+    place_id: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      primaryKey: true,
+      unique: true,
+    },
+    place_name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_number: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_road: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_postcode: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_city: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_maps: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_infos: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_inscr: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    place_access: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+  })
 
   await bot.Tournaments.sync()
   await bot.Inscriptions.sync()
   await bot.Teams.sync()
   await bot.Teammates.sync()
+  await bot.Places.sync()
   console.log("Database Online.")
 
   await slashcommands_loader(bot)

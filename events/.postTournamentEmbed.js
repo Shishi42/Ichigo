@@ -14,6 +14,7 @@ module.exports = {
     let challonge = await req.body.json()
 
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
+    let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
@@ -27,7 +28,7 @@ module.exports = {
 
     embed.addFields(
       { name: ':small_orange_diamond: Date', value: `Le <t:${tournament.dataValues.tournament_date}:F>` },
-      { name: ':small_orange_diamond: Lieu', value: `${tournament.dataValues.tournament_place}` },
+      { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
       { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
       { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
       { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}` },

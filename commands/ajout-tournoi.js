@@ -106,6 +106,8 @@ module.exports = {
 
     let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
 
+    let place = await bot.Places.findOne({ where: { place_id: args.get("place").value } })
+
     let embed = new Discord.EmbedBuilder()
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
       .setTitle(args.get("title").value)
@@ -115,7 +117,7 @@ module.exports = {
       .addFields(
         { name: ':small_orange_diamond: ID', value: tournament_id },
         { name: ':small_orange_diamond: Date', value: `Le <t:${Math.floor(date)/1000}:F>`},
-        { name: ':small_orange_diamond: Lieu', value: `${args.get("place").value}`},
+        { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
         { name: ':small_orange_diamond: Règlement', value: `${args.get("ruleset").value}`},
         { name: ':small_orange_diamond: Format', value: `${args.get("format").value}`},
         { name: ':small_orange_diamond: Statut', value: "Inscriptions en cours"},
@@ -143,17 +145,13 @@ module.exports = {
         let challonge = ""
 
         if (args.get("format").value != "Training"){
-          let desc_challonge = `<p>${args.get("description").value.replaceAll("\\n", "\n")}</p><br><p>Règlement : ${args.get("ruleset").value} (<a href="https://drive.google.com/file/d/1agZf01RlWYBnfRjCcysJJct4mCZVLnIb/view?usp=drive_link" rel="nofollow">plus de détails ici</a>)</p><p>Format : ${args.get("format").value}</p><p>Horaire : Le ${date.getDate()} ${["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"][date.getMonth()]} à partir de ${date.toTimeString().substr(0,5).replace(':','h')}</p><p>Localisation : `
-          if (args.get("place").value == "Dernier Bar avant la Fin du Monde, Paris") desc_challonge += " Dernier Bar Avant la Fin du Monde, 19 Avenue Victoria, 75001, Paris</p>" + "<p>Accès : RER A+B, Métro 1+4+7+11+14, Bus 21+47+72+85+96</p>"
-          if (args.get("place").value == "Guyajeux, Marseille") desc_challonge += " Guyajeux, 65 Avenue Jules Cantini, 13006, Marseille" + "</p>"
-          desc_challonge += `<br><p>Toutes les informations sont disponibles sur notre <a href="https://discord.gg/afEvCBF9XR" rel="nofollow">Discord</a>.</p>`
         
           let data = {
             api_key: bot.challonge,
             "tournament[name]": args.get("title").value,
             "tournament[tournament_type]": args.get("format").value == "Double Élimination" ? "double elimination" : "single elimination",
             "tournament[url]": tournament_id,
-            "tournament[description]": desc_challonge,
+            "tournament[description]": `<p>${args.get("description").value.replaceAll("\\n", "\n")}</p><br><p>Règlement : ${args.get("ruleset").value} (<a href="https://drive.google.com/file/d/1agZf01RlWYBnfRjCcysJJct4mCZVLnIb/view?usp=drive_link" rel="nofollow">plus de détails ici</a>)</p><p>Format : ${args.get("format").value}</p><p>Horaire : Le ${date.getDate()} ${["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"][date.getMonth()]} à partir de ${date.toTimeString().substr(0, 5).replace(':', 'h')}</p><p>Localisation : ${place.dataValues.place_name}, ${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, ${place.dataValues.place_city}</p>` + (place.dataValues.place_access ? `<p>Accès : ${place.dataValues.place_access}</p>` : "") + `<br><p>Toutes les informations sont disponibles sur notre <a href="https://discord.gg/afEvCBF9XR" rel="nofollow">Discord</a>.</p>`,
             "tournament[open_signup]": "false",
             "tournament[accept_attachments]": "false",
             "tournament[show_rounds]": "true",
@@ -211,7 +209,7 @@ module.exports = {
             entityType: 3,
             image: poster,
             description: args.get("description").value.replaceAll("\\n", "\n"),
-            entityMetadata: {location: args.get("place").value},
+            entityMetadata: { location: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
           })
 
           let role = await message.guild.roles.create({

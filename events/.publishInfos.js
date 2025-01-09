@@ -3,18 +3,14 @@ module.exports = {
   async run(bot, tournament) {
 
     let channel = await bot.channels.fetch(tournament.dataValues.tournament_info)
-
+    let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
     //await channel.messages.delete(channel.lastMessageId)
 
-    msg = ""
-
-    if (tournament.dataValues.tournament_place.endsWith("Paris")) msg += "## Paris" + "\n"
-    if (tournament.dataValues.tournament_place.endsWith("Marseille")) msg += "## Marseille" + "\n"
+    msg = `## ${place.dataValues.place_city}` + "\n"
 
     msg += `Début de l'évènement le <t:${tournament.dataValues.tournament_date}:F> (<t:${tournament.dataValues.tournament_date}:R>)` 
 
-    if (tournament.dataValues.tournament_place == "Dernier Bar avant la Fin du Monde, Paris") msg += " au **DERNIER BAR AVANT LA FIN DU MONDE**, situé au **19 Avenue Victoria, 75001, à Paris** !" + "\n"
-    if (tournament.dataValues.tournament_place == "Guyajeux, Marseille") msg += " à **GUYAJEUX**, situé au **65 Avenue Jules Cantini, 13006, à Marseille** !" + "\n"
+    msg += ` au **${place.dataValues.place_name.toUpperCase()}**, situé au **${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, à ${place.dataValues.place_city}** !` + "\n"
 
     msg += "\n"
 
@@ -29,10 +25,7 @@ module.exports = {
    
     msg += "\n"
 
-    msg += "Merci de confirmer votre présence pour le tournoi dans le canal "
-    if (tournament.dataValues.tournament_place.endsWith("Paris")) msg += "https://discordapp.com/channels/1221611301332193371/1227020880614260866"
-    if (tournament.dataValues.tournament_place.endsWith("Marseille")) msg += "https://discordapp.com/channels/1221611301332193371/1289972474083282995"
-    msg += " avant le début du tournoi." + "\n"
+    msg += `Merci de confirmer votre présence pour le tournoi dans le canal ${place.dataValues.place_inscr} avant le début du tournoi.` + "\n"
       
     msg += "\n"
 
@@ -41,10 +34,7 @@ module.exports = {
     msg += "- La participation à cet évènement donne, par défaut, le droit aux organisateurs les droits à l'image des participants prises lors de l'évènement." + "\n"
     msg += "- Vous restez responsable de vos effets personnels, aucune consigne n'est disponible sur place." + "\n"
     msg += "- La consommation sur place est **obligatoire** pour vous inscrire, de plus **aucune nourriture ou boisson extérieure ne sera accepté**." + "\n"
-    msg += "- Pour vous aider à trouver le lieu où se déroule le tournoi, vous pouvez utiliser ce lien Google Maps : "
-
-    if (tournament.dataValues.tournament_place == "Dernier Bar avant la Fin du Monde, Paris") msg += "https://maps.app.goo.gl/3Zj4sCcDNsoYLc1e8" + "\n"
-    if (tournament.dataValues.tournament_place == "Guyajeux, Marseille") msg += "https://maps.app.goo.gl/8WQxpQFx2G4S3XZg7" + "\n"
+    msg += `- Pour vous aider à trouver le lieu où se déroule le tournoi, vous pouvez utiliser ce lien Google Maps : ${place.dataValues.place_maps}`
 
     msg += "\n"
 
