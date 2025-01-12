@@ -6,7 +6,7 @@ module.exports = {
   async run(bot, tournament, update = false) {
 
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
-    let channel = await bot.channels.fetch(place.dataValues.place_inscr)
+    let channel = await bot.channels.fetch(place.dataValues.place_inscr.split('/')[5])
 
     let challonge = ""
     if (tournament.dataValues.tournament_challonge) {

@@ -3,7 +3,7 @@ module.exports = {
   async run(bot, tournament) {
 
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
-    let channel = await bot.channels.fetch(place.dataValues.place_info) 
+    let channel = await bot.channels.fetch(place.dataValues.place_info.split('/')[5]) 
     //await channel.messages.delete(channel.lastMessageId)
 
     msg = `## ${place.dataValues.place_city}` + "\n"
