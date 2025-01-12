@@ -15,7 +15,7 @@ module.exports = {
 		
 		msg += ` au **${place.dataValues.place_name.toUpperCase()}**, situé au **${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, à ${place.dataValues.place_city}**.` + "\n"
 		
-		msg += `-# Plus d'infos sur ${place.dataValues.place_infos}`
+		msg += `-# Plus d'infos sur ${place.dataValues.place_info}`
 
 		msg += `et inscriptions dans ${place.dataValues.place_inscr}`
 

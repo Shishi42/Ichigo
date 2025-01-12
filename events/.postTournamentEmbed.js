@@ -3,12 +3,10 @@ const { request } = require('undici')
 
 module.exports = {
 
-  async run(bot, tournament, post, update = false) {
+  async run(bot, tournament, update = false) {
 
-    let channel
-
-    if (post) channel = await bot.channels.fetch(post)
-    else channel = await bot.channels.fetch(tournament.dataValues.tournament_channel)
+    let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
+    let channel = await bot.channels.fetch(place.dataValues.place_inscr)
 
     let challonge = ""
     if (tournament.dataValues.tournament_challonge) {
@@ -18,7 +16,6 @@ module.exports = {
     }
 
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
-    let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)

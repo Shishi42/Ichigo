@@ -61,13 +61,6 @@ module.exports = {
     },
     {
       type: "Channel",
-      name: "post_inscr",
-      description: "Channel to open inscriptions of the tournament",
-      required: true,
-      autocomplete: false,
-    },
-    {
-      type: "Channel",
       name: "post_pub",
       description: "Channel to publish the tournament",
       required: true,
@@ -191,10 +184,8 @@ module.exports = {
             tournament_ruleset: args.get("ruleset").value,
             tournament_format: args.get("format").value,
             tournament_place: args.get("place").value,
-            tournament_channel: args.get("post_inscr").value,
             tournament_message: "",
             tournament_role: "",
-            tournament_info: args.get("post_info").value,
             tournament_poster: poster,
             tournament_status: "Inscriptions en cours",
             tournament_challonge: challonge,
@@ -218,7 +209,7 @@ module.exports = {
             permissions : "0",
           })
 
-          let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, args.get("post_inscr").value)
+          let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament)
           await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
           await require(`../events/.publishInfos.js`).run(bot, tournament)

@@ -65,19 +65,11 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    tournament_channel: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     tournament_message: {
       type: Sequelize.STRING,
       allowNull: false,
     },
     tournament_role: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    tournament_info: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -219,7 +211,7 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    place_infos: {
+    place_info: {
       type: Sequelize.STRING,
       allowNull: false,
     },

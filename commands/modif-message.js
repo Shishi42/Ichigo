@@ -19,14 +19,53 @@ module.exports = {
       type: "string",
       name: "texte",
       description: "le texte du message",
-      required: true,
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
+      name: "media1",
+      description: "le lien vers un média",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
+      name: "media2",
+      description: "le lien vers un média",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
+      name: "media3",
+      description: "le lien vers un média",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
+      name: "media4",
+      description: "le lien vers un média",
+      required: false,
       autocomplete: false,
     },
   ],
 
   async run(bot, message, args) {
 
-    message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit(args.get("texte").value.replaceAll("\\n", "\n")))
+    let content = ""
+    let medias = []
+
+    if (args.get("texte")) content = args.get("texte").value.replaceAll("\\n", "\n")
+
+    if (args.get("media1")) medias.push({ attachment: args.get("media1").value })
+    if (args.get("media2")) medias.push({ attachment: args.get("media2").value })
+    if (args.get("media3")) medias.push({ attachment: args.get("media3").value })
+    if (args.get("media4")) medias.push({ attachment: args.get("media4").value })
+      
+    if (content) message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ content: content }))
+    if (medias.length != 0) message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ files: medias }))
 
     return await message.reply({ content: "C'est bon.", ephemeral: true })
   }
