@@ -67,13 +67,6 @@ module.exports = {
       autocomplete: false,
     },
     {
-      type: "Channel",
-      name: "post_info",
-      description: "Channel to publish the infos",
-      required: true,
-      autocomplete: false,
-    },
-    {
       type: "string",
       name: "poster",
       description: "Poster URL to display",

@@ -54,7 +54,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    let content = ""
+    let content = "none"
     let medias = []
 
     if (args.get("texte")) content = args.get("texte").value.replaceAll("\\n", "\n")
@@ -64,9 +64,11 @@ module.exports = {
     if (args.get("media3")) medias.push({ attachment: args.get("media3").value })
     if (args.get("media4")) medias.push({ attachment: args.get("media4").value })
       
-    if (content) message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ content: content }))
-    if (medias.length != 0) message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ files: medias }))
-
+    if (content != "none") message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ content: content }))
+    if (medias.length != 0){
+      if (medias[0].attachment == "none") message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ files: [] }))
+      else message.channel.messages.fetch(args.get("id").value).then(ancien_message => ancien_message.edit({ files: medias }))
+    }
     return await message.reply({ content: "C'est bon.", ephemeral: true })
   }
 }
