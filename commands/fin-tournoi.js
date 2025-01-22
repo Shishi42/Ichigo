@@ -1,6 +1,4 @@
 const Discord = require("discord.js")
-const { logger } = require("sequelize/lib/utils/logger")
-const { request } = require('undici')
 
 module.exports = {
 
@@ -66,22 +64,23 @@ module.exports = {
     bot.Tournaments.update({ tournament_first: args.get("first").value, tournament_second: args.get("second").value, tournament_third: args.get("third").value, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
     message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
   
+    let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
+
     let content = ""
     let medias = []
 
     if (args.get("img_result")) medias.push({ attachment: args.get("img_result").value })
 
-    content += `## ${tournament.dataValues.tournament_name} (<t:${tournament.dataValues.tournament_date}:d>) - **${tournament.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament.dataValues.tournament_id})` + "\n"
-    content += `- :first_place: <@${tournament.dataValues.tournament_first}>` + "\n"
-    content += `- :second_place: <@${tournament.dataValues.tournament_second}>` + "\n"
-    content += `- :third_place: <@${tournament.dataValues.tournament_third}>` + "\n"
+    content += `## ${tournament_updated.dataValues.tournament_name} (<t:${tournament_updated.dataValues.tournament_date}:d>) - **${tournament_updated.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament_updated.dataValues.tournament_id})` + "\n"
+    content += `- :first_place: <@${tournament_updated.dataValues.tournament_first}>` + "\n"
+    content += `- :second_place: <@${tournament_updated.dataValues.tournament_second}>` + "\n"
+    content += `- :third_place: <@${tournament_updated.dataValues.tournament_third}>` + "\n"
     content += "\n"
     content += "Bravo à tous·tes !"
 
     let channel = await message.guild.channels.fetch(args.get("post_result").value)
     await channel.send({ content: content, files: medias })
-
-    let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
+    
     await require(`../events/.postTournamentEmbed.js`).run(bot, tournament_updated, true)
 
     return await message.editReply({ content: "Done.", ephemeral: true })

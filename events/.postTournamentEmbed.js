@@ -33,7 +33,7 @@ module.exports = {
         { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
         { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
-        { name: ':small_orange_diamond: Participants', value: participants, inline: true },
+        { name: ':small_orange_diamond: Participants', value: participants.toString(), inline: true },
       )
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 
