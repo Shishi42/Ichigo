@@ -17,7 +17,7 @@ module.exports = {
 		
 		msg += `-# Plus d'infos sur ${place.dataValues.place_info}`
 
-		msg += `et inscriptions dans ${place.dataValues.place_inscr}`
+		msg += ` et inscriptions dans ${place.dataValues.place_inscr}`
 
 		msg += ", à retrouver sur https://discord.gg/afEvCBF9XR :arrow_down:"
 

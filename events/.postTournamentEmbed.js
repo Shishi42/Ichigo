@@ -16,6 +16,7 @@ module.exports = {
     }
 
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
+    let participants = tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
@@ -32,7 +33,7 @@ module.exports = {
         { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
         { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
-        { name: ':small_orange_diamond: Inscriptions', value: `${players.length}`, inline: true },
+        { name: ':small_orange_diamond: Participants', value: participants, inline: true },
       )
     if (tournament.dataValues.tournament_status == "Tournoi fini") {
 

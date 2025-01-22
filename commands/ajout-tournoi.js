@@ -106,7 +106,6 @@ module.exports = {
         { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
         { name: ':small_orange_diamond: Règlement', value: `${args.get("ruleset").value}`},
         { name: ':small_orange_diamond: Format', value: `${args.get("format").value}`},
-        { name: ':small_orange_diamond: Statut', value: "Inscriptions en cours"},
         { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + tournament_id },
       )
 
