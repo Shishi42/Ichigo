@@ -14,6 +14,10 @@ bot.role_capitaine = config.role_capitaine
 
 bot.challonge = config.challonge
 
+bot.season = "1"
+
+bot.top_bladers = config.top_bladers
+
 fs.readdirSync("./events/").filter(f => f.endsWith(".js") && !f.startsWith('.')).forEach(async file => {
   let event = require(`./events/${file}`)
   bot.on(file.split(".js").join(""), event.bind(null, bot))

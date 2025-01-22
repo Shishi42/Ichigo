@@ -28,6 +28,7 @@
     "@napi-rs/canvas": "^0.1.65",
     "cron": "^3.1.7",
     "discord.js": "^14.10.2",
+    "googleapis": "^144.0.0",
     "jsonfile": "^6.1.0",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7"
