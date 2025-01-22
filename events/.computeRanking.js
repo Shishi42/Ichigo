@@ -53,10 +53,10 @@ module.exports = {
       winrate = classement[blader]["W"] / (classement[blader]["W"] + classement[blader]["L"])
       winscore = winrate + (point_avg / 100)
       punish = 1 / (1 + 5 * (1 / (classement[blader]["participations"] * point_avg)))
-      old_punish = 1 / (1 + 5 * (1 / (classement[blader]["participations"] * 3)))
       score = (punish * winscore * 100000).toFixed()
-      old_score = (old_punish * winrate * 100000).toFixed()
-      return [blader, old_score, point_avg, classement[blader]]
+      // old_punish = 1 / (1 + 5 * (1 / (classement[blader]["participations"] * 3)))
+      // old_score = (old_punish * winrate * 100000).toFixed()
+      return [blader, score, point_avg, classement[blader]]
     })
 
     items.sort(function (a, b) { return a[1] != b[1] ? b[1] - a[1] : a[2] != b[2] ? b[2] - a[2] : a[3]["participations"] != b[3]["participations"] ? b[3]["participations"] - a[3]["participations"] : b[0] - a[0] })
