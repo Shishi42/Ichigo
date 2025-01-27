@@ -30,6 +30,8 @@ module.exports = {
 
     let classements = [[classement_paris, "Paris"], [classement_marseille, "Marseille"]]
 
+    await message.channel.send("## Classement Complet au " + new Date().toLocaleDateString("fr-FR") + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
+
     for (classement of classements) {
 
       values = new Array(300).fill(new Array(6).fill(""))
@@ -47,8 +49,7 @@ module.exports = {
       await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `${classement[1]}!B2`, valueInputOption: "USER_ENTERED", resource: { values } })
 
     }
-    await message.channel.send("## Classement Complet au " + new Date().toLocaleDateString("fr-FR") + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
-
+    
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
 }
