@@ -38,7 +38,7 @@ module.exports = {
       await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `${classement[1]}!B2`, valueInputOption: "USER_ENTERED", resource: { values } })
       values = []
       
-      res = "## Classement " + classement[1] + " au " + new Date().toLocaleDateString("fr-FR") + "\n-# Classement par score calculé sur l'ensemble des matchs de 3on3.\n```\n N°         NOM          SCORE    WIN\n\n"
+      res = "## TOP 10 " + classement[1] + " au " + new Date().toLocaleDateString("fr-FR") + "\n-# Classement par score calculé sur l'ensemble des matchs de 3on3.\n```\n N°         NOM          SCORE    WIN\n\n"
       for (blader in classement[0].slice(0, 10)) {
         res += ' '.repeat(3 - ((parseInt(blader) + 1).toString()).length) + (parseInt(blader) + 1).toString() + ' '.repeat(4) + classement[0][blader][0] + ' '.repeat(18 - classement[0][blader][0].length) + classement[0][blader][1] + ' '.repeat(5) + classement[0][blader][3]["wins"] + "\n"
       }
