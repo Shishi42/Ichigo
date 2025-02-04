@@ -45,6 +45,7 @@ module.exports = {
               classement[blader.name]["points"] += Math.min(...score)
             }
           }
+          else if (blader.id == match.loser_id) classement[blader.name]["L"] += 1
         }
       }
     }
