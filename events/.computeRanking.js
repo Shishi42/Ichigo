@@ -33,16 +33,17 @@ module.exports = {
 
           let match = matches.match
 
-          if (match.scores_csv.length == 3) score = match.scores_csv.split("-").map(Number)
-          else match.scores_csv[0] == '-' ? score = [-1, 0] : score = [0, -1]
+          if (match.scores_csv.length == 3 && match.scores_csv != "0-0") {
+            score = match.scores_csv.split("-").map(Number)
 
-          if (blader.id == match.winner_id) {
-            classement[blader.name]["W"] += 1
-            classement[blader.name]["points"] += Math.max(...score)
-          }
-          else if (blader.id == match.loser_id) {
-            classement[blader.name]["L"] += 1
-            classement[blader.name]["points"] += Math.min(...score)
+            if (blader.id == match.winner_id) {
+              classement[blader.name]["W"] += 1
+              classement[blader.name]["points"] += Math.max(...score)
+            }
+            else if (blader.id == match.loser_id) {
+              classement[blader.name]["L"] += 1
+              classement[blader.name]["points"] += Math.min(...score)
+            }
           }
         }
       }
