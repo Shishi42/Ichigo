@@ -9,14 +9,10 @@ bot.commands = new Discord.Collection()
 bot.color = "BEF0ED"
 bot.url = "https://discord.gg/afEvCBF9XR"
 
-bot.liste_equipe = config.liste_equipe
-bot.role_capitaine = config.role_capitaine
-
 bot.challonge = config.challonge
+bot.top_bladers = config.top_bladers
 
 bot.season = "1"
-
-bot.top_bladers = config.top_bladers
 
 fs.readdirSync("./events/").filter(f => f.endsWith(".js") && !f.startsWith('.')).forEach(async file => {
   let event = require(`./events/${file}`)

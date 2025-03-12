@@ -62,6 +62,7 @@ module.exports = {
     if (!tournament) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })
 
     bot.Tournaments.update({ tournament_first: args.get("first").value, tournament_second: args.get("second").value, tournament_third: args.get("third").value, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
+    if (tournament.dataValues.tournament_challonge) bot.Tournaments.update({ tournament_participants: "challonge" }, { where: { tournament_id: id } })
     message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
   
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })

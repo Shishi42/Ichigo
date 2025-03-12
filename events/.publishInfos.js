@@ -34,7 +34,7 @@ module.exports = {
     msg += "- La participation à cet évènement donne, par défaut, le droit aux organisateurs les droits à l'image des participants prises lors de l'évènement." + "\n"
     msg += "- Vous restez responsable de vos effets personnels, aucune consigne n'est disponible sur place." + "\n"
     msg += "- La consommation sur place est **obligatoire** pour vous inscrire, de plus **aucune nourriture ou boisson extérieure ne sera accepté**." + "\n"
-    msg += `- Pour vous aider à trouver le lieu où se déroule le tournoi, vous pouvez utiliser ce lien Google Maps : ${place.dataValues.place_maps}`
+    msg += `- Pour vous aider à trouver le lieu où se déroule le tournoi, vous pouvez utiliser ce lien Google Maps : ${place.dataValues.place_maps}` + "\n"
 
     msg += "\n"
 

@@ -8,15 +8,15 @@ module.exports = {
     let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
     let channel = await bot.channels.fetch(place.dataValues.place_inscr.split('/')[5])
 
-    let challonge = ""
-    if (tournament.dataValues.tournament_challonge) {
+    let challonge = tournament.dataValues.tournament_challonge
+    if (challonge) {
       let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?api_key=${bot.challonge}`)
-      body = await req.body.json()
-      challonge = body.tournament.url
+      let body = await req.body.json()
+      challonge = body.tournament
     }
 
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
-    let participants = tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
+    let participants = tournament.dataValues.tournament_participants == "challonge" ? challonge.participants_count : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)

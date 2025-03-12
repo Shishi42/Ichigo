@@ -2,9 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
 
-    async run(bot, team, update = false) {
-
-    let channel = await bot.channels.fetch(bot.liste_equipe)
+    async run(bot, team, channel, update = false) {
 
     let member0 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "0", teammate_status: "ACTIVE"} })
     let member1 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "1", teammate_status: "ACTIVE" } })

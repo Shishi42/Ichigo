@@ -16,6 +16,13 @@ module.exports = {
       autocomplete: true,
     },
     {
+      type: "role",
+      name: "captain",
+      description: "Captain role",
+      required: true,
+      autocomplete: true,
+    },
+    {
       type: "string",
       name: "name",
       description: "Team name",
@@ -110,7 +117,7 @@ module.exports = {
       let member0 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "0", teammate_status: "ACTIVE" } })
       bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { teammate_id: member0.dataValues.teammate_id } })
       message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
-      message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(bot.role_capitaine))
+      message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(args.get("captain").value))
 
       await bot.Teammates.create({
         teammate_id: parseInt(await bot.Teammates.count()) + 1,
@@ -121,7 +128,7 @@ module.exports = {
       })
 
       message.guild.members.fetch(args.get("member0").value).then(member => member.roles.add(team.dataValues.team_role))
-      message.guild.members.fetch(args.get("member0").value).then(member => member.roles.add(bot.role_capitaine))
+      message.guild.members.fetch(args.get("member0").value).then(member => member.roles.add(args.get("captain").value))
     } 
 
     if (args.get("member1")) {
@@ -177,10 +184,10 @@ module.exports = {
 
         let member0 = await bot.Teammates.findOne({ where: { team_id: id, teammate_status: "ACTIVE", teammate_number: "0" }})
 
-        message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(bot.role_capitaine))
+        message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(args.get("captain").value))
 
         message.guild.roles.fetch(team.dataValues.team_role).then(role => role.delete())
-        bot.channels.fetch(bot.liste_equipe).then(channel => channel.messages.fetch(team.dataValues.team_message).then(message => message.delete()))
+        bot.channels.fetch(message.channel).then(channel => channel.messages.fetch(team.dataValues.team_message).then(message => message.delete()))
 
         bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { team_id: id, teammate_status: "ACTIVE"} })
       }
@@ -188,7 +195,7 @@ module.exports = {
 
     let team_updated = await bot.Teams.findOne({ where: { team_id: id, team_status: "ACTIVE" } })
 
-    if (team_updated) await require(`../events/.postTeamEmbed.js`).run(bot, team_updated, true)     
+    if (team_updated) await require(`../events/.postTeamEmbed.js`).run(bot, team_updated, message.channel, true)     
     
     return await message.editReply({ content: "Done.", ephemeral: true })
   }

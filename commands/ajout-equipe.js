@@ -57,6 +57,13 @@ module.exports = {
       required: true,
       autocomplete: true,
     },
+    {
+      type: "role",
+      name: "captain",
+      description: "Captain role",
+      required: true,
+      autocomplete: true,
+    }
   ],
 
   async run(bot, message, args) {
@@ -64,7 +71,7 @@ module.exports = {
     await message.deferReply({ ephemeral: true })
 
     let team_id = parseInt(await bot.Teams.count()) + 1
-    let pos = await message.guild.roles.fetch(bot.role_capitaine)
+    let role_pos = await message.guild.roles.fetch(args.get("captain").value).position
 
     let name = args.get("name").value
     let description = args.get("description").value.replaceAll("\\n", "\n")
@@ -164,13 +171,13 @@ module.exports = {
           name: name,
           color: color,
           permissions: "0",
-          position: pos.position,
+          position: role_pos,
         })   
 
-        let post = await require(`../events/.postTeamEmbed.js`).run(bot, team)
+        let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, message.channel)
 
         message.guild.members.fetch(member0).then(member => member.roles.add(role))
-        message.guild.members.fetch(member0).then(member => member.roles.add(bot.role_capitaine))
+        message.guild.members.fetch(member0).then(member => member.roles.add(args.get("captain").value))
         message.guild.members.fetch(member1).then(member => member.roles.add(role))
         message.guild.members.fetch(member2).then(member => member.roles.add(role))
        
