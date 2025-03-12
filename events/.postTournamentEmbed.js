@@ -31,7 +31,7 @@ module.exports = {
         { name: ':small_orange_diamond: Lieu', value: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
         { name: ':small_orange_diamond: Règlement', value: `${tournament.dataValues.tournament_ruleset}`, inline: true },
         { name: ':small_orange_diamond: Format', value: `${tournament.dataValues.tournament_format}`, inline: true },
-        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge },
+        { name: ':small_orange_diamond: Challonge', value: "https://challonge.com/" + challonge.id },
         { name: ':small_orange_diamond: Statut', value: `${tournament.dataValues.tournament_status}`, inline: true },
         { name: ':small_orange_diamond: Participants', value: participants.toString(), inline: true },
       )
