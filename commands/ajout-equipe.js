@@ -172,6 +172,7 @@ module.exports = {
           color: color,
           permissions: "0",
           position: role_pos,
+          icon: logo
         })   
 
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, message.channel)

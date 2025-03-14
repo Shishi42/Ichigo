@@ -16,6 +16,7 @@ module.exports = {
 
     for (team of teams) {
       await require(`../events/.postTeamEmbed.js`).run(bot, team, true)  
+      message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(team.dataValues.team_logo) })
     }
 
     return await message.editReply({ content: "Done.", ephemeral: true })
