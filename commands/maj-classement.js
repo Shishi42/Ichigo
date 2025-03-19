@@ -19,9 +19,10 @@ module.exports = {
     await message.deferReply({ ephemeral: true })
 
     const auth = new google.auth.GoogleAuth({ keyFile: "./google.json", scopes: ["https://www.googleapis.com/auth/spreadsheets"] })
-    
-    let values = []
 
+    let values = []
+    let all_values = []
+    
     let tournaments_paris_bdd = await bot.Tournaments.findAll({ where: { tournament_name: { [Sequelize.Op.startsWith]: "Beyblade Battle Tournament" }, tournament_place: { [Sequelize.Op.endsWith]: "paris" }, tournament_ruleset: "3on3", tournament_season: bot.season } })
     let tournaments_marseille_bdd = await bot.Tournaments.findAll({ where: { tournament_name: { [Sequelize.Op.startsWith]: "Beyblade Battle Tournament" }, tournament_place: { [Sequelize.Op.endsWith]: "marseille" }, tournament_ruleset: "3on3", tournament_season: bot.season } })
     
@@ -31,6 +32,9 @@ module.exports = {
     let classements = [[classement_paris, "Paris"], [classement_marseille, "Marseille"]]
 
     await message.channel.send("## Classement Complet au " + new Date().toLocaleDateString("fr-FR") + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
+
+    values = new Array(300).fill(new Array(14).fill(""))
+    await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `RAW!A2`, valueInputOption: "USER_ENTERED", resource: { values } })
 
     for (classement of classements) {
 
@@ -45,11 +49,13 @@ module.exports = {
       res += "```"
       await message.channel.send(res)
 
-      for (blader in classement[0]) values.push([classement[0][blader][0], classement[0][blader][1], classement[0][blader][3]["wins"], classement[0][blader][3]["participations"], classement[0][blader][3]["W"] / (classement[0][blader][3]["W"] + classement[0][blader][3]["L"]), classement[0][blader][2]])   
+      for (blader in classement[0]) values.push([classement[0][blader][0], classement[0][blader][1], classement[0][blader][3]["wins"], classement[0][blader][3]["participations"], classement[0][blader][3]["W"] / (classement[0][blader][3]["W"] + classement[0][blader][3]["L"]), classement[0][blader][2]])
+      for (blader in classement[0]) all_values.push([`[${classement[1][0]}]`,classement[0][blader][0],classement[0][blader][1],`=$M${parseInt(blader)+2}*$N${parseInt(blader)+2}*100000`,classement[0][blader][3]["wins"],classement[0][blader][3]["participations"],`=$H${parseInt(blader)+2}/($H${parseInt(blader)+2}+$I${parseInt(blader)+2})`,classement[0][blader][3]["W"],classement[0][blader][3]["L"],`=$H${parseInt(blader)+2}+$I${parseInt(blader)+2}`,`=L${parseInt(blader)+2}/$J${parseInt(blader)+2}`,classement[0][blader][3]["points"],`=$G${parseInt(blader)+2}+($K${parseInt(blader)+2}/100)`,`=1/(1+(FLOOR(${tournaments_paris_bdd.length}/2)+1)*(1/($F${parseInt(blader)+2}*$K${parseInt(blader)+2})))`]) 
       await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `${classement[1]}!B2`, valueInputOption: "USER_ENTERED", resource: { values } })
 
     }
-    
+    values = all_values
+    await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `RAW!A2`, valueInputOption: "USER_ENTERED", resource: { values } })
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
 }

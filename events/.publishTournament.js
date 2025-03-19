@@ -1,3 +1,5 @@
+const Discord = require("discord.js")
+
 module.exports = {
 
 	async run(bot, tournament, post) {
@@ -12,7 +14,7 @@ module.exports = {
 		msg += "### " + tournament.dataValues.tournament_desc.toUpperCase() + "\n"
 
 		msg += `Début de l'évènement le <t:${tournament.dataValues.tournament_date}:F> (<t:${tournament.dataValues.tournament_date}:R>)`
-		
+
 		msg += ` au **${place.dataValues.place_name.toUpperCase()}**, situé au **${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, à ${place.dataValues.place_city}**.` + "\n"
 		
 		msg += `-# Plus d'infos sur ${place.dataValues.place_info}`
@@ -21,7 +23,7 @@ module.exports = {
 
 		msg += ", à retrouver sur https://discord.gg/afEvCBF9XR :arrow_down:"
 
-		await channel.send(msg).then(message => message.crosspost())
-		if (tournament.dataValues.tournament_poster) await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] }).then(message => message.crosspost())
+		channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send(msg).then(message => message.crosspost()) : await channel.send(msg)
+		if (tournament.dataValues.tournament_poster) channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] }).then(message => message.crosspost()) : await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] })
 	}
 }
