@@ -61,7 +61,7 @@ module.exports = {
       if (args.get("date")){     
         let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
         new cron.CronJob(datetime, () => { message.channel.send(annonces[args.get("annonce").value] ) }).start()
-        return await message.reply({ content: `C'est bon, les règles seront envoyées le __<t:${Math.floor(datetime) / 1000}:d> à <t:${Math.floor(datetime) / 1000}:T> (<t:${Math.floor(datetime) / 1000}:R>)__.`, ephemeral: true })
+        return await message.reply({ content: `C'est bon, l'annonce seront envoyées le __<t:${Math.floor(datetime) / 1000}:d> à <t:${Math.floor(datetime) / 1000}:T> (<t:${Math.floor(datetime) / 1000}:R>)__.`, ephemeral: true })
       } else {
         await message.channel.send(annonces[args.get("annonce").value] )
         return await message.reply({content: "C'est bon.", ephemeral: true})
