@@ -22,7 +22,7 @@ module.exports = async (bot, interaction) => {
     if (focusedOption.name === "team_status") { choices = ["ACTIVE", "INACTIVE"] }
     if (focusedOption.name === "place") { choices = places.map(place => place.dataValues.place_id) }
     if (focusedOption.name === "regle") { choices = Object.keys(bot.regles) }
-    if (focusedOption.name === "annonce") { choices = ["Rappel", "Guide", "Inscription"] }
+    if (focusedOption.name === "annonce") { choices = ["Rappel", "Guide", "Inscriptions"] }
 
     let filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()))
     if (!focusedOption.value) filtered = choices
