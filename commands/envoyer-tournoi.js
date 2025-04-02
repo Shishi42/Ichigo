@@ -12,6 +12,20 @@ module.exports = {
   options: [
     {
       type: "string",
+      name: "ville",
+      description: "Ville du tournoi",
+      required: true,
+      autocomplete: false,
+    },
+    {
+      type: "role",
+      name: "ping",
+      description: "Quel role ping",
+      required: true,
+      autocomplete: false,
+    },
+    {
+      type: "string",
       name: "nom",
       description: "Nom du tournoi",
       required: false,
@@ -48,7 +62,7 @@ module.exports = {
     {
       type: "string",
       name: "lieu",
-      description: "Ou est le tournoi",
+      description: "Lieu du tournoi",
       required: false,
       autocomplete: false,
     },
@@ -81,18 +95,17 @@ module.exports = {
 
     let date = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
 
-    let embed = new Discord.EmbedBuilder()
-      .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
-      .setTitle(args.get("title").value)
-      .setURL(bot.url)
+    let embed = new Discord.EmbedBuilder().setColor(bot.color)
     
-    if (args.get("date")) embed.setDescription(args.get("description").value.replaceAll("\\n", "\n"))
+    if(args.get("nom")) embed.setTitle(args.get("nom").value).setURL(bot.url)
+    
+    if (args.get("description")) embed.setDescription(args.get("description").value.replaceAll("\\n", "\n"))
     if (args.get("poster")) embed.setImage(args.get("poster").value)
     if (args.get("date")) embed.addFields({ name: ':small_orange_diamond: Date', value: `Le <t:${Math.floor(date)/1000}:F>`})
-    if (args.get("place")) embed.addFields({ name: ':small_orange_diamond: Lieu', value: args.get("place").value })  
+    embed.addFields({ name: ':small_orange_diamond: Lieu', value: args.get("ville").value + (args.get("lieu") ? ` - ${args.get("lieu").value}` : "")})  
     if (args.get("ruleset")) embed.addFields({ name: ':small_orange_diamond: Règlement', value: `${args.get("ruleset").value}`})
     if (args.get("format")) embed.addFields({ name: ':small_orange_diamond: Format', value: `${args.get("format").value}`})
-    if (args.get("lien")) embed.addFields({ name: ":small_orange_diamond: Plus d'infos", value: args.get("lien").value })          
+    if (args.get("lien")) embed.addFields({ name: ":small_orange_diamond: Plus d'infos ⬇️", value: args.get("lien").value })          
 
     let row = new Discord.ActionRowBuilder()
       .addComponents(
@@ -119,13 +132,13 @@ module.exports = {
 
         new cron.CronJob(prog, async () => {
         
-          await message.editReply({embeds: [embed], components: []})
+          await message.followUp({ content: `-# <@&${args.get("ping").value}>\n## Un nouveau tournoi arrive à __${args.get("ville").value.toUpperCase()}__`, embeds: [embed], components: []})
           
-          return i.editReply({content: `Tournament **${args.get("title").value}** posted.`, components: [], ephemeral: true})
+          return i.editReply({content: "C'est bon.", components: [], ephemeral: true})
         }).start()
 
       } else if (i.customId === 'cancel-post') {
-        return i.editReply({content: 'Tournament post canceled.', components: [], ephemeral: true})
+        return i.editReply({content: "Annulé.", components: [], ephemeral: true})
       }
     })
   }
