@@ -131,7 +131,7 @@ module.exports = {
         } else prog = new Date(parseInt(Math.floor(Date.now()+5)))
 
         new cron.CronJob(prog, async () => {
-          channel.type == Discord.ChannelType.GuildAnnouncement ? await message.followUp({ content: `-# <@&${args.get("ping").value}>\n## Un nouveau tournoi arrive à __${args.get("ville").value.toUpperCase()}__`, embeds: [embed], components: []}).then(message => message.crosspost()) : await message.followUp({ content: `-# <@&${args.get("ping").value}>\n## Un nouveau tournoi arrive à __${args.get("ville").value.toUpperCase()}__`, embeds: [embed], components: []})
+          message.channel.type == Discord.ChannelType.GuildAnnouncement ? await message.followUp({ content: `-# <@&${args.get("ping").value}>\n## Un nouveau tournoi arrive à __${args.get("ville").value.toUpperCase()}__`, embeds: [embed], components: []}).then(message => message.crosspost()) : await message.followUp({ content: `-# <@&${args.get("ping").value}>\n## Un nouveau tournoi arrive à __${args.get("ville").value.toUpperCase()}__`, embeds: [embed], components: []})
             
           return i.editReply({content: "C'est bon.", components: [], ephemeral: true})
         }).start()
