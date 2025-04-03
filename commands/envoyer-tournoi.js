@@ -105,7 +105,7 @@ module.exports = {
     if(args.get("description")) content += `${args.get("description").value}` + "\n"
 
     if(args.get("description") || args.get("description")) content += "\n"
-
+    if(!args.get("description") && !args.get("description")) content += "\n"
 
     if(args.get("date") || args.get("lieu") || args.get("format") || args.get("ruleset")) {
       content += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n" + "\n"
