@@ -102,7 +102,7 @@ module.exports = {
 
     if(args.get("nom")) content += `## ${args.get("nom").value}` + "\n"
 
-    if(args.get("description")) content += `${args.get("description").value}` + "\n"
+    if(args.get("description")) content += `${args.get("description").value.replaceAll("\\n", "\n")}` + "\n"
 
     if(args.get("description") || args.get("description")) content += "\n"
     if(!args.get("description") && !args.get("description")) content += "\n"
@@ -116,7 +116,7 @@ module.exports = {
       content += "\n"
     }
 
-    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + "\n" + args.get("infos").value
+    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + "\n" + args.get("infos").value.replaceAll("\\n", "\n")
   
     if (args.get("poster")) medias.push({ attachment: args.get("poster").value })
 
