@@ -113,9 +113,10 @@ module.exports = {
       if (args.get("lieu")) content += `:map: Lieu : ${args.get("lieu").value}` + "\n"
       if (args.get("format")) content += `:bar_chart: Format : ${args.get("format").value}` + "\n"
       if (args.get("ruleset")) content += `:scroll: Règlement : ${args.get("ruleset").value}` + "\n"
+      content += "\n"
     }
 
-    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + args.get("infos").value
+    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + "\n" + args.get("infos").value
   
     if (args.get("poster")) medias.push({ attachment: args.get("poster").value })
 
