@@ -98,25 +98,25 @@ module.exports = {
     let medias = []
     let date = args.get("date") ? new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2]) : ""
 
-    if(args.get("ping")) content += `-# <@&${args.get("ping").value}>\n` + "\n"
+    if(args.get("ping")) content += `-# <@&${args.get("ping").value}>\n`
 
-    if(args.get("nom")) content += `## ${args.get("nom").value}>` + "\n"
+    if(args.get("nom")) content += `## ${args.get("nom").value}` + "\n"
 
-    if(args.get("description")) content += `## ${args.get("description").value}>` + "\n"
+    if(args.get("description")) content += `${args.get("description").value}` + "\n"
 
     if(args.get("description") || args.get("description")) content += "\n"
 
 
     if(args.get("date") || args.get("lieu") || args.get("format") || args.get("ruleset") || args.get("infos")) {
-      content += ":small_orange_diamond: Informations :small_orange_diamond:" + "\n"
-      if (args.get("date")) content += `:date: Date : Le <t:${date}:D>, à partir de <t:${date}:t>` + "\n"
+      content += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n" + "\n"
+      if (args.get("date")) content += `:date: Date : Le <t:${Math.floor(date) / 1000}:D>, à partir de <t:${Math.floor(date) / 1000}:t>` + "\n"
       if (args.get("lieu")) content += `:map: Lieu : ${args.get("lieu").value}` + "\n"
       if (args.get("format")) content += `:bar_chart: Format : ${args.get("format").value}` + "\n"
       if (args.get("ruleset")) content += `:scroll: Règlement : ${args.get("ruleset").value}` + "\n"
-      if (args.get("infos")) content += `:loudspeaker: Informations supplémentaires : ${args.get("infos").value}` + "\n"
-      content += "\n"
     }
 
+    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + args.get("infos").value
+  
     if (args.get("poster")) medias.push({ attachment: args.get("poster").value })
 
     let row = new Discord.ActionRowBuilder()
