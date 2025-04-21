@@ -12,7 +12,7 @@ bot.url = "https://discord.gg/afEvCBF9XR"
 bot.challonge = config.challonge
 bot.top_bladers = config.top_bladers
 
-bot.season = "1"
+bot.season = "2"
 
 fs.readdirSync("./events/").filter(f => f.endsWith(".js") && !f.startsWith('.')).forEach(async file => {
   let event = require(`./events/${file}`)
