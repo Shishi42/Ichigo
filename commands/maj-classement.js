@@ -31,7 +31,7 @@ module.exports = {
 
     let classements = [[classement_paris, "Paris"], [classement_marseille, "Marseille"]]
 
-    await message.channel.send("## Classement Saison " + bot.season + " au " + new Date().toLocaleDateString("fr-FR") + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
+    await message.channel.send("## Classement en cours - Saison " + bot.season + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
 
     values = new Array(300).fill(new Array(14).fill(""))
     await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `RAW!A2`, valueInputOption: "USER_ENTERED", resource: { values } })
