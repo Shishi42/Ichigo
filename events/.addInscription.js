@@ -8,13 +8,15 @@ module.exports = {
     let inscr = await bot.Inscriptions.findOne({ where: { player_id: player_id, tournament_id: tournament_id } })
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: tournament_id } })
 
-    if (interaction.customId.includes("join")) {
+    if (interaction.customId.includes("inscription")) {
+
+      if (interaction.fields.getTextInputValue('validation-regles') != "Je confirme avoir lu le règlement.") return await interaction.reply({ content: "Tu dois confirmer avoir lu le règlement avant de t'inscrire.", ephemeral: true })
 
       interaction.member.roles.add(tournament.dataValues.tournament_role)
 
       if (inscr?.dataValues.player_status == "INSCRIT") return await interaction.reply({ content: "Tu es déjà inscrit à ce tournoi.", ephemeral: true })
       inscr ? await bot.Inscriptions.update({ player_status: "INSCRIT" }, { where: { player_id: player_id, tournament_id: tournament_id } }) : await bot.Inscriptions.create({ inscription_id: parseInt(await bot.Inscriptions.count()) + 1, player_id: player_id, tournament_id: tournament_id, player_status: "INSCRIT" })
-      await interaction.reply({ content: "Tu es désormais inscrit à ce tournoi, merci de consulter <#1221671605348864031> avant de participer.", ephemeral: true })
+      await interaction.reply({ content: "Tu es désormais inscrit à ce tournoi.", ephemeral: true })
     }
     else if (interaction.customId.includes("leave")) {
 

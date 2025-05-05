@@ -30,5 +30,10 @@ module.exports = async (bot, interaction) => {
     await interaction.respond(filtered.map(choice => ({ name: choice, value: choice })))
   }
 
-  else if (interaction.isButton()) if (interaction.customId.startsWith("tournament-")) require("./.addInscription.js").run(bot, interaction)
+  else if (interaction.isButton()){
+    if (interaction.customId.startsWith("tournament-join")) require("./.formInscription.js").run(bot, interaction)
+    if (interaction.customId.startsWith("tournament-leave")) require("./.addInscription.js").run(bot, interaction)
+  }
+
+  else if (interaction.customId.startsWith("tournament-inscription")) require("./.addInscription.js").run(bot, interaction)
 }
