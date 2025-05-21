@@ -113,6 +113,7 @@ module.exports = {
       if (args.get("lieu")) content += `:map: Lieu : ${args.get("lieu").value}` + "\n"
       if (args.get("format")) content += `:bar_chart: Format : ${args.get("format").value}` + "\n"
       if (args.get("ruleset")) content += `:scroll: Règlement : ${args.get("ruleset").value}` + "\n"
+      if (args.get("lien")) content += `:globe_with_meridians: Lien : ${args.get("lien").value}` + "\n"
       content += "\n"
     }
 
