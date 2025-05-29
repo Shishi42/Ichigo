@@ -75,7 +75,7 @@ module.exports = {
     content += `## ${tournament_updated.dataValues.tournament_name} (<t:${tournament_updated.dataValues.tournament_date}:d>) - **${tournament_updated.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament_updated.dataValues.tournament_id})` + "\n"
     content += `- :trophy: **1ʳᵉ place** : <@${tournament_updated.dataValues.tournament_first}>` + "\n"
     content += `- :second_place: **2ᵉ place** : <@${tournament_updated.dataValues.tournament_second}>` + "\n"
-    content += `- :third_place: **3ᵉ places** : <@${tournament_updated.dataValues.tournament_third}>` + "\n"
+    content += `- :third_place: **3ᵉ place** : <@${tournament_updated.dataValues.tournament_third}>` + "\n"
     content += "\n"
     content += "Bravo à tous·tes !"
 
