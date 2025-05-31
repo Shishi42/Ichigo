@@ -26,7 +26,7 @@ module.exports = {
     let context = canvas.getContext('2d')
 
     context.drawImage(await Canvas.loadImage(args.get("image").value), 152, 152, 696, 696)
-    context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
+    context.drawImage(await Canvas.loadImage('./medias/teams/base_equipe.png'), 0, 0, canvas.width, canvas.height)
 
     return await message.editReply({ content: "C'est bon.", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe.png' })], ephemeral: true })
 
