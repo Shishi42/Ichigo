@@ -1,7 +1,5 @@
 const Discord = require("discord.js")
 const Canvas = require('@napi-rs/canvas')
-const { promises } = require('node:fs')
-const { join } = require('node:path')
 
 module.exports = {
 
@@ -126,7 +124,7 @@ module.exports = {
     context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
 
     let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
-    let msg_logo = await channel_logo.send({ content: "C'est bon.", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe.png' })] })
+    let msg_logo = await channel_logo.send({ files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-'+team_id+'.png' })] })
     let logo = msg_logo.attachments.first().url
 
     let embed = new Discord.EmbedBuilder()

@@ -1,4 +1,5 @@
 const Discord = require("discord.js")
+const Canvas = require('@napi-rs/canvas')
 
 module.exports = {
 
@@ -19,6 +20,13 @@ module.exports = {
       type: "role",
       name: "captain",
       description: "Captain role",
+      required: true,
+      autocomplete: true,
+    },
+    {
+      type: "channel",
+      name: "post_logo",
+      description: "Channel to post the team logo",
       required: true,
       autocomplete: true,
     },
@@ -99,7 +107,20 @@ module.exports = {
 
     if (args.get("description")) bot.Teams.update({ team_desc: args.get("description").value.replaceAll("\\n", "\n") }, { where: { team_id: id } })   
 
-    if (args.get("logo")) { await bot.Teams.update({ team_logo: args.get("logo").value }, { where: { team_id: team.dataValues.team_id } })} 
+    if (args.get("logo")) { 
+      let canvas = Canvas.createCanvas(1000, 1000)
+      let context = canvas.getContext('2d')
+  
+      context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
+      context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
+  
+      let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
+      let msg_logo = await channel_logo.send({ files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-' + id + '.png' })] })
+      let logo = msg_logo.attachments.first().url
+
+      await bot.Teams.update({ team_logo: logo }, { where: { team_id: team.dataValues.team_id } })
+      // await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(logo) })
+    } 
 
     if (args.get("color")){
       bot.Teams.update({ team_color: args.get("color").value }, { where: { team_id: id } })
