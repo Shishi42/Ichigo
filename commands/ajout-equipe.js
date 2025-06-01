@@ -1,4 +1,7 @@
 const Discord = require("discord.js")
+const Canvas = require('@napi-rs/canvas')
+const { promises } = require('node:fs')
+const { join } = require('node:path')
 
 module.exports = {
 
@@ -70,6 +73,13 @@ module.exports = {
       description: "Channel to post the team embed",
       required: true,
       autocomplete: true,
+    },
+    {
+      type: "channel",
+      name: "post_logo",
+      description: "Channel to post the team logo",
+      required: true,
+      autocomplete: true,
     }
   ],
 
@@ -83,7 +93,6 @@ module.exports = {
     let name = args.get("name").value
     let description = args.get("description").value.replaceAll("\\n", "\n")
     let color = args.get("color").value
-    let logo = args.get("logo").value
     let member0 = args.get("member0").value
     let member1 = args.get("member1").value 
     let member2 = args.get("member2").value
@@ -109,6 +118,16 @@ module.exports = {
       let team = await bot.Teams.findOne({ where: { team_id: user2.dataValues.team_id } })
       return await message.editReply({ content: `${member2.match(/[0-9]{18}/) ? "<@" + member2 + ">" : member2} is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
     }
+
+    let canvas = Canvas.createCanvas(1000, 1000)
+    let context = canvas.getContext('2d')
+
+    context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
+    context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
+
+    let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
+    let msg_logo = await channel_logo.send({ content: "C'est bon.", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe.png' })] })
+    let logo = msg_logo.attachments.first().url
 
     let embed = new Discord.EmbedBuilder()
       .setTitle(name)
