@@ -44,23 +44,30 @@ module.exports = {
       autocomplete: true,
     },
     {
-      type: "user",
+      type: "string",
       name: "member1",
       description: "Team member1",
       required: true,
-      autocomplete: true,
+      autocomplete: false,
     },
     {
-      type: "user",
+      type: "string",
       name: "member2",
       description: "Team member2",
       required: true,
-      autocomplete: true,
+      autocomplete: false,
     },
     {
       type: "role",
       name: "captain",
       description: "Captain role",
+      required: true,
+      autocomplete: true,
+    },
+    {
+      type: "channel",
+      name: "post_team",
+      description: "Channel to post the team embed",
       required: true,
       autocomplete: true,
     }
@@ -71,7 +78,7 @@ module.exports = {
     await message.deferReply({ ephemeral: true })
 
     let team_id = parseInt(await bot.Teams.count()) + 1
-    let role_pos = await message.guild.roles.fetch(args.get("captain").value).position
+    let captain = await message.guild.roles.fetch(args.get("captain").value)
 
     let name = args.get("name").value
     let description = args.get("description").value.replaceAll("\\n", "\n")
@@ -90,17 +97,17 @@ module.exports = {
 
     if (user0) {
       let team = await bot.Teams.findOne({ where: { team_id: user0.dataValues.team_id } })
-      return await message.editReply({ content: `<@${member0}> in already in team **${team.dataValues.team_name}**.`, ephemeral: true })
+      return await message.editReply({ content: `<@${member0}> is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
     }
 
     if (user1) {
       let team = await bot.Teams.findOne({ where: { team_id: user1.dataValues.team_id } })
-      return await message.editReply({ content: `<@${user1}> in already in team **${team.dataValues.team_name}**.`, ephemeral: true })
+      return await message.editReply({ content: `${member1.match(/[0-9]{18}/) ? "<@" + member1 + ">" : member1} is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
     }
 
     if (user2) {
       let team = await bot.Teams.findOne({ where: { team_id: user2.dataValues.team_id } })
-      return await message.editReply({ content: `<@${user2}> in already in team **${team.dataValues.team_name}**.`, ephemeral: true })
+      return await message.editReply({ content: `${member2.match(/[0-9]{18}/) ? "<@" + member2 + ">" : member2} is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
     }
 
     let embed = new Discord.EmbedBuilder()
@@ -109,9 +116,9 @@ module.exports = {
       .setThumbnail(logo)
       .setColor(color)
       .addFields(
-        { name: 'Capitaine', value: `<@${member0}>`},
-        { name: 'Membre', value: `<@${member1}>`, inline: true },
-        { name: 'Membre', value: `<@${member2}>`, inline: true },
+        { name: 'Capitaine', value: "<@" + member0 + ">" },
+        { name: 'Membre', value: member1.match(/[0-9]{18}/) ? "<@" + member1 + ">" : member1, inline: true },
+        { name: 'Membre', value: member2.match(/[0-9]{18}/) ? "<@" + member2 + ">" : member2, inline: true },
       )
 
     let row = new Discord.ActionRowBuilder()
@@ -171,18 +178,19 @@ module.exports = {
           name: name,
           color: color,
           permissions: "0",
-          position: role_pos,
-          icon: logo
+          position: captain.position,
+          //icon: logo
         })   
 
-        let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, message.channel)
+        let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))
 
         message.guild.members.fetch(member0).then(member => member.roles.add(role))
-        message.guild.members.fetch(member0).then(member => member.roles.add(args.get("captain").value))
-        message.guild.members.fetch(member1).then(member => member.roles.add(role))
-        message.guild.members.fetch(member2).then(member => member.roles.add(role))
+        message.guild.members.fetch(member0).then(member => member.roles.add(captain))
+    
+        if (member1.match(/[0-9]{18}/)) message.guild.members.fetch(member1).then(member => member.roles.add(role))
+        if (member2.match(/[0-9]{18}/)) message.guild.members.fetch(member2).then(member => member.roles.add(role))
        
-        await bot.Teams.update({ team_message: post.id, team_role: role.id }, { where: { team_id: team_id } })
+        await bot.Teams.update({ team_message: args.get("post_team").value+"/"+post.id, team_role: role.id }, { where: { team_id: team_id } })
 
         return i.editReply({ content: `Team **${name}** created with id : **${team_id}**.`, components: [], ephemeral: true })
 

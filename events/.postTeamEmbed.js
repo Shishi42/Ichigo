@@ -14,9 +14,9 @@ module.exports = {
       .setThumbnail(team.dataValues.team_logo)
       .setColor(team.dataValues.team_color)
       .addFields(
-        { name: 'Capitaine', value: `<@${member0.dataValues.teammate_discord}>` },
-        { name: 'Membre', value: `<@${member1.dataValues.teammate_discord}>`, inline: true },
-        { name: 'Membre', value: `<@${member2.dataValues.teammate_discord}>`, inline: true },
+        { name: 'Capitaine', value: "<@" + member0.dataValues.teammate_discord + ">" },
+        { name: 'Membre', value: member1.dataValues.teammate_discord.match(/[0-9]{18}/) ? "<@" + member1.dataValues.teammate_discord + ">" : member1.dataValues.teammate_discord, inline: true },
+        { name: 'Membre', value: member2.dataValues.teammate_discord.match(/[0-9]{18}/) ? "<@" + member2.dataValues.teammate_discord + ">" : member2.dataValues.teammate_discord, inline: true },
       )
     
     if (!update) return await channel.send({ embeds: [embed] })
