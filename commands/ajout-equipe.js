@@ -200,7 +200,7 @@ module.exports = {
         })   
 
         // TODO enregistrer dans BDD
-        message.guild.emojis.create({ attachment: logo, name: name })
+        message.guild.emojis.create({ attachment: logo, name: name.toLowerCase().replaceAll(' ', '_') })
 
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))
 
