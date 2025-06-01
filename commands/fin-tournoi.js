@@ -61,7 +61,11 @@ module.exports = {
     let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
     if (!tournament) return await message.reply({ content: "The tournament provided does not exist.", ephemeral: true })
 
-    bot.Tournaments.update({ tournament_first: args.get("first").value, tournament_second: args.get("second").value, tournament_third: args.get("third").value, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
+    let first = args.get("first").value
+    let second = args.get("second").value
+    let third = args.get("third").value
+  
+    bot.Tournaments.update({ tournament_first: first, tournament_second: second, tournament_third: third, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
     if (tournament.dataValues.tournament_challonge) bot.Tournaments.update({ tournament_participants: "challonge" }, { where: { tournament_id: id } })
     message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
   
@@ -73,9 +77,9 @@ module.exports = {
     if (args.get("img_result")) medias.push({ attachment: args.get("img_result").value })
 
     content += `## ${tournament_updated.dataValues.tournament_name} (<t:${tournament_updated.dataValues.tournament_date}:d>) - **${tournament_updated.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament_updated.dataValues.tournament_id})` + "\n"
-    content += `- :trophy: **1ʳᵉ place** - <@${tournament_updated.dataValues.tournament_first}>` + "\n"
-    content += `- :second_place: **2ᵉ place** - <@${tournament_updated.dataValues.tournament_second}>` + "\n"
-    content += `- :third_place: **3ᵉ place** - <@${tournament_updated.dataValues.tournament_third}>` + "\n"
+    content += `- :trophy: **1ʳᵉ place** - ${first.match(/[0-9]{18}/) ? "<@" + first + ">" : first}` + "\n"
+    content += `- :second_place: **2ᵉ place** - ${second.match(/[0-9]{18}/) ? "<@" + second + ">" : second}` + "\n"
+    content += `- :third_place: ** 3ᵉ place ** - ${third.match(/[0-9]{18}/) ? "<@" + third + ">" : third}` + "\n"
     content += "\n"
     content += "Bravo à tous·tes !"
 
