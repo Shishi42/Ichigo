@@ -124,7 +124,7 @@ module.exports = {
     context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
 
     let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
-    let msg_logo = await channel_logo.send({ files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-'+team_id+'.png' })] })
+    let msg_logo = await channel_logo.send({ content: "## " + name, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-'+team_id+'.png' })] })
     let logo = msg_logo.attachments.first().url
 
     let embed = new Discord.EmbedBuilder()
@@ -196,7 +196,7 @@ module.exports = {
           color: color,
           permissions: "0",
           position: captain.position,
-          //icon: logo
+          icon: logo
         })   
 
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))

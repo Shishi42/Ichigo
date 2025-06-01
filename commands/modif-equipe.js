@@ -115,11 +115,11 @@ module.exports = {
       context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
   
       let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
-      let msg_logo = await channel_logo.send({ files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-' + id + '.png' })] })
+      let msg_logo = await channel_logo.send({ content: "## " + team.dataValues.team_name, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-' + id + '.png' })] })
       let logo = msg_logo.attachments.first().url
 
       await bot.Teams.update({ team_logo: logo }, { where: { team_id: team.dataValues.team_id } })
-      // await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(logo) })
+      await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(logo) })
     } 
 
     if (args.get("color")){
