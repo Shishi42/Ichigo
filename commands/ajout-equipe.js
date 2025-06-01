@@ -199,6 +199,9 @@ module.exports = {
           icon: logo
         })   
 
+        // TODO enregistrer dans BDD
+        message.guild.emojis.create({ attachment: logo, name: name })
+
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))
 
         message.guild.members.fetch(member0).then(member => member.roles.add(role))
