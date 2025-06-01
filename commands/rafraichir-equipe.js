@@ -14,10 +14,7 @@ module.exports = {
 
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
 
-    for (team of teams) {
-      await require(`../events/.postTeamEmbed.js`).run(bot, team, message.channel, true)  
-      await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(team.dataValues.team_logo) })
-    }
+    for (team of teams) await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(team.dataValues.team_message.split('/')[0]), true)
 
     return await message.editReply({ content: "Done.", ephemeral: true })
   }

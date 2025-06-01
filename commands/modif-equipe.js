@@ -65,18 +65,18 @@ module.exports = {
       autocomplete: true,
     },
     {
-      type: "user",
+      type: "string",
       name: "member1",
       description: "Team member1",
       required: false,
-      autocomplete: true,
+      autocomplete: false,
     },
     {
-      type: "user",
+      type: "string",
       name: "member2",
       description: "Team member2",
       required: false,
-      autocomplete: true,
+      autocomplete: false,
     },
   ],
 
@@ -136,12 +136,12 @@ module.exports = {
       let new_member1 = await bot.Teammates.findOne({ where: { teammate_discord: args.get("member1").value, teammate_status: "ACTIVE" } })
       if (new_member1) {
         let team = await bot.Teams.findOne({ where: { team_id: new_member1.dataValues.team_id } })
-        return await message.editReply({ content: `<@${new_member1}> in already in team **${team.dataValues.team_name}**.`, ephemeral: true })
+        return await message.editReply({ content: `${new_member1.match(/[0-9]{18}/) ? "<@" + new_member1 + ">" : new_member1} is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
       }
 
       let member1 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "1", teammate_status: "ACTIVE" } })
       bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { teammate_id: member1.dataValues.teammate_id } })
-      message.guild.members.fetch(member1.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
+      if (member1.dataValues.teammate_discord.match(/[0-9]{18}/)) message.guild.members.fetch(member1.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
 
       await bot.Teammates.create({
         teammate_id: parseInt(await bot.Teammates.count()) + 1,
@@ -151,7 +151,7 @@ module.exports = {
         teammate_status: "ACTIVE",
       })
 
-      message.guild.members.fetch(args.get("member1").value).then(member => member.roles.add(team.dataValues.team_role))
+      if (args.get("member1").value.match(/[0-9]{18}/)) message.guild.members.fetch(args.get("member1").value).then(member => member.roles.add(team.dataValues.team_role))
     } 
 
     if (args.get("member2")) {
@@ -159,12 +159,12 @@ module.exports = {
       let new_member2 = await bot.Teammates.findOne({ where: { teammate_discord: args.get("member2").value, teammate_status: "ACTIVE" } })
       if (new_member2) {
         let team = await bot.Teams.findOne({ where: { team_id: new_member2.dataValues.team_id } })
-        return await message.editReply({ content: `<@${new_member2}> in already in team **${team.dataValues.team_name}**.`, ephemeral: true })
+        return await message.editReply({ content: `${new_member2.match(/[0-9]{18}/) ? "<@" + new_member2 + ">" : new_member2} is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
       }
 
       let member2 = await bot.Teammates.findOne({ where: { team_id: team.dataValues.team_id, teammate_number: "2", teammate_status: "ACTIVE" } })
       bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { teammate_id: member2.dataValues.teammate_id } })
-      message.guild.members.fetch(member2.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
+      if (member2.dataValues.teammate_discord.match(/[0-9]{18}/)) message.guild.members.fetch(member2.dataValues.teammate_discord).then(member => member.roles.remove(team.dataValues.team_role))
 
       await bot.Teammates.create({
         teammate_id: parseInt(await bot.Teammates.count()) + 1,
@@ -174,7 +174,7 @@ module.exports = {
         teammate_status: "ACTIVE",
       })
 
-      message.guild.members.fetch(args.get("member2").value).then(member => member.roles.add(team.dataValues.team_role))
+      if (args.get("member2").value.match(/[0-9]{18}/)) message.guild.members.fetch(args.get("member2").value).then(member => member.roles.add(team.dataValues.team_role))
     } 
 
     if (args.get("team_status")) {
@@ -195,7 +195,7 @@ module.exports = {
 
     let team_updated = await bot.Teams.findOne({ where: { team_id: id, team_status: "ACTIVE" } })
 
-    if (team_updated) await require(`../events/.postTeamEmbed.js`).run(bot, team_updated, message.channel, true)     
+    if (team_updated) await require(`../events/.postTeamEmbed.js`).run(bot, team_updated, await bot.channels.fetch(team_updated.dataValues.team_message.split('/')[0]), true)     
     
     return await message.editReply({ content: "Done.", ephemeral: true })
   }

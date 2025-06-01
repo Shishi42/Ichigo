@@ -20,6 +20,6 @@ module.exports = {
       )
     
     if (!update) return await channel.send({ embeds: [embed] })
-    else return await channel.messages.fetch(team.dataValues.team_message).then(message => message.edit({ embeds: [embed] }))
+    else return await channel.messages.fetch(team.dataValues.team_message.split('/')[1]).then(message => message.edit({ embeds: [embed] }))
   }
 }
