@@ -210,9 +210,11 @@ module.exports = {
         })   
 
         // TODO enregistrer dans BDD
-        message.guild.emojis.create({ attachment: logo_emoji, name: name.toLowerCase().replaceAll(' ', '_') })
+        let emoji = await message.guild.emojis.create({ attachment: logo_emoji, name: name.toLowerCase().replaceAll(' ', '_') })
 
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))
+
+        await post.react(emoji)
 
         message.guild.members.fetch(member0).then(member => member.roles.add(role))
         message.guild.members.fetch(member0).then(member => member.roles.add(captain))
