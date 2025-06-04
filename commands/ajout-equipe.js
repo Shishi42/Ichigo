@@ -123,9 +123,19 @@ module.exports = {
     context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
     context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
 
+    let canvas_emoji = Canvas.createCanvas(200, 200)
+    let context_emoji = canvas_emoji.getContext('2d')
+
+    context_emoji.drawImage(await Canvas.loadImage(args.get("logo").value), 30, 30, 139, 139)
+    context_emoji.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas_emoji.width, canvas_emoji.height)
+
     let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
+
     let msg_logo = await channel_logo.send({ content: "## " + name, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-'+team_id+'.png' })] })
     let logo = msg_logo.attachments.first().url
+
+    let msg_logo_emoji = await channel_logo.send({ content: "## " + name, files: [new Discord.AttachmentBuilder(await canvas_emoji.encode('png'), { name: 'emoji-equipe-'+team_id+'.png' })] })
+    let logo_emoji = msg_logo_emoji.attachments.first().url
 
     let embed = new Discord.EmbedBuilder()
       .setTitle(name)
@@ -200,7 +210,7 @@ module.exports = {
         })   
 
         // TODO enregistrer dans BDD
-        message.guild.emojis.create({ attachment: logo, name: name.toLowerCase().replaceAll(' ', '_') })
+        message.guild.emojis.create({ attachment: logo_emoji, name: name.toLowerCase().replaceAll(' ', '_') })
 
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))
 
