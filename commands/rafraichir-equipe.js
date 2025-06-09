@@ -14,7 +14,7 @@ module.exports = {
 
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
 
-    for (team of teams) await require(`../commands/modif-equipe.js`).run(bot, message, null, {team_id : team.dataValues.team_id, post_resource : team.dataValues.team_logo.split('/')[0]})
+    for (team of teams) await require(`../commands/modif-equipe.js`).run(bot, message, true, {team_id : team.dataValues.team_id, post_resource : team.dataValues.team_logo.split('/')[0]})
 
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
