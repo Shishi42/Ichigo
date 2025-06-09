@@ -124,7 +124,7 @@ module.exports = {
       let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: team.dataValues.team_name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') })
       await bot.Teams.update({ team_logo: channel.id + "/" + msg_logo.id, team_emoji: channel.id + "/" + msg_emoji.id + "/" + server_emoji.id }, { where: { team_id: id } })
       await message.guild.channels.fetch(team.dataValues.team_message.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_message.split('/')[1]).then(msg => msg.react(server_emoji)))
-      //await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(msg_emoji.attachments.first().url) })
+      await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(msg_emoji.attachments.first().url) })
     } 
 
     if (args.get("color")){
