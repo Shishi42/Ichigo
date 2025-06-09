@@ -149,6 +149,14 @@ module.exports = async bot => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    team_emoji: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    team_affiche: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     team_status: {
       type: Sequelize.STRING,
       allowNull: false,

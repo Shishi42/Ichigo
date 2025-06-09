@@ -25,8 +25,8 @@ module.exports = {
     },
     {
       type: "channel",
-      name: "post_logo",
-      description: "Channel to post the team logo",
+      name: "post_resource",
+      description: "Channel to post the team resources",
       required: true,
       autocomplete: true,
     },
@@ -97,29 +97,34 @@ module.exports = {
     let team = await bot.Teams.findOne({ where: { team_id: id } })
     if (!team) return await message.editReply({ content: "Team provided does not exist.", ephemeral: true })
 
+    let channel = await bot.channels.fetch(args.get("post_resource").value)
+
     if (args.get("name")){
       let team_with_name = await bot.Teams.findOne({ where: { team_name: args.get("name").value, team_status: "ACTIVE" } })
       if (team_with_name) return await message.editReply({ content: `Team **${args.get("name").value}** already exists.`, ephemeral: true })
       bot.Teams.update({ team_name: args.get("name").value }, { where: { team_id: id } })
+
+      await message.guild.channels.fetch(team.dataValues.team_logo.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_logo.split('/')[1]).then(msg => msg.edit({ content: "## [" + "logo".toUpperCase() + "] : __" + args.get("name").value + "__ - " + new Date().toISOString().split('T')[0] })))
+      await message.guild.channels.fetch(team.dataValues.team_emoji.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_emoji.split('/')[1]).then(msg => msg.edit({ content: "## [" + "emoji".toUpperCase() + "] : __" + args.get("name").value + "__ - " + new Date().toISOString().split('T')[0] })))
       
       await message.guild.roles.edit(team.dataValues.team_role, { name: args.get("name").value })
+      await message.guild.emojis.fetch(team.dataValues.team_emoji.split('/')[2]).then(emoji => emoji.edit({ name: team.dataValues.team_name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') }))
     } 
 
     if (args.get("description")) bot.Teams.update({ team_desc: args.get("description").value.replaceAll("\\n", "\n") }, { where: { team_id: id } })   
 
     if (args.get("logo")) { 
-      let canvas = Canvas.createCanvas(1000, 1000)
-      let context = canvas.getContext('2d')
-  
-      context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
-      context.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas.width, canvas.height)
-  
-      let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
-      let msg_logo = await channel_logo.send({ content: "## " + team.dataValues.team_name, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-' + id + '.png' })] })
-      let logo = msg_logo.attachments.first().url
+      await channel.messages.fetch(team.dataValues.team_logo.split('/')[1]).then(msg => msg.delete()).catch(() => {})
+      await channel.messages.fetch(team.dataValues.team_emoji.split('/')[1]).then(msg => msg.delete()).catch(() => {})
+      await message.guild.emojis.fetch(team.dataValues.team_emoji.split('/')[2]).then(emoji => emoji.delete()).catch(() => { })
 
-      await bot.Teams.update({ team_logo: logo }, { where: { team_id: team.dataValues.team_id } })
-      await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(logo) })
+      let msg_logo = await require(`../events/.generateTeamImage.js`).run(bot, team, channel.id, "logo", args.get("logo").value)
+      let msg_emoji = await require(`../events/.generateTeamImage.js`).run(bot, team, channel.id, "emoji", args.get("logo").value)
+    
+      let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: team.dataValues.team_name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') })
+      await bot.Teams.update({ team_logo: channel.id + "/" + msg_logo.id, team_emoji: channel.id + "/" + msg_emoji.id + "/" + server_emoji.id }, { where: { team_id: id } })
+      await message.guild.channels.fetch(team.dataValues.team_message.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_message.split('/')[1]).then(msg => msg.react(server_emoji)))
+      //await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(msg_emoji.attachments.first().url) })
     } 
 
     if (args.get("color")){
@@ -202,16 +207,30 @@ module.exports = {
       bot.Teams.update({ team_status: args.get("team_status").value }, { where: { team_id: id } })
 
       if (args.get("team_status").value == "INACTIVE"){ 
-
         let member0 = await bot.Teammates.findOne({ where: { team_id: id, teammate_status: "ACTIVE", teammate_number: "0" }})
+        await message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(args.get("captain").value))
 
-        message.guild.members.fetch(member0.dataValues.teammate_discord).then(member => member.roles.remove(args.get("captain").value))
+        await message.guild.roles.fetch(team.dataValues.team_role).then(role => role.delete())
+        await message.guild.emojis.fetch(team.dataValues.team_emoji.split('/')[2]).then(emoji => emoji.delete())
+        await message.guild.channels.fetch(team.dataValues.team_logo.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_logo.split('/')[1]).then(message => message.delete()))
+        await message.guild.channels.fetch(team.dataValues.team_emoji.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_emoji.split('/')[1]).then(message => message.delete()))
+        await message.guild.channels.fetch(team.dataValues.team_affiche.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_affiche.split('/')[1]).then(message => message.delete()))
+        await message.guild.channels.fetch(team.dataValues.team_message.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_message.split('/')[1]).then(message => message.delete()))
 
-        message.guild.roles.fetch(team.dataValues.team_role).then(role => role.delete())
-        bot.channels.fetch(message.channel).then(channel => channel.messages.fetch(team.dataValues.team_message).then(message => message.delete()))
-
-        bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { team_id: id, teammate_status: "ACTIVE"} })
+        await bot.Teammates.update({ teammate_status: "INACTIVE" }, { where: { team_id: id, teammate_status: "ACTIVE"} })
       }
+    } 
+
+    if (args.get("name") || args.get("description") || args.get("logo") || args.get("color") || args.get("member0") || args.get("member1") || args.get("member2")) {
+      let channel = await bot.channels.fetch(args.get("post_resource").value)
+      await channel.messages.fetch(team.dataValues.team_affiche.split('/')[1]).then(msg => msg.delete()).catch(() => {})
+
+      team = await bot.Teams.findOne({ where: { team_id: id } })
+
+      let msg_logo = await channel.messages.fetch(team.dataValues.team_logo.split('/')[1])
+      let msg_affiche = await require(`../events/.generateTeamImage.js`).run(bot, team, channel.id, "affiche", msg_logo.attachments.first().url)
+
+      await bot.Teams.update({ team_affiche: channel.id + "/" + msg_affiche.id }, { where: { team_id: id } })
     } 
 
     let team_updated = await bot.Teams.findOne({ where: { team_id: id, team_status: "ACTIVE" } })

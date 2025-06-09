@@ -74,8 +74,8 @@ module.exports = {
     },
     {
       type: "channel",
-      name: "post_logo",
-      description: "Channel to post the team logo",
+      name: "post_resource",
+      description: "Channel to post the team resources",
       required: true,
       autocomplete: true,
     }
@@ -117,33 +117,18 @@ module.exports = {
       return await message.editReply({ content: `${member2.match(/[0-9]{18}/) ? "<@" + member2 + ">" : member2} is already in team **${team.dataValues.team_name}**.`, ephemeral: true })
     }
 
-    let canvas = Canvas.createCanvas(1000, 1000)
-    let context = canvas.getContext('2d')
+    canvas = Canvas.createCanvas(1000, 1000)
+    context = canvas.getContext('2d')
 
     context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
     context.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas.width, canvas.height)
 
-    let canvas_emoji = Canvas.createCanvas(200, 200)
-    let context_emoji = canvas_emoji.getContext('2d')
-
-    context_emoji.drawImage(await Canvas.loadImage(args.get("logo").value), 30, 30, 139, 139)
-    context_emoji.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas_emoji.width, canvas_emoji.height)
-
-    let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
-
-    let msg_logo = await channel_logo.send({ content: "## " + name + " (logo)", files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-'+team_id+'.png' })] })
-    let logo = msg_logo.attachments.first().url
-
-    let msg_logo_emoji = await channel_logo.send({ content: "## " + name + " (emoji)", files: [new Discord.AttachmentBuilder(await canvas_emoji.encode('png'), { name: 'emoji-equipe-'+team_id+'.png' })] })
-    let logo_emoji = msg_logo_emoji.attachments.first().url
-
     let embed = new Discord.EmbedBuilder()
       .setTitle(name)
       .setDescription(description)
-      .setThumbnail(logo)
       .setColor(color)
       .addFields(
-        { name: 'Capitaine', value: "<@" + member0 + ">" },
+        { name: 'Capitaine', value: "<@" + member0 + ">", inline: true }, 
         { name: 'Membre', value: member1.match(/[0-9]{18}/) ? "<@" + member1 + ">" : member1, inline: true },
         { name: 'Membre', value: member2.match(/[0-9]{18}/) ? "<@" + member2 + ">" : member2, inline: true },
       )
@@ -171,7 +156,9 @@ module.exports = {
           team_name: name,
           team_desc: description,
           team_color: color,
-          team_logo: logo,
+          team_logo: "",
+          team_affiche: "",
+          team_emoji: "",
           team_status: "ACTIVE",
           team_message: "",
           team_role: "",
@@ -206,23 +193,24 @@ module.exports = {
           color: color,
           permissions: "0",
           position: captain.position,
-          icon: logo
         })   
-
-        // TODO enregistrer dans BDD
-        let emoji = await message.guild.emojis.create({ attachment: logo_emoji, name: name.toLowerCase().replaceAll(' ', '_') })
-
-        let post = await require(`../events/.postTeamEmbed.js`).run(bot, team, await bot.channels.fetch(args.get("post_team").value))
-
-        await post.react(emoji)
 
         message.guild.members.fetch(member0).then(member => member.roles.add(role))
         message.guild.members.fetch(member0).then(member => member.roles.add(captain))
-    
         if (member1.match(/[0-9]{18}/)) message.guild.members.fetch(member1).then(member => member.roles.add(role))
         if (member2.match(/[0-9]{18}/)) message.guild.members.fetch(member2).then(member => member.roles.add(role))
-       
-        await bot.Teams.update({ team_message: args.get("post_team").value+"/"+post.id, team_role: role.id }, { where: { team_id: team_id } })
+
+        let msg_logo = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "logo", args.get("logo").value)
+        let msg_emoji = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "emoji", args.get("logo").value)
+        let msg_affiche = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "affiche", msg_logo.attachments.first().url, "affiche",)
+        let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') })
+        await bot.Teams.update({ team_logo: args.get("post_resource").value + "/" + msg_logo.id, team_emoji: args.get("post_resource").value + "/" + msg_emoji.id + "/" + server_emoji.id, team_affiche: args.get("post_resource").value + "/" + msg_affiche.id }, { where: { team_id: team_id } })
+        let team_updated = await bot.Teams.findOne({ where: { team_id: team_id } })
+
+        let post = await require(`../events/.postTeamEmbed.js`).run(bot, team_updated, await bot.channels.fetch(args.get("post_team").value))
+        //await role.setIcon(server_emoji)
+        await post.react(server_emoji)
+        await bot.Teams.update({ team_message: args.get("post_team").value + "/" + post.id, team_role: role.id }, { where: { team_id: team_id } })
 
         return i.editReply({ content: `Team **${name}** created with id : **${team_id}**.`, components: [], ephemeral: true })
 
