@@ -221,7 +221,6 @@ module.exports = {
     } 
 
     if (args.get("name") || args.get("description") || args.get("logo") || args.get("color") || args.get("member0") || args.get("member1") || args.get("member2") || update) {
-      let channel = await bot.channels.fetch(args.get("post_resource").value)
       await channel.messages.fetch(team.dataValues.team_affiche.split('/')[1]).then(msg => msg.delete()).catch(() => {})
 
       team = await bot.Teams.findOne({ where: { team_id: id } })
