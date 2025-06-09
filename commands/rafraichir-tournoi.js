@@ -14,9 +14,7 @@ module.exports = {
 
     let tournaments = await bot.Tournaments.findAll()
 
-    for (tournament of tournaments) {
-      await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, true)  
-    }
+    for (tournament of tournaments) await require(`../events/.postTournamentEmbed.js`).run(bot, tournament, true)
 
     return await message.editReply({ content: "Done.", ephemeral: true })
   }

@@ -10,8 +10,6 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    await message.deferReply({ ephemeral: true })
-
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
 
     for (team of teams) await require(`../commands/modif-equipe.js`).run(bot, message, {team_id : team.dataValues.team_id, post_resource : team.dataValues.team_logo.split('/')[0]}, true)
