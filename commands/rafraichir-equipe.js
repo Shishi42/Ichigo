@@ -10,7 +10,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    console.log(args)
+    await message.deferReply({ ephemeral: true })
 
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
 

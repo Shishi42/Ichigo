@@ -89,7 +89,7 @@ module.exports = {
 
   async run(bot, message, args, update = false) {
 
-    await message.deferReply({ ephemeral: true })
+    if (!update) await message.deferReply({ ephemeral: true })
 
     let id = update ? update.team_id : args.get("team_id").value.split(" - ")[0]
 
