@@ -72,7 +72,7 @@ module.exports = {
       } 
   
       context.font = '58px Impact'
-      context.fillText(((team.dataValues.team_desc.match(new RegExp('.', "g")) || []).length > 1 ? team.dataValues.team_desc.split('.').slice(0, 1).join('. ') + '.' : team.dataValues.team_desc), 48, 280)    
+      context.fillText(((team.dataValues.team_desc.match(new RegExp('\.', "g")) || []).length > 1 ? team.dataValues.team_desc.split('.').slice(0, 2).join('. ') + '.' : team.dataValues.team_desc), 48, 280)    
 
       context.font = '200px Impact'
       context.fillStyle = '#' + team.dataValues.team_color
