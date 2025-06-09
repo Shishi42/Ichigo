@@ -112,7 +112,7 @@ module.exports = {
       let context = canvas.getContext('2d')
   
       context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
-      context.drawImage(await Canvas.loadImage('./medias/base_equipe.png'), 0, 0, canvas.width, canvas.height)
+      context.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas.width, canvas.height)
   
       let channel_logo = await bot.channels.fetch(args.get("post_logo").value)   
       let msg_logo = await channel_logo.send({ content: "## " + team.dataValues.team_name, files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: 'logo-equipe-' + id + '.png' })] })
