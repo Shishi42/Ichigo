@@ -91,12 +91,12 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    let id = args.get("team_id").value.split(" - ")[0]
+    let id = update ? update.team_id : args.get("team_id").value.split(" - ")[0]
 
     let team = await bot.Teams.findOne({ where: { team_id: id } })
     if (!team) return await message.editReply({ content: "Team provided does not exist.", ephemeral: true })
 
-    let channel = await bot.channels.fetch(args.get("post_resource").value)
+    let channel = update ? await bot.channels.fetch(update.post_resource) : await bot.channels.fetch(args.get("post_resource").value)
 
     if (args.get("name")){
       let team_with_name = await bot.Teams.findOne({ where: { team_name: args.get("name").value, team_status: "ACTIVE" } })
