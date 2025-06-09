@@ -7,22 +7,6 @@ module.exports = {
   permission: Discord.PermissionFlagsBits.Administrator,
   dm: true,
   category: "Équipe",
-  options: [
-    {
-      type: "role",
-      name: "captain",
-      description: "Captain role",
-      required: true,
-      autocomplete: true,
-    },
-    {
-      type: "channel",
-      name: "post_resource",
-      description: "Channel to post the team resources",
-      required: true,
-      autocomplete: true,
-    },
-  ],
 
   async run(bot, message, args) {
 
@@ -30,7 +14,7 @@ module.exports = {
 
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
 
-    for (team of teams) await require(`../commands/modif-equipe.js`).run(bot, message, {team_id : team.dataValues.team_id, captain : args.get("captain").value, post_resource : args.get("post_resource").value}, true)
+    for (team of teams) await require(`../commands/modif-equipe.js`).run(bot, message, {team_id : team.dataValues.team_id, post_resource : team.dataValues.team_logo.split('/')[0]}, true)
 
     return await message.editReply({ content: "Done.", ephemeral: true })
   }
