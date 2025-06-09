@@ -49,31 +49,31 @@ module.exports = {
   
       let user0 = await channel.guild.members.fetch(member0.dataValues.teammate_discord)
       context.drawImage(await Canvas.loadImage(user0.user.displayAvatarURL({ forceStatic: true })), x_avatar, 363, taille_avatar, taille_avatar)    
-      context.fillText(user0.displayName, x_pseudo, 478)
+      context.fillText(user0.displayName.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''), x_pseudo, 478)
       
       let user1 = member1.dataValues.teammate_discord
       if (user1.match(/[0-9]{18}/)) {
         user1 = await channel.guild.members.fetch(member1.dataValues.teammate_discord)
         context.drawImage(await Canvas.loadImage(user1.user.displayAvatarURL({ forceStatic: true })), x_avatar, 566, taille_avatar, taille_avatar)
-        context.fillText(user1.displayName, x_pseudo, 681) 
+        context.fillText(user1.displayName.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''), x_pseudo, 681) 
       } else {
         context.drawImage(await Canvas.loadImage('./medias/Teams/placeholder1.png'), 0, 0, canvas.width, canvas.height)
-        context.fillText(user1, x_pseudo, 681)
+        context.fillText(user1.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''), x_pseudo, 681)
       } 
   
       let user2 = member2.dataValues.teammate_discord
       if (user2.match(/[0-9]{18}/)) {
         user2 = await channel.guild.members.fetch(member2.dataValues.teammate_discord)
         context.drawImage(await Canvas.loadImage(user2.user.displayAvatarURL({ forceStatic: true })), x_avatar, 769, taille_avatar, taille_avatar)
-        context.fillText(user2.displayName, x_pseudo, 880)
+        context.fillText(user2.displayName.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''), x_pseudo, 880)
       } else {
         context.drawImage(await Canvas.loadImage('./medias/Teams/placeholder2.png'), 0, 0, canvas.width, canvas.height)
-        context.fillText(user2, x_pseudo, 880)
+        context.fillText(user2.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''), x_pseudo, 880)
       } 
   
       context.font = '58px Impact'
-      context.fillText(team.dataValues.team_desc, 48, 280)
-            
+      context.fillText(((team.dataValues.team_desc.match(new RegExp('.', "g")) || []).length > 1 ? team.dataValues.team_desc.split('.').slice(0, 1).join('. ') + '.' : team.dataValues.team_desc), 48, 280)    
+
       context.font = '200px Impact'
       context.fillStyle = '#' + team.dataValues.team_color
       context.fillText(team.dataValues.team_name.toUpperCase(), 42, 210)  

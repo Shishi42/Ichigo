@@ -1,5 +1,4 @@
 const Discord = require("discord.js")
-const Canvas = require('@napi-rs/canvas')
 
 module.exports = {
 
@@ -88,12 +87,12 @@ module.exports = {
     },
   ],
 
-  async run(bot, message, args) {
+  async run(bot, message, args, update = false) {
 
     await message.deferReply({ ephemeral: true })
 
     let id = args.get("team_id").value.split(" - ")[0]
-    console.log(id)
+
     let team = await bot.Teams.findOne({ where: { team_id: id } })
     if (!team) return await message.editReply({ content: "Team provided does not exist.", ephemeral: true })
 
@@ -221,7 +220,7 @@ module.exports = {
       }
     } 
 
-    if (args.get("name") || args.get("description") || args.get("logo") || args.get("color") || args.get("member0") || args.get("member1") || args.get("member2")) {
+    if (args.get("name") || args.get("description") || args.get("logo") || args.get("color") || args.get("member0") || args.get("member1") || args.get("member2") || update) {
       let channel = await bot.channels.fetch(args.get("post_resource").value)
       await channel.messages.fetch(team.dataValues.team_affiche.split('/')[1]).then(msg => msg.delete()).catch(() => {})
 
