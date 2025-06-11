@@ -72,11 +72,11 @@ module.exports = {
         context.fillText(user2.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, ''), x_pseudo, 880)
       } 
   
-      context.font = '48px Impact'
+      context.font = '55px Impact'
       context.fillText(((team.dataValues.team_desc.split('.').length - 1) >= 2 ? (team.dataValues.team_desc.split('.').slice(0, 2).join('. ') + '.') : team.dataValues.team_desc), 48, 280)    
 
       context.font = '200px Impact'
-      context.fillStyle = tinycolor('#' + team.dataValues.team_color).isDark() ? '#ffffff' : '#' + team.dataValues.team_color
+      context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() > 200 ? '#ffffff' : '#' + team.dataValues.team_color
       context.fillText(team.dataValues.team_name.toUpperCase(), 42, 210)  
   
       context.drawImage(await Canvas.loadImage('./medias/Teams/crown.png'), 0, 0, canvas.width, canvas.height)
