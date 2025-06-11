@@ -75,10 +75,13 @@ module.exports = {
       context.font = '54px Impact'
       context.fillText(((team.dataValues.team_desc.split('.').length - 1) >= 2 ? (team.dataValues.team_desc.split('.').slice(0, 2).join('. ') + '.') : team.dataValues.team_desc), 48, 280)    
 
+      console.log("test")
+      console.log(tinycolor('#171718').getBrightness())
+
       context.font = '200px Impact'
       console.log(team.dataValues.team_color)
       console.log(tinycolor('#' + team.dataValues.team_color).getBrightness())
-      context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() > 200 ? '#ffffff' : '#' + team.dataValues.team_color
+      context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() < 10 ? '#ffffff' : '#' + team.dataValues.team_color
       context.fillText(team.dataValues.team_name.toUpperCase(), 42, 210)  
   
       context.drawImage(await Canvas.loadImage('./medias/Teams/crown.png'), 0, 0, canvas.width, canvas.height)
