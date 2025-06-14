@@ -29,7 +29,7 @@ module.exports = {
 
     if (bot.regles[args.get("regle").value]) {
 
-      let content = bot.regles[args.get("regle").value]
+      let content = args.get("regle").value.startsWith("banlist") ? "" : bot.regles[args.get("regle").value]
       let media = args.get("regle").value.startsWith("banlist") ? new Discord.AttachmentBuilder("./medias/"+args.get("regle").value+".png") : ""
 
       if (args.get("date")) {
