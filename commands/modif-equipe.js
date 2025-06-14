@@ -107,7 +107,7 @@ module.exports = {
       await message.guild.channels.fetch(team.dataValues.team_emoji.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_emoji.split('/')[1]).then(msg => msg.edit({ content: "## [" + "emoji".toUpperCase() + "] : __" + args.get("name").value + "__ - " + new Date().toISOString().split('T')[0] })))
       
       await message.guild.roles.edit(team.dataValues.team_role, { name: args.get("name").value })
-      await message.guild.emojis.fetch(team.dataValues.team_emoji.split('/')[2]).then(emoji => emoji.edit({ name: team.dataValues.team_name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') }))
+      await message.guild.emojis.fetch(team.dataValues.team_emoji.split('/')[2]).then(emoji => emoji.edit({ name: team.dataValues.team_name.toLowerCase().normalize("NFD").replaceAll(' ', '_').replaceAll('-', '').replaceAll(/[\u0300-\u036f]/g, "") }))
     } 
 
     if (args.get("description")) bot.Teams.update({ team_desc: args.get("description").value.replaceAll("\\n", "\n") }, { where: { team_id: id } })   
@@ -120,7 +120,7 @@ module.exports = {
       let msg_logo = await require(`../events/.generateTeamImage.js`).run(bot, team, channel.id, "logo", args.get("logo").value)
       let msg_emoji = await require(`../events/.generateTeamImage.js`).run(bot, team, channel.id, "emoji", args.get("logo").value)
     
-      let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: team.dataValues.team_name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') })
+      let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: team.dataValues.team_name.toLowerCase().normalize("NFD").replaceAll(' ', '_').replaceAll('-', '').replaceAll(/[\u0300-\u036f]/g, "") })
       await bot.Teams.update({ team_logo: channel.id + "/" + msg_logo.id, team_emoji: channel.id + "/" + msg_emoji.id + "/" + server_emoji.id }, { where: { team_id: id } })
       await message.guild.channels.fetch(team.dataValues.team_message.split('/')[0]).then(channel => channel.messages.fetch(team.dataValues.team_message.split('/')[1]).then(msg => msg.react(server_emoji)))
       // await message.guild.roles.fetch(team.dataValues.team_role).then(role => { role.setIcon(msg_emoji.attachments.first().url) })

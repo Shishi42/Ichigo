@@ -203,7 +203,7 @@ module.exports = {
         let msg_logo = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "logo", args.get("logo").value)
         let msg_emoji = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "emoji", args.get("logo").value)
         let msg_affiche = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "affiche", msg_logo.attachments.first().url, "affiche",)
-        let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: name.toLowerCase().replaceAll(' ', '_').replaceAll('-', '') })
+        let server_emoji = await message.guild.emojis.create({ attachment: msg_emoji.attachments.first().url, name: name.toLowerCase().normalize("NFD").replaceAll(' ', '_').replaceAll('-', '').replaceAll(/[\u0300-\u036f]/g, "") })
         await bot.Teams.update({ team_logo: args.get("post_resource").value + "/" + msg_logo.id, team_emoji: args.get("post_resource").value + "/" + msg_emoji.id + "/" + server_emoji.id, team_affiche: args.get("post_resource").value + "/" + msg_affiche.id }, { where: { team_id: team_id } })
         let team_updated = await bot.Teams.findOne({ where: { team_id: team_id } })
 
