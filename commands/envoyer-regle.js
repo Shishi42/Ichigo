@@ -34,10 +34,10 @@ module.exports = {
 
       if (args.get("date")) {
         let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
-        new cron.CronJob(datetime, () => { message.channel.send({ content: content, files: [media]) }).start()
+        new cron.CronJob(datetime, () => { message.channel.send({ content: content, files: [media] }).start()
         return await message.reply({ content: `C'est bon, les règles seront envoyées le __<t:${Math.floor(datetime) / 1000}:d> à <t:${Math.floor(datetime) / 1000}:T> (<t:${Math.floor(datetime) / 1000}:R>)__.`, ephemeral: true })
       } else {
-        await message.channel.send({ content: content, files: [media]) })
+        await message.channel.send({ content: content, files: [media] })
         return await message.reply({ content: "C'est bon.", ephemeral: true })
       }
     } else return await message.reply({ content: "Pas de règles disponibles à ce nom.", ephemeral: true })
