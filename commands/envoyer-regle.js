@@ -29,12 +29,15 @@ module.exports = {
 
     if (bot.regles[args.get("regle").value]) {
 
+      let content = bot.regles[args.get("regle").value]
+      let media = args.get("regle").value.startsWith("banlist") ? new Discord.AttachmentBuilder("./medias/"+args.get("regle").value+".png") : ""
+
       if (args.get("date")) {
         let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
-        new cron.CronJob(datetime, () => { message.channel.send(bot.regles[args.get("regle").value]) }).start()
+        new cron.CronJob(datetime, () => { message.channel.send({ content: content, files: [media]) }).start()
         return await message.reply({ content: `C'est bon, les règles seront envoyées le __<t:${Math.floor(datetime) / 1000}:d> à <t:${Math.floor(datetime) / 1000}:T> (<t:${Math.floor(datetime) / 1000}:R>)__.`, ephemeral: true })
       } else {
-        await message.channel.send(bot.regles[args.get("regle").value])
+        await message.channel.send({ content: content, files: [media]) })
         return await message.reply({ content: "C'est bon.", ephemeral: true })
       }
     } else return await message.reply({ content: "Pas de règles disponibles à ce nom.", ephemeral: true })
