@@ -29,7 +29,7 @@ module.exports = {
 
     if (bot.regles[args.get("regle").value]) {
 
-      let content = args.get("regle").value.startsWith("banlist") ? "" : bot.regles[args.get("regle").value]
+      let content = (args.get("regle").value.startsWith("banlist") || args.get("regle").value.startsWith("ruleset")) ? "" : bot.regles[args.get("regle").value]
       let media = []
       if (args.get("regle").value.startsWith("banlist") || args.get("regle").value.startsWith("ruleset")) media.push("./medias/"+args.get("regle").value+".png")
 
