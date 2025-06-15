@@ -31,7 +31,7 @@ module.exports = {
 
       let content = args.get("regle").value.startsWith("banlist") ? "" : bot.regles[args.get("regle").value]
       let media = []
-      if (args.get("regle").value.startsWith("banlist")) media.push("./medias/"+args.get("regle").value+".png")
+      if (args.get("regle").value.startsWith("banlist") || args.get("regle").value.startsWith("ruleset")) media.push("./medias/"+args.get("regle").value+".png")
 
       if (args.get("date")) {
         let datetime = new Date(args.get("date").value.split('-')[0].split('/')[2], args.get("date").value.split('-')[0].split('/')[1] - 1, args.get("date").value.split('-')[0].split('/')[0], args.get("date").value.split('-')[1].split(':')[0], args.get("date").value.split('-')[1].split(':')[1], args.get("date").value.split('-')[1].split(':')[2])
