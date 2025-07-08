@@ -18,6 +18,8 @@ module.exports = {
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     let participants = tournament.dataValues.tournament_participants == "challonge" ? challonge.participants_count : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
 
+    if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "3vs3") participants = parseInt(participants)*3
+
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
