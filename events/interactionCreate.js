@@ -33,6 +33,21 @@ module.exports = async (bot, interaction) => {
   else if (interaction.isButton()){
     if (interaction.customId.startsWith("tournament-join")) require("./.formInscription.js").run(bot, interaction)
     if (interaction.customId.startsWith("tournament-leave")) require("./.addInscription.js").run(bot, interaction)
+
+
+    if (interaction.customId.startsWith("watchlist")) {
+      let count = parseInt(interaction.message.embeds[0].description.split(": ")[1])
+      let embed = new Discord.EmbedBuilder().setTitle(interaction.message.embeds[0].title).setImage(interaction.message.embeds[0].image.url)
+      if (interaction.customId.endsWith("up")) count += 1
+      if (interaction.customId.endsWith("down")) count -= 1
+      if (interaction.customId.endsWith("reset")) count = 0
+      
+      embed.setDescription("Compte : " + count)
+
+      interaction.deferUpdate()
+     
+      return await interaction.message.edit({ embeds: [embed] })
+    }
   }
 
   else if (interaction.customId.startsWith("tournament-inscription")) require("./.addInscription.js").run(bot, interaction)
