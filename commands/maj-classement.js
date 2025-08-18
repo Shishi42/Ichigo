@@ -31,7 +31,7 @@ module.exports = {
 
     let classements = [[classement_paris, "Paris"], [classement_marseille, "Marseille"]]
 
-    await message.channel.send("## Classement en cours - Saison " + bot.season + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
+    // await message.channel.send("## Classement en cours - Saison " + bot.season + "\n-# https://docs.google.com/spreadsheets/d/e/2PACX-1vR3SoKvCW1BTnWs4ikQdlMxYDSOlUlEeeb_Qi0RpQoKSZG1dfEVluU3uj5LzLvwhKdRZh9IA4V8qa89/pubhtml")
 
     values = new Array(300).fill(new Array(14).fill(""))
     await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `RAW!A2`, valueInputOption: "USER_ENTERED", resource: { values } })
@@ -47,7 +47,7 @@ module.exports = {
         res += ' '.repeat(3 - ((parseInt(blader) + 1).toString()).length) + (parseInt(blader) + 1).toString() + ' '.repeat(4) + classement[0][blader][0] + ' '.repeat(18 - classement[0][blader][0].length) + classement[0][blader][1] + ' '.repeat(5) + classement[0][blader][3]["wins"] + "\n"
       }
       res += "```"
-      await message.channel.send(res)
+      // await message.channel.send(res)
 
       for (blader in classement[0]) values.push([classement[0][blader][0], classement[0][blader][1], classement[0][blader][3]["wins"], classement[0][blader][3]["participations"], classement[0][blader][3]["W"] / (classement[0][blader][3]["W"] + classement[0][blader][3]["L"]), classement[0][blader][2]])
       for (blader in classement[0]) all_values.push([`[${classement[1][0]}]`,classement[0][blader][0],classement[0][blader][1],`=$M${all_values.length+1}*$N${all_values.length+1}*100000`,classement[0][blader][3]["wins"],classement[0][blader][3]["participations"],`=$H${all_values.length+1}/($H${all_values.length+1}+$I${all_values.length+1})`,classement[0][blader][3]["W"],classement[0][blader][3]["L"],`=$H${all_values.length+1}+$I${all_values.length+1}`,`=L${all_values.length+1}/$J${all_values.length+1}`,classement[0][blader][3]["points"],`=$G${all_values.length+1}+($K${all_values.length+1}/100)`,`=IF($L${all_values.length+1}>0;1/(1+(FLOOR(${tournaments_paris_bdd.length}/2)+2)*(1/($F${all_values.length+1}*$K${all_values.length+1})));0)`]) 
