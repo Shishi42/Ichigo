@@ -10,13 +10,15 @@ module.exports = {
 
 		if (tournament.dataValues.tournament_poster) medias.push({ attachment: tournament.dataValues.tournament_poster })
 
-		msg = "-# @everyone" + "\n"
+		msg = "-# @everyone - Annonce nouveau tournoi !" + "\n"
 
-		msg += "## NOUVEAU TOURNOI : " + tournament.dataValues.tournament_name.toUpperCase() + "\n"
+		msg += "## " + tournament.dataValues.tournament_name.toUpperCase() + "\n"
 
-		msg += "### " + tournament.dataValues.tournament_desc.toUpperCase() + "\n"
+		msg += "**" + tournament.dataValues.tournament_desc.toUpperCase() + "**"+ "\n"
 
-        msg += "\n" + ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n"
+		msg += "\n"
+
+        msg += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n"
 			
 		msg	+= "\n"
 
@@ -31,4 +33,6 @@ module.exports = {
         msg += `-# Merci d'indiquer votre participation dans ${place.dataValues.place_inscr} afin que nous puissions, au mieux, estimer la taille du tournoi.`
 
 		channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send({content : msg, files : medias}).then(message => message.crosspost()) : await channel.send({content : msg, files : medias})
+
+	}
 }
