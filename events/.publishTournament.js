@@ -6,22 +6,29 @@ module.exports = {
 
 		let channel = await bot.channels.fetch(post)
 		let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
+		let medias = []
+
+		if (tournament.dataValues.tournament_poster) medias.push({ attachment: tournament.dataValues.tournament_poster })
 
 		msg = "-# @everyone" + "\n"
 
-		msg += "## " + tournament.dataValues.tournament_name.toUpperCase() + "\n"
+		msg += "## NOUVEAU TOURNOI : " + tournament.dataValues.tournament_name.toUpperCase() + "\n"
 
 		msg += "### " + tournament.dataValues.tournament_desc.toUpperCase() + "\n"
 
-		msg += `Début de l'évènement le <t:${tournament.dataValues.tournament_date}:F> (<t:${tournament.dataValues.tournament_date}:R>)`
+        msg += "\n" + ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n"
+			
+		msg	+= "\n"
 
-		msg += ` au **${place.dataValues.place_name.toUpperCase()}**, situé au **${place.dataValues.place_number} ${place.dataValues.place_road}, ${place.dataValues.place_postcode}, à ${place.dataValues.place_city}**.` + "\n"
-		
-		msg += `-# Les inscriptions sont dans ${place.dataValues.place_inscr}`
+	 	msg += `:date: Date : Le <t:${tournament.dataValues.tournament_date}:D>, à partir de <t:${tournament.dataValues.tournament_date}:t> (<t:${tournament.dataValues.tournament_date}:R>)` + "\n"
+	    msg += `:map: Lieu : ${place.dataValues.place_name}, ${place.dataValues.place_city}` + "\n"
+	    msg += `:bar_chart: Format : ${tournament.dataValues.tournament_format}` + "\n"
+	    msg += `:scroll: Règlement : ${tournament.dataValues.tournament_ruleset}` + "\n"
+	    msg += `:globe_with_meridians: Lien : ${bot.url}` + "\n"
 
-		msg += ", à retrouver sur https://discord.gg/afEvCBF9XR :arrow_down:"
+		msg += "\n"
 
-		channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send(msg).then(message => message.crosspost()) : await channel.send(msg)
-		if (tournament.dataValues.tournament_poster) channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] }).then(message => message.crosspost()) : await channel.send({ files: [{ attachment: tournament.dataValues.tournament_poster }] })
-	}
+        msg += `-# Merci d'indiquer votre participation dans ${place.dataValues.place_inscr} afin que nous puissions, au mieux, estimer la taille du tournoi.`
+
+		channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send({content : msg, files : medias}).then(message => message.crosspost()) : await channel.send({content : msg, files : medias})
 }
