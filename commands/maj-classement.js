@@ -23,8 +23,8 @@ module.exports = {
     let values = []
     let all_values = []
     
-    let tournaments_paris_bdd = await bot.Tournaments.findAll({ where: { tournament_name: { [Sequelize.Op.startsWith]: "Beyblade Battle Tournament" }, tournament_place: { [Sequelize.Op.endsWith]: "paris" }, tournament_ruleset: "3on3", tournament_season: bot.season } })
-    let tournaments_marseille_bdd = await bot.Tournaments.findAll({ where: { tournament_name: { [Sequelize.Op.startsWith]: "Beyblade Battle Tournament" }, tournament_place: { [Sequelize.Op.endsWith]: "marseille" }, tournament_ruleset: "3on3", tournament_season: bot.season } })
+    let tournaments_paris_bdd = await bot.Tournaments.findAll({ where: { tournament_name: { [Sequelize.Op.startsWith]: "Beyblade Battle Tournament" }, tournament_place: { [Sequelize.Op.endsWith]: "paris" }, tournament_ruleset: "3on3", tournament_season: bot.season, tournament_status: "Tournoi fini" } })
+    let tournaments_marseille_bdd = await bot.Tournaments.findAll({ where: { tournament_name: { [Sequelize.Op.startsWith]: "Beyblade Battle Tournament" }, tournament_place: { [Sequelize.Op.endsWith]: "marseille" }, tournament_ruleset: "3on3", tournament_season: bot.season, tournament_status: "Tournoi fini" } })
     
     let classement_paris = await require("../events/.computeRanking.js").run(bot, tournaments_paris_bdd)
     let classement_marseille = await require("../events/.computeRanking.js").run(bot, tournaments_marseille_bdd)
@@ -50,7 +50,7 @@ module.exports = {
       await message.channel.send(res)
 
       for (blader in classement[0]) values.push([classement[0][blader][0], classement[0][blader][1], classement[0][blader][3]["wins"], classement[0][blader][3]["participations"], classement[0][blader][3]["W"] / (classement[0][blader][3]["W"] + classement[0][blader][3]["L"]), classement[0][blader][2]])
-      for (blader in classement[0]) all_values.push([`[${classement[1][0]}]`,classement[0][blader][0],classement[0][blader][1],`=$M${all_values.length+2}*$N${all_values.length+2}*100000`,classement[0][blader][3]["wins"],classement[0][blader][3]["participations"],`=$H${all_values.length+2}/($H${all_values.length+2}+$I${all_values.length+2})`,classement[0][blader][3]["W"],classement[0][blader][3]["L"],`=$H${all_values.length+2}+$I${all_values.length+2}`,`=L${all_values.length+2}/$J${all_values.length+2}`,classement[0][blader][3]["points"],`=$G${all_values.length+2}+($K${all_values.length+2}/100)`,`=IF($L${all_values.length+2}>0;1/(1+(FLOOR(${tournaments_paris_bdd.length}/2)+2)*(1/($F${all_values.length+2}*$K${all_values.length+2})));0)`]) 
+      for (blader in classement[0]) all_values.push([`[${classement[1][0]}]`,classement[0][blader][0],classement[0][blader][1],`=$M${all_values.length+2}*$N${all_values.length+2}*100000`,classement[0][blader][3]["wins"],classement[0][blader][3]["participations"],`=$H${all_values.length+2}/($H${all_values.length+2}+$I${all_values.length+2})`,classement[0][blader][3]["W"],classement[0][blader][3]["L"],`=$H${all_values.length+2}+$I${all_values.length+2}`,`=L${all_values.length+2}/$J${all_values.length+2}`,classement[0][blader][3]["points"],`=$G${all_values.length+2}+($K${all_values.length+2}/100)`,`=IF($L${all_values.length+2}>0;1/(1+(FLOOR(${classement[1] == "Paris" ? tournaments_paris_bdd.length : tournaments_marseille_bdd.length}/2)+2)*(1/($F${all_values.length+2}*$K${all_values.length+2})));0)`]) 
       await google.sheets({ version: "v4", auth: auth }).spreadsheets.values.update({ spreadsheetId: bot.top_bladers, range: `${classement[1]}!B2`, valueInputOption: "USER_ENTERED", resource: { values } })
 
     }
