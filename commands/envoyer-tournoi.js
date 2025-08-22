@@ -69,6 +69,20 @@ module.exports = {
     },
     {
       type: "string",
+      name: "limite",
+      description: "Limite du tournoi",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
+      name: "custom",
+      description: "Custom du tournoi",
+      required: false,
+      autocomplete: false,
+    },
+    {
+      type: "string",
       name: "infos",
       description: "Infos supplémentaires du tournoi",
       required: false,
@@ -107,12 +121,14 @@ module.exports = {
     if(args.get("description") || args.get("description")) content += "\n"
     if(!args.get("description") && !args.get("description")) content += "\n"
 
-    if(args.get("date") || args.get("lieu") || args.get("format") || args.get("ruleset") || args.get("lien")) {
+    if(args.get("date") || args.get("lieu") || args.get("format") || args.get("ruleset") || args.get("limite") || args.get("custom") || args.get("lien")) {
       content += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n" + "\n"
       if (args.get("date")) content += `:date: Date : Le <t:${Math.floor(date) / 1000}:D>, à partir de <t:${Math.floor(date) / 1000}:t>` + "\n"
       if (args.get("lieu")) content += `:map: Lieu : ${args.get("lieu").value}` + "\n"
       if (args.get("format")) content += `:bar_chart: Format : ${args.get("format").value}` + "\n"
       if (args.get("ruleset")) content += `:scroll: Règlement : ${args.get("ruleset").value}` + "\n"
+      if (args.get("limite")) content += `:scroll: Limite de participants : ${args.get("limite").value}` + "\n"
+      if (args.get("custom")) content += `${args.get("custom").value}` + "\n"
       if (args.get("lien")) content += `:globe_with_meridians: Lien : ${args.get("lien").value}` + "\n"
       content += "\n"
     }
