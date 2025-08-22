@@ -158,7 +158,7 @@ module.exports = {
         if (args.get("date_pub")){   
           prog = new Date(args.get("date_pub").value.split('-')[0].split('/')[2], args.get("date_pub").value.split('-')[0].split('/')[1] - 1, args.get("date_pub").value.split('-')[0].split('/')[0], args.get("date_pub").value.split('-')[1].split(':')[0], args.get("date_pub").value.split('-')[1].split(':')[1], args.get("date_pub").value.split('-')[1].split(':')[2])
           await i.editReply({ content: `Tournament post confirmed, waiting to post the __<t:${Math.floor(prog) / 1000}:d> at <t:${Math.floor(prog) / 1000}:T> (<t:${Math.floor(prog) / 1000}:R>)__.`, components: [], ephemeral: true })
-        } else prog = new Date(parseInt(Math.floor(Date.now()+5)))
+        } else prog = new Date(parseInt(Math.floor(Date.now()+10)))
 
         new cron.CronJob(prog, async () => {
           message.channel.type == Discord.ChannelType.GuildAnnouncement ? await message.channel.send({content : content, files : medias}).then(message => message.crosspost()) : await message.channel.send({content : content, files : medias})
