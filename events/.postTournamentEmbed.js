@@ -19,6 +19,7 @@ module.exports = {
     let participants = tournament.dataValues.tournament_participants == "challonge" ? challonge.participants_count : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
 
     if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "3vs3") participants = parseInt(participants)*3
+    else if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "2vs2") participants = parseInt(participants)*2
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
