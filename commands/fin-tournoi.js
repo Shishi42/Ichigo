@@ -77,9 +77,9 @@ module.exports = {
     if (args.get("img_result")) medias.push({ attachment: args.get("img_result").value })
 
     content += `## ${tournament_updated.dataValues.tournament_name} (<t:${tournament_updated.dataValues.tournament_date}:d>) - **${tournament_updated.dataValues.tournament_ruleset}** - \<:challonge:1310799875864268800> [Challonge](https://challonge.com/${tournament_updated.dataValues.tournament_id})` + "\n"
-    content += `- :trophy: **1ʳᵉ place** - ${first.match(/[0-9]{18}/) ? "<@" + first + ">" : first}` + "\n"
-    content += `- :second_place: **2ᵉ place** - ${second.match(/[0-9]{18}/) ? "<@" + second + ">" : second}` + "\n"
-    content += `- :third_place: **3ᵉ place ** - ${third.match(/[0-9]{18}/) ? "<@" + third + ">" : third}` + "\n"
+    content += `- :trophy: **1ʳᵉ place** - ${first.match(/^[0-9]{18}/) ? "<@" + first + ">" : first}` + "\n"
+    content += `- :second_place: **2ᵉ place** - ${second.match(/^[0-9]{18}/) ? "<@" + second + ">" : second}` + "\n"
+    content += `- :third_place: **3ᵉ place ** - ${third.match(/^[0-9]{18}/) ? "<@" + third + ">" : third}` + "\n"
     content += "\n"
     content += "Bravo à tous·tes !"
 
