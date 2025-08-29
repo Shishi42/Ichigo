@@ -11,13 +11,13 @@ module.exports = async bot => {
     "instagram": "https://www.instagram.com/sunafterthereign",
     "twitter": "https://x.com/SunAfterTheBey",
     "youtube": "https://www.youtube.com/@SunAftertheReign",
+    "liens": "https://sunafterthereign.carrd.co",
 
-    "data" : "Notre base de données des produits Beyblade X : https://docs.google.com/spreadsheets/d/1Wshh88T0oDORXXr4F7xVYK0cjBRMXYJE5KzoPjss_no",
+    "data" : "Base de données des produits Beyblade X : https://docs.google.com/spreadsheets/d/1Wshh88T0oDORXXr4F7xVYK0cjBRMXYJE5KzoPjss_no",
     "tournoi": "Sun After the Reign organise un tournoi tous les mois, le Beyblade Battle Tournament. Si une date n'est pas encore annoncée, alors ça arrivera bientôt dans https://discord.com/channels/1221611301332193371/1255960593563910306",
-    "enregistrement": "N'oubliez pas de valider votre présence au tournoi dans https://discord.com/channels/1221611301332193371/1227020880614260866 sinon on va se tape <:chopan_pouce:1255261127055769700>",
+    "enregistrement": "N'oubliez pas d'indiquer votre présence au tournoi dans https://discord.com/channels/1221611301332193371/1227020880614260866",
     "salon": "https://discordapp.com/channels/1221611301332193371/1221669702477021247/1297573105757196320",
 
-    "streaming" : "https://www.streaming-espace.fr",
   }
 
   bot.regles = {
@@ -27,6 +27,7 @@ module.exports = async bot => {
     "banlist-3on3" : ".",
     "ruleset-p1" : ".",
     "ruleset-p2" : ".",
+    "ruleset-p3" : ".",
     "3vs3": "# Déroulement d'un match __3vs3__\n  - Une équipe est composée de 3 joueurs, qui chacun assemble **1 toupie** en n'utilisant **aucun composant en double** parmi les 3 toupies de l'équipe.\n  - Ensuite l'équipe désigne un ordre pour chacun de ses joueurs et leur toupie, **n°1 n°2 et n°3**.\n  - Puis l'équipe donne ses toupies, dans l'ordre, à l'arbitre afin qu'il procède à une vérification et puisse fournir à chaque set les 2 toupies aux joueurs.\n  - Enfin, l'équipe déclare qu'elle est prête et présente ses lanceurs à l'arbitre.\n  - Les joueurs de l'équipe affronte alors un joueur de l'équipe adverse selon son ordre, dans un set, avec sa toupie.\n\n- Les sets sont joués en 2 points gagnants, avec les règles suivantes :\n  - **EXTREME FINISH** : 3 points\n  - **OVER FINISH** : 2 points\n  - **BURST FINISH** : 2 points\n  - **SPIN FINISH** : 1 point\n - Le perdant du set est éliminé du match et laisse la place au joueur suivant de son équipe, le gagnant quant à lui continue à jouer.\n - L'équipe qui élimine tous les joueurs de l'équipe adverse est déclarée vainqueur.",
     "banlist-3vs3" : ".",
     "2vs2": "# Déroulement d'un match __2vs2__\n  - Une équipe est composée de 2 joueurs, qui chacun assemble **1 toupie** en n'utilisant **aucun composant en double** parmi les 2 toupies de l'équipe.\n  - Ensuite l'équipe désigne un ordre pour chacun de ses joueurs et leur toupie, **n°1 puis n°2**.\n  - Puis l'équipe donne ses toupies, dans l'ordre, à l'arbitre afin qu'il procède à une vérification et puisse fournir à chaque set les 2 toupies aux joueurs.\n  - Enfin, l'équipe déclare qu'elle est prête et présente ses lanceurs à l'arbitre.\n  - Les joueurs de l'équipe affronte alors un joueur de l'équipe adverse selon son ordre, dans un set, avec sa toupie.\n\n- Les sets sont joués en 2 points gagnants, avec les règles suivantes :\n  - **EXTREME FINISH** : 3 points\n  - **OVER FINISH** : 2 points\n  - **BURST FINISH** : 2 points\n  - **SPIN FINISH** : 1 point\n - Le perdant du set est éliminé du match et laisse la place au joueur suivant de son équipe, le gagnant quant à lui continue à jouer.\n - L'équipe qui élimine tous les joueurs de l'équipe adverse est déclarée vainqueur.",
