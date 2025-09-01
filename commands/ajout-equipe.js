@@ -208,7 +208,7 @@ module.exports = {
         let team_updated = await bot.Teams.findOne({ where: { team_id: team_id } })
 
         let post = await require(`../events/.postTeamEmbed.js`).run(bot, team_updated, await bot.channels.fetch(args.get("post_team").value))
-        // await role.setIcon(server_emoji)
+        await role.setIcon(server_emoji)
         await post.react(server_emoji)
         await bot.Teams.update({ team_message: args.get("post_team").value + "/" + post.id, team_role: role.id }, { where: { team_id: team_id } })
 
