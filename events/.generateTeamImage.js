@@ -74,7 +74,7 @@ module.exports = {
       } 
   
       context.font = '54px Impact'
-      context.fillText(((team.dataValues.team_desc.split('.').length - 1) >= 1 ? (team.dataValues.team_desc.split('.').slice(0, 1).join('. ') + '.') : team.dataValues.team_desc), 48, 280)    
+      context.fillText(((team.dataValues.team_desc.split('.').length - 1) >= 1 ? (team.dataValues.team_desc.split('.').split('!').slice(0, 1).join('. ') + '.') : team.dataValues.team_desc), 48, 280)    
 
       context.font = '180px Impact'
       context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() < 30 ? '#ffffff' : '#' + team.dataValues.team_color
