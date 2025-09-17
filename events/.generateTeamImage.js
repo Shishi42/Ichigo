@@ -74,9 +74,9 @@ module.exports = {
       } 
   
       context.font = '54px Impact'
-      context.fillText(((team.dataValues.team_desc.split('.').length - 1) >= 1 ? (team.dataValues.team_desc.split('.').split('!').slice(0, 1).join('. ') + '.').replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, '') : team.dataValues.team_desc.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, '')), 48, 280)    
+      context.fillText(((team.dataValues.team_desc.split('.').length - 1) >= 1 ? (team.dataValues.team_desc.split('.').split('!').slice(0, 1).join('. ') + '.').replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, '') : team.dataValues.team_desc.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, '')), 48, 250)    
 
-      context.font = '180px Impact'
+      context.font = '150px Impact'
       context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() < 30 ? '#ffffff' : '#' + team.dataValues.team_color
       context.fillText(team.dataValues.team_name.toUpperCase(), 42, 210)  
   
