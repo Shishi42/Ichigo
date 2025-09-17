@@ -75,8 +75,8 @@ module.exports = {
   
       context.font = '54px Impact'
       let desc = team.dataValues.team_desc.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, '')
-      if (desc.split('.').length - 1) >= 1) desc = desc.split('.')[0]+'.'
-      if (desc.split('!').length - 1) >= 1) desc = desc.split('!')[0]+'!'      
+      if ((desc.split('.').length - 1) >= 1) desc = desc.split('.')[0]+'.'
+      if ((desc.split('!').length - 1) >= 1) desc = desc.split('!')[0]+'!'      
       context.fillText(desc, 48, 260)    
 
       context.font = '150px Impact'
