@@ -77,7 +77,7 @@ module.exports = {
       let desc = team.dataValues.team_desc.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, '')
       if ((desc.split('.').length - 1) >= 1) desc = desc.split('.')[0]+'.'
       if ((desc.split('!').length - 1) >= 1) desc = desc.split('!')[0]+'!'      
-      context.fillText(desc, 48, 260)    
+      context.fillText(desc, 48, 270)    
 
       context.font = '150px Impact'
       context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() < 30 ? '#ffffff' : '#' + team.dataValues.team_color
