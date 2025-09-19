@@ -51,13 +51,13 @@ module.exports = {
   
       let user0 = await channel.guild.members.fetch(member0.dataValues.teammate_discord)
       context.drawImage(await Canvas.loadImage(user0.user.displayAvatarURL({ forceStatic: true })), x_avatar, 363, taille_avatar, taille_avatar)    
-      context.fillText(user0.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 478)
+      context.fillText(user0.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæîïÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 478)
       
       let user1 = member1.dataValues.teammate_discord
       if (user1.match(/[0-9]{18}/)) {
         user1 = await channel.guild.members.fetch(member1.dataValues.teammate_discord)
         context.drawImage(await Canvas.loadImage(user1.user.displayAvatarURL({ forceStatic: true })), x_avatar, 566, taille_avatar, taille_avatar)
-        context.fillText(user1.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 681) 
+        context.fillText(user1.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæîïÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 681) 
       } else {
         context.drawImage(await Canvas.loadImage('./medias/Teams/placeholder1.png'), 0, 0, canvas.width, canvas.height)
         context.fillText(user1, x_pseudo, 681)
@@ -67,14 +67,14 @@ module.exports = {
       if (user2.match(/[0-9]{18}/)) {
         user2 = await channel.guild.members.fetch(member2.dataValues.teammate_discord)
         context.drawImage(await Canvas.loadImage(user2.user.displayAvatarURL({ forceStatic: true })), x_avatar, 769, taille_avatar, taille_avatar)
-        context.fillText(user2.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 880)
+        context.fillText(user2.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæîïÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 880)
       } else {
         context.drawImage(await Canvas.loadImage('./medias/Teams/placeholder2.png'), 0, 0, canvas.width, canvas.height)
         context.fillText(user2, x_pseudo, 880)
       } 
   
       context.font = '54px Impact'
-      let desc = team.dataValues.team_desc.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!#…"]+/g, '')
+      let desc = team.dataValues.team_desc.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæîïÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!#…"]+/g, '')
       if ((desc.split('.').length - 1) >= 1) desc = desc.split('.')[0]+'.'
       if ((desc.split('!').length - 1) >= 1) desc = desc.split('!')[0]+'!'      
       context.fillText(desc, 48, 270)    
