@@ -50,6 +50,13 @@ module.exports = {
       required: false,
       autocomplete: false,
     },
+    {
+      type: "string",
+      name: "delete_role",
+      description: "Option to delete participation role",
+      required: false,
+      autocomplete: false,
+    },
   ],
 
   async run(bot, message, args) {
@@ -67,7 +74,7 @@ module.exports = {
   
     bot.Tournaments.update({ tournament_first: first, tournament_second: second, tournament_third: third, tournament_status: "Tournoi fini", tournament_event: "", tournament_role: "" }, { where: { tournament_id: id } })
     if (tournament.dataValues.tournament_challonge) bot.Tournaments.update({ tournament_participants: "challonge" }, { where: { tournament_id: id } })
-    message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
+    if (args.get("delete_role")) message.guild.roles.fetch(tournament.dataValues.tournament_role).then(role => role.delete())
   
     let tournament_updated = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
