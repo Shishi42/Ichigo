@@ -11,6 +11,14 @@ module.exports = {
     let canvas
     let context
 
+    if (type == "base"){
+      img = await Canvas.loadImage(logo)
+      canvas = Canvas.createCanvas(img.width, img.height)
+      context = canvas.getContext('2d')
+
+      context.drawImage(img, 0, 0, img.width, img.height)
+    } 
+
     if (type == "logo"){
       canvas = Canvas.createCanvas(1000, 1000)
       context = canvas.getContext('2d')
