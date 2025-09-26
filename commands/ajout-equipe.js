@@ -200,6 +200,7 @@ module.exports = {
         if (member1.match(/[0-9]{18}/)) message.guild.members.fetch(member1).then(member => member.roles.add(role))
         if (member2.match(/[0-9]{18}/)) message.guild.members.fetch(member2).then(member => member.roles.add(role))
 
+        let msg_base = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "base", args.get("logo").value)
         let msg_logo = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "logo", args.get("logo").value)
         let msg_emoji = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "emoji", args.get("logo").value)
         let msg_affiche = await require(`../events/.generateTeamImage.js`).run(bot, team, args.get("post_resource").value, "affiche", msg_logo.attachments.first().url, "affiche",)
