@@ -38,7 +38,7 @@ module.exports = {
 
             if (blader.id == match.winner_id) {
               classement[blader.name]["W"] += 1
-              classement[blader.name]["points"] += Math.max(...score)
+              classement[blader.name]["points"] += Math.max(...score) > 4 ? 4 : Math.max(...score)
             }
             else if (blader.id == match.loser_id) {
               classement[blader.name]["L"] += 1
