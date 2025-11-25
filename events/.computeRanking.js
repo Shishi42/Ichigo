@@ -51,7 +51,7 @@ module.exports = {
       point_avg = classement[blader]["points"] / (classement[blader]["W"] + classement[blader]["L"])
       winrate = classement[blader]["W"] / (classement[blader]["W"] + classement[blader]["L"])
       winscore = winrate + (point_avg / 100)
-      punish = 1 / (1 + (Math.floor(tournaments.length/1.5)+2) * (1 / (classement[blader]["participations"] * point_avg)))
+      punish = 1 / (1 + (Math.floor(tournaments.length/1.25)+2) * (1 / (classement[blader]["participations"] * point_avg)))
       score = (punish * winscore * 100000).toFixed()
       return [blader, score, point_avg, classement[blader]]
     })
