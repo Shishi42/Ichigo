@@ -34,18 +34,15 @@ module.exports = {
           let match = matches.match
 
           if (match.scores_csv.length == 3 && match.scores_csv != "0-0") {
-            score = match.scores_csv.split("-").map(Number)
-
-            if (blader.id == match.winner_id) {
-              classement[blader.name]["W"] += 1
-              classement[blader.name]["points"] += Math.max(...score) > 4 ? 4 : Math.max(...score)
-            }
-            else if (blader.id == match.loser_id) {
-              classement[blader.name]["L"] += 1
-              classement[blader.name]["points"] += Math.min(...score)
+            if (blader.id == match.loser_id) {
+              classement[blader.name]["points"] += Math.min(...match.scores_csv.split("-").map(Number))
             }
           }
-          else if (blader.id == match.loser_id) classement[blader.name]["L"] += 1
+          if (blader.id == match.winner_id) {
+            classement[blader.name]["W"] += 1
+            classement[blader.name]["points"] += 4
+          }
+          if (blader.id == match.loser_id) classement[blader.name]["L"] += 1
         }
       }
     }
