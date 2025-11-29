@@ -27,6 +27,6 @@ module.exports = {
 
     await msg.attachments.forEach(file => { message.channel.send(file.url) })
 
-    return await message.reply({content: "Done.", ephemeral: true})
+    return await message.editReply({content: "Done.", ephemeral: true})
   }
 }
