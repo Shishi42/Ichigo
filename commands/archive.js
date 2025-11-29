@@ -1,0 +1,31 @@
+const Discord = require("discord.js")
+
+module.exports = {
+
+  name: "archive",
+  description: "Get all files from a message",
+  permission: Discord.PermissionFlagsBits.Administrator,
+  dm: false,
+  category: "Utilitaire",
+  options: [
+    {
+      type: "string",
+      name: "message",
+      description: "Link to the message",
+      required: true,
+      autocomplete: false,
+    }
+  ],
+
+  async run(bot, message, args) {
+
+    await message.deferReply({ ephemeral: true })
+
+    let channel = await message.guild.channels.fetch(args.get("message").split("/")[6])
+    let message = await channel.messages.fetch(args.get("message").split("/")[7])
+
+    message.attachments.forEach(file => { message.followUp(file.url) })
+
+    return await message.reply({content: "Done.", ephemeral: true})
+  }
+}
