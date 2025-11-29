@@ -22,9 +22,9 @@ module.exports = {
     await message.deferReply({ ephemeral: true })
 
     let channel = await message.guild.channels.fetch(args.get("message").split("/")[6])
-    let message = await channel.messages.fetch(args.get("message").split("/")[7])
+    let msg = await channel.messages.fetch(args.get("message").split("/")[7])
 
-    message.attachments.forEach(file => { message.followUp(file.url) })
+    msg.attachments.forEach(file => { message.followUp(file.url) })
 
     return await message.reply({content: "Done.", ephemeral: true})
   }
