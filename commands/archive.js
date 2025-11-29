@@ -25,7 +25,7 @@ module.exports = {
     let msg = await channel.messages.fetch(args.get("message").value.split('/')[6])
 
 
-    msg.attachments.forEach(file => { message.channel.send(file.url) })
+    await msg.attachments.forEach(file => { message.channel.send(file.url) })
 
     return await message.reply({content: "Done.", ephemeral: true})
   }
