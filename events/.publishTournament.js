@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
 
-	async run(bot, tournament, post) {
+	async run(bot, tournament, post, ping) {
 
 		let channel = await bot.channels.fetch(post)
 		let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
@@ -10,7 +10,7 @@ module.exports = {
 
 		if (tournament.dataValues.tournament_poster) medias.push({ attachment: tournament.dataValues.tournament_poster })
 
-		msg = "-# @everyone - Annonce nouveau tournoi !" + "\n"
+		msg = "-# @everyone"+ ping ? ` | <@&${ping}>` : "" +" - Annonce nouveau tournoi !" + "\n"
 
 		msg += "## " + tournament.dataValues.tournament_name.toUpperCase() + "\n"
 
