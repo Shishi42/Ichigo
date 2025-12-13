@@ -32,7 +32,6 @@ module.exports = {
 
         msg += `-# Merci d'indiquer votre participation dans ${place.dataValues.place_inscr} afin que nous puissions, au mieux, estimer la taille du tournoi.`
 
-		channel.type == Discord.ChannelType.GuildAnnouncement ? await channel.send({content : msg, files : medias}).then(message => message.crosspost()) : await channel.send({content : msg, files : medias})
-
+		return await channel.send({content : msg, files : medias})
 	}
 }
