@@ -10,7 +10,7 @@ module.exports = {
 
 		if (tournament.dataValues.tournament_poster) medias.push({ attachment: tournament.dataValues.tournament_poster })
 
-		msg = "-# @everyone"+ ping ? ` | <@&${ping}>` : "" +" - Annonce nouveau tournoi !" + "\n"
+		msg = "-# @everyone" + (ping ? ` <@&${ping}>` : "") + " - Annonce nouveau tournoi !" + "\n"
 
 		msg += "## " + tournament.dataValues.tournament_name.toUpperCase() + "\n"
 
