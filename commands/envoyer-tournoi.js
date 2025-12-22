@@ -133,9 +133,8 @@ module.exports = {
       content += "\n"
     }
 
-    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + "\n" + args.get("infos").value.replaceAll("\\n", "\n")
+    if (args.get("infos")) content += ":small_orange_diamond: **Informations supplémentaires** :small_orange_diamond:" + "\n" + "\n" + args.get("infos").value.replaceAll("\\n", "\n") + "\n"
 
-    content += "\n"
     content += "\n"
     content += "-# Attention ce tournoi n'est pas organisé par **Sun After the Reign**, cette annonce n'en fait que la promotion."
   
