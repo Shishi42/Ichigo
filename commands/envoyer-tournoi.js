@@ -114,7 +114,7 @@ module.exports = {
 
     if(args.get("ping")) content += `-# <@&${args.get("ping").value}>\n`
 
-    if(args.get("nom")) content += `## ${args.get("nom").value}` + "\n"
+    if(args.get("nom")) content += `## :trophy: ${args.get("nom").value.toUpperCase()} :trophy:` + "\n"
 
     if(args.get("description")) content += `${args.get("description").value.replaceAll("\\n", "\n")}` + "\n"
 
@@ -125,11 +125,11 @@ module.exports = {
       content += ":small_orange_diamond: **Informations** :small_orange_diamond:" + "\n" + "\n"
       if (args.get("date")) content += `:date: Date : Le <t:${Math.floor(date) / 1000}:D>, à partir de <t:${Math.floor(date) / 1000}:t>` + "\n"
       if (args.get("lieu")) content += `:map: Lieu : ${args.get("lieu").value}` + "\n"
-      if (args.get("format")) content += `:bar_chart: Format : ${args.get("format").value}` + "\n"
+      if (args.get("format")) content += `:tools: Format : ${args.get("format").value}` + "\n"
       if (args.get("ruleset")) content += `:scroll: Règlement : ${args.get("ruleset").value}` + "\n"
-      if (args.get("limite")) content += `:scroll: Limite de participants : ${args.get("limite").value}` + "\n"
+      if (args.get("limite")) content += `:busts_in_silhouette: Limite de participants : ${args.get("limite").value}` + "\n"
       if (args.get("custom")) content += `${args.get("custom").value}` + "\n"
-      if (args.get("lien")) content += `:globe_with_meridians: Lien : ${args.get("lien").value}` + "\n"
+      if (args.get("lien")) content += `:link: Lien : ${args.get("lien").value}` + "\n"
       content += "\n"
     }
 
