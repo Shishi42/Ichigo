@@ -15,12 +15,11 @@ module.exports = {
       challonge = body.tournament
     }
 
-    let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
-    let participants = tournament.dataValues.tournament_participants == "challonge" ? challonge.participants_count : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
-    let participants2 = challonge.participants_count + " ("+ players.length+")"
+    let players = tournament.dataValues.tournament_ruleset == "3vs3" ? challonge.participants_count*3 : tournament.dataValues.tournament_ruleset == "2vs2" ? challonge.participants_count*2 : challonge.participants_count
+    let users = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     
-    if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "3vs3") participants = parseInt(participants)*3
-    else if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "2vs2") participants = parseInt(participants)*2
+    let participants = tournament.dataValues.tournament_participants == "challonge" ? players : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
+    let participants2 = players + " ("+ players.length+")"
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
