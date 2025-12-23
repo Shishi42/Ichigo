@@ -21,7 +21,7 @@ module.exports = {
     let participants = tournament.dataValues.tournament_participants == "challonge" ? players : tournament.dataValues.tournament_participants == "auto" ? users.length : tournament.dataValues.tournament_participants
     let participants2 = players + " ("+ users.length+" pré-inscrits)"
 
-    if (tournament.dataValues.status == "Inscriptions en cours") participants2 = users.length
+    if (tournament.dataValues.tournament_status == "Inscriptions en cours") participants2 = users.length
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
