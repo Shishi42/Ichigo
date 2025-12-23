@@ -17,7 +17,7 @@ module.exports = {
 
     let players = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     let participants = tournament.dataValues.tournament_participants == "challonge" ? challonge.participants_count : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
-    let participants2 = tournament.dataValues.tournament_participants + " pré-inscrits sur " + challonge.participants_count + "participants"
+    let participants2 = challonge.participants_count + " / " + players.length
     
     if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "3vs3") participants = parseInt(participants)*3
     else if (tournament.dataValues.tournament_participants == "challonge" && tournament.dataValues.tournament_ruleset == "2vs2") participants = parseInt(participants)*2
