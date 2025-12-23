@@ -21,6 +21,8 @@ module.exports = {
     let participants = tournament.dataValues.tournament_participants == "challonge" ? players : tournament.dataValues.tournament_participants == "auto" ? users.length : tournament.dataValues.tournament_participants
     let participants2 = players + " ("+ users.length+")"
 
+    if (tournament.dataValues.status == "Inscriptions en cours") participants2 = users.length
+
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
       .setAuthor({ name: 'Ichigo - Sun After the Reign', iconURL: bot.user.displayAvatarURL(), url: bot.url})
