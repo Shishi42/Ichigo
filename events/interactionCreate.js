@@ -9,7 +9,7 @@ module.exports = async (bot, interaction) => {
     let choices = []
     let focusedOption = interaction.options.getFocused(true)
 
-    let tournaments = await bot.Tournaments.findAll()
+    let tournaments = await bot.Tournaments.findAll({ where: { tournament_season: bot.season } })
     let teams = await bot.Teams.findAll({ where: { team_status: "ACTIVE" } })
     let places = await bot.Places.findAll()
 
