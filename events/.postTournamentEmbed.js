@@ -18,8 +18,8 @@ module.exports = {
     let players = tournament.dataValues.tournament_ruleset == "3vs3" ? challonge.participants_count*3 : tournament.dataValues.tournament_ruleset == "2vs2" ? challonge.participants_count*2 : challonge.participants_count
     let users = await bot.Inscriptions.findAll({ where: { tournament_id: tournament.dataValues.tournament_id, player_status: "INSCRIT" } })
     
-    let participants = tournament.dataValues.tournament_participants == "challonge" ? players : tournament.dataValues.tournament_participants == "auto" ? players.length : tournament.dataValues.tournament_participants
-    let participants2 = players + " ("+ players.length+")"
+    let participants = tournament.dataValues.tournament_participants == "challonge" ? players : tournament.dataValues.tournament_participants == "auto" ? users.length : tournament.dataValues.tournament_participants
+    let participants2 = players + " ("+ users.length+")"
 
     let embed = new Discord.EmbedBuilder()
       .setColor(bot.color)
