@@ -164,7 +164,7 @@ module.exports = {
         } else prog = new Date(parseInt(Math.floor(Date.now()+10)))
 
         new cron.CronJob(prog, async () => {
-          message.channel.type == Discord.ChannelType.GuildAnnouncement ? await message.channel.send({content : content, files : medias}).then(message => message.crosspost()) : await message.channel.send({content : content, files : medias})
+          await message.channel.send({content : content, files : medias})
             
           return i.editReply({content: "C'est bon.", components: [], ephemeral: true})
         }).start()
@@ -175,4 +175,5 @@ module.exports = {
     })
   }
 }
+
 
