@@ -27,7 +27,7 @@ module.exports = {
 
   async run(bot, message, args) {
 
-    await message.deferReply({ ephemeral: true })
+    await message.deferReply()
 
     Canvas.GlobalFonts.registerFromPath('./medias/calendrier/impact.ttf', 'Impact')
     Canvas.GlobalFonts.registerFromPath('./medias/calendrier/franklin.ttf', 'Franklin')
