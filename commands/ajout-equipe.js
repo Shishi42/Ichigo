@@ -121,7 +121,7 @@ module.exports = {
     context = canvas.getContext('2d')
 
     context.drawImage(await Canvas.loadImage(args.get("logo").value), 152, 152, 696, 696)
-    context.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas.width, canvas.height)
+    context.drawImage(await Canvas.loadImage('./medias/teams/base.png'), 0, 0, canvas.width, canvas.height)
 
     let embed = new Discord.EmbedBuilder()
       .setTitle(name)

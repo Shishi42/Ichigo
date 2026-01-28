@@ -24,7 +24,7 @@ module.exports = {
       context = canvas.getContext('2d')
 
       context.drawImage(await Canvas.loadImage(logo), 152, 152, 696, 696)
-      context.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas.width, canvas.height)
+      context.drawImage(await Canvas.loadImage('./medias/teams/base.png'), 0, 0, canvas.width, canvas.height)
     } 
     
     if (type == "emoji"){
@@ -32,7 +32,7 @@ module.exports = {
       context = canvas.getContext('2d')
     
       context.drawImage(await Canvas.loadImage(logo), 30, 30, 139, 139)
-      context.drawImage(await Canvas.loadImage('./medias/Teams/base.png'), 0, 0, canvas.width, canvas.height)
+      context.drawImage(await Canvas.loadImage('./medias/teams/base.png'), 0, 0, canvas.width, canvas.height)
     }
 
     if (type == "affiche") {
@@ -43,15 +43,15 @@ module.exports = {
 
       canvas = Canvas.createCanvas(1920, 1080)
       context = canvas.getContext('2d')
-      Canvas.GlobalFonts.registerFromPath('./medias/Teams/impact.ttf', 'Impact')
-      Canvas.GlobalFonts.registerFromPath('./medias/Teams/noto.ttf', 'Noto')
+      Canvas.GlobalFonts.registerFromPath('./medias/teams/impact.ttf', 'Impact')
+      Canvas.GlobalFonts.registerFromPath('./medias/teams/noto.ttf', 'Noto')
 
       let x_avatar = 1044
       let taille_avatar = 172
       let x_pseudo = 1269
         
-      context.drawImage(await Canvas.loadImage('./medias/Teams/background.png'), 0, 0, canvas.width, canvas.height)
-      context.drawImage(await Canvas.loadImage('./medias/Teams/logo.png'), 0, 0, canvas.width, canvas.height)
+      context.drawImage(await Canvas.loadImage('./medias/teams/background.png'), 0, 0, canvas.width, canvas.height)
+      context.drawImage(await Canvas.loadImage('./medias/teams/logo.png'), 0, 0, canvas.width, canvas.height)
       context.drawImage(await Canvas.loadImage(logo), 186, 386, 586, 586)
   
       context.font = '66px Impact'
@@ -67,7 +67,7 @@ module.exports = {
         context.drawImage(await Canvas.loadImage(user1.user.displayAvatarURL({ forceStatic: true })), x_avatar, 566, taille_avatar, taille_avatar)
         context.fillText(user1.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæîïÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 681) 
       } else {
-        context.drawImage(await Canvas.loadImage('./medias/Teams/placeholder1.png'), 0, 0, canvas.width, canvas.height)
+        context.drawImage(await Canvas.loadImage('./medias/teams/placeholder1.png'), 0, 0, canvas.width, canvas.height)
         context.fillText(user1, x_pseudo, 681)
       } 
   
@@ -77,7 +77,7 @@ module.exports = {
         context.drawImage(await Canvas.loadImage(user2.user.displayAvatarURL({ forceStatic: true })), x_avatar, 769, taille_avatar, taille_avatar)
         context.fillText(user2.displayName.replace(/[^a-zA-Z0-9\sàâäéèêëçùûüôöœæîïÀÂÄÉÈÊËÇÙÛÜÔÖŒÆ|'.,;:\-()?!"]+/g, ''), x_pseudo, 880)
       } else {
-        context.drawImage(await Canvas.loadImage('./medias/Teams/placeholder2.png'), 0, 0, canvas.width, canvas.height)
+        context.drawImage(await Canvas.loadImage('./medias/teams/placeholder2.png'), 0, 0, canvas.width, canvas.height)
         context.fillText(user2, x_pseudo, 880)
       } 
   
@@ -91,7 +91,7 @@ module.exports = {
       context.fillStyle = tinycolor('#' + team.dataValues.team_color).getBrightness() < 30 ? '#ffffff' : '#' + team.dataValues.team_color
       context.fillText(team.dataValues.team_name.toUpperCase(), 42, 210)  
   
-      context.drawImage(await Canvas.loadImage('./medias/Teams/crown.png'), 0, 0, canvas.width, canvas.height)
+      context.drawImage(await Canvas.loadImage('./medias/teams/crown.png'), 0, 0, canvas.width, canvas.height)
     }
 
     return await channel.send({ content: "## [" + type.toUpperCase() + "] : __" + team.dataValues.team_name + "__ - " + new Date().toISOString().split('T')[0], files: [new Discord.AttachmentBuilder(await canvas.encode('png'), { name: type + '-equipe-' + team.dataValues.team_id + '.png' })] })
