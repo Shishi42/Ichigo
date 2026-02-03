@@ -189,6 +189,7 @@ module.exports = {
             tournament_status: "Inscriptions en cours",
             tournament_challonge: challonge,
             tournament_season: bot.season,
+            tournament_published: false,
           })
 
           let event = await message.guild.scheduledEvents.create({

@@ -111,6 +111,9 @@ module.exports = async bot => {
       allowNull: false,
       defaultValue: "auto",
     },
+    tournament_published: {
+      type: Sequelize.STRING,
+    },
   })
   bot.Inscriptions = bot.db.define("inscription", {
     inscription_id: {
