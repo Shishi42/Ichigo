@@ -8,7 +8,7 @@ module.exports = {
 
 		let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
-		if (!tournament.dataValues.tournament_published){
+		if (tournament.dataValues.tournament_published == "false") {
 
 			let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
 			let medias = []
@@ -38,7 +38,7 @@ module.exports = {
 			msg += `-# Merci d'indiquer votre participation dans ${place.dataValues.place_inscr} afin que nous puissions, au mieux, estimer la taille du tournoi.`
 
 			await channel.send({content : msg, files : medias})
-			return await bot.Tournaments.update({ tournament_published: true}, { where: { tournament_id: tournament.dataValues.tournament_id }})
+			return await bot.Tournaments.update({ tournament_published: "true"}, { where: { tournament_id: tournament.dataValues.tournament_id }})
 		}
 		return
 	}
