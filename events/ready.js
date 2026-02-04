@@ -257,6 +257,6 @@ module.exports = async bot => {
 
   await slashcommands_loader(bot)
 
-  bot.user.setPresence({activities: [{ name: "les matchs du BBT.", type: 3 }], status: "online"})
+  bot.user.setPresence({activities: [{ name: "Regarde les matchs du BBT.", type: 1 }], status: "online"})
 
 }
