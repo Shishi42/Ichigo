@@ -79,14 +79,7 @@ module.exports = {
       description: "Date to pub the tournament, format (DD/MM/YYYY-HH:mm:SS)",
       required: false,
       autocomplete: false,
-    },
-    {
-      type: "role",
-      name: "ping",
-      description: "What role to ping",
-      required: false,
-      autocomplete: false,
-    },
+    }
   ],
 
   async run(bot, message, args) {
@@ -212,7 +205,7 @@ module.exports = {
           let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament)
           await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
 
-          await require(`../events/.publishTournament.js`).run(bot, tournament_id, args.get("post_pub").value, args.get("ping") ? args.get("ping").value : "" )
+          await require(`../events/.publishTournament.js`).run(bot, tournament_id, args.get("post_pub").value)
           
           return i.editReply({content: `Tournament **${args.get("title").value}** created with id : **${tournament_id}**.`, components: [], ephemeral: true})
         }).start()
