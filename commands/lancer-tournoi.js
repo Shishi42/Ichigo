@@ -1,6 +1,5 @@
 const Discord = require("discord.js")
-const tmi = require('tmi.js')
-const config = require("../config.json")
+const { request } = require('undici')
 
 module.exports = {
 
@@ -23,13 +22,17 @@ module.exports = {
 
     await message.deferReply({ ephemeral: true })
 
-    const twitch_client = new tmi.client({ identity: { username: "sunafterthereign", password: config.twitch }, channels: ["sunafterthereign"] }) 
-    twitch_client.connect()
+    let tournament = await bot.Tournaments.findOne({ where: { tournament_id: args.get("tournament_id").value.split(" - ")[0] } })
+    
+    let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}/participants.json?api_key=${bot.challonge}`)
+    let participants = await req.body.json()
 
-    let id = args.get("tournament_id").value.split(" - ")[0]
+    await participants.forEach(item => { bot.participants.set(item.participant.id, item.participant.name) })
 
-    twitch_client.say("sunafterthereign", id)
+    bot.suivi = tournament.dataValues.tournament_challonge
 
-    return await message.reply({content: "Done.", ephemeral: true})
+    bot.emit("check")
+
+    return await message.editReply({content: "Done.", ephemeral: true})
   }
 }

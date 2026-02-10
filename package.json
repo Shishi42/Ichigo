@@ -1,6 +1,6 @@
 {
   "name": "ichigo",
-  "version": "3.6.2",
+  "version": "3.7.0",
   "description": "Discord BOT for Sun After The Reign, a Beyblade X Community. ",
   "main": "ichigo.js",
   "scripts": {
@@ -32,6 +32,7 @@
     "jsonfile": "^6.1.0",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7",
-    "tinycolor2": "^1.6.0"
+    "tinycolor2": "^1.6.0",
+    "tmi.js": "^1.8.5"
   }
 }
