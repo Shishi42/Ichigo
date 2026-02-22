@@ -4,11 +4,15 @@ module.exports = {
 
 	async run(bot, id, post) {
 
+		console.log("PUBLISH TOURNAMENT")
+
 		let channel = await bot.channels.fetch(post)
 
 		let tournament = await bot.Tournaments.findOne({ where: { tournament_id: id } })
 
 		if (tournament.dataValues.tournament_published == "false") {
+
+			console.log("LOGIC PUBLISH TOURNAMENT")
 
 			let place = await bot.Places.findOne({ where: { place_id: tournament.dataValues.tournament_place } })
 			let medias = []
@@ -40,6 +44,7 @@ module.exports = {
 			await channel.send({content : msg, files : medias})
 			return await bot.Tournaments.update({ tournament_published: "true"}, { where: { tournament_id: tournament.dataValues.tournament_id }})
 		}
+		console.log("ALREADY PUBLISHED")
 		return
 	}
 }

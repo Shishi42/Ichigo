@@ -168,6 +168,10 @@ module.exports = {
         } else prog = new Date(parseInt(Math.floor(Date.now()+1000)))
 
         new cron.CronJob(prog, async () => {
+
+
+          console.log("LANCEMENT DU CRONJOB")
+
           let tournament = await bot.Tournaments.create({
             tournament_id: tournament_id,
             tournament_name: args.get("title").value,
@@ -185,6 +189,8 @@ module.exports = {
             tournament_published: "false",
           })
 
+          console.log("CREATION DU TOURNOI DANS DB")
+
           let event = await message.guild.scheduledEvents.create({
             name: args.get("title").value,
             scheduledStartTime: new Date(parseInt(Math.floor(date))),
@@ -196,11 +202,15 @@ module.exports = {
             entityMetadata: { location: `${place.dataValues.place_name}, ${place.dataValues.place_city}` },
           })
 
+          console.log("CREATION EVENT")
+
           let role = await message.guild.roles.create({
             name: "Participants "+args.get("title").value,
             color: "32ECE0",
             permissions : "0",
           })
+
+          console.log("CREATION ROLE")
 
           let post = await require(`../events/.postTournamentEmbed.js`).run(bot, tournament)
           await bot.Tournaments.update({ tournament_message: post.id, tournament_event: event.id, tournament_role: role.id}, { where: { tournament_id: tournament_id }})
