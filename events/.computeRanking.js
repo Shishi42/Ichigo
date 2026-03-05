@@ -9,8 +9,6 @@ module.exports = {
     let bans = await bot.Bans.findAll({})
     let bannis = bans.map(ban => ban.dataValues.ban_name)
 
-    console.log(bannis)
-
     for (tournament of tournaments) {
 
       let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?include_participants=1&include_matches=1&api_key=${bot.challonge}`)
