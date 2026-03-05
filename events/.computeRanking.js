@@ -18,7 +18,7 @@ module.exports = {
 
         let blader = participant.participant
 
-        console.log(blader.name + " : " + blader.name in bannis)
+        console.log(blader.name + " : " + (blader.name in bannis))
 
         if (!(blader.name in bannis)){
 
