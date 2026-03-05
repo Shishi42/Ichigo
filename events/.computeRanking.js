@@ -20,6 +20,8 @@ module.exports = {
 
         let blader = participant.participant
 
+        console.log(blader.name + " : " + blader.name in bannis)
+
         if (!(blader.name in bannis)){
 
           if (classement[blader.name]) classement[blader.name]["participations"] += 1
