@@ -6,7 +6,7 @@ module.exports = {
 
     let classement = {}
 
-    let bans = await bot.Bans.findAll({}).map(ban => ban.dataValues.ban_name) }
+    let bans = await bot.Bans.findAll({}).map(ban => ban.dataValues.ban_name)
 
     for (tournament of tournaments) {
 
