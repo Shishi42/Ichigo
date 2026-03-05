@@ -18,9 +18,7 @@ module.exports = {
 
         let blader = participant.participant
 
-        console.log(blader.name + " : " + bannis.includes(blader.name))
-
-        if (!(blader.name in bannis)){
+        if (!bannis.includes(blader.name)){
 
           if (classement[blader.name]) classement[blader.name]["participations"] += 1
           else {
