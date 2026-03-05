@@ -247,12 +247,29 @@ module.exports = async bot => {
       allowNull: true,
     },
   })
+bot.Bans = bot.db.define("ban", {
+  ban_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+    unique: true,
+  },
+  ban_name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  ban_reason: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+})
 
   await bot.Tournaments.sync()
   await bot.Inscriptions.sync()
   await bot.Teams.sync()
   await bot.Teammates.sync()
   await bot.Places.sync()
+  await bot.Bans.sync() 
   console.log("Database Online.")
 
   await slashcommands_loader(bot)

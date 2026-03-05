@@ -6,6 +6,8 @@ module.exports = {
 
     let classement = {}
 
+    let bans = await bot.Bans.findAll({}).map(ban => ban.dataValues.ban_name) }
+
     for (tournament of tournaments) {
 
       let req = await request(`https://api.challonge.com/v1/tournaments/${tournament.dataValues.tournament_challonge}.json?include_participants=1&include_matches=1&api_key=${bot.challonge}`)
@@ -15,34 +17,37 @@ module.exports = {
 
         let blader = participant.participant
 
-        if (classement[blader.name]) classement[blader.name]["participations"] += 1
-        else {
-          classement[blader.name] = {}
+        if (!(blader.name in bans)){
 
-          classement[blader.name]["participations"] = 1
-          classement[blader.name]["W"] = 0
-          classement[blader.name]["L"] = 0
+          if (classement[blader.name]) classement[blader.name]["participations"] += 1
+          else {
+            classement[blader.name] = {}
 
-          classement[blader.name]["points"] = 0
-          classement[blader.name]["wins"] = 0
-        }
+            classement[blader.name]["participations"] = 1
+            classement[blader.name]["W"] = 0
+            classement[blader.name]["L"] = 0
 
-        if (blader.final_rank == 1) classement[blader.name]["wins"] += 1
+            classement[blader.name]["points"] = 0
+            classement[blader.name]["wins"] = 0
+          }
 
-        for (matches of challonge.tournament.matches) {
+          if (blader.final_rank == 1) classement[blader.name]["wins"] += 1
 
-          let match = matches.match
+          for (matches of challonge.tournament.matches) {
 
-          if (match.scores_csv.length == 3 && match.scores_csv != "0-0") {
-            if (blader.id == match.loser_id) {
-              classement[blader.name]["points"] += Math.min(...match.scores_csv.split("-").map(Number))
+            let match = matches.match
+
+            if (match.scores_csv.length == 3 && match.scores_csv != "0-0") {
+              if (blader.id == match.loser_id) {
+                classement[blader.name]["points"] += Math.min(...match.scores_csv.split("-").map(Number))
+              }
             }
+            if (blader.id == match.winner_id) {
+              classement[blader.name]["W"] += 1
+              classement[blader.name]["points"] += 4
+            }
+            if (blader.id == match.loser_id) classement[blader.name]["L"] += 1
           }
-          if (blader.id == match.winner_id) {
-            classement[blader.name]["W"] += 1
-            classement[blader.name]["points"] += 4
-          }
-          if (blader.id == match.loser_id) classement[blader.name]["L"] += 1
         }
       }
     }
