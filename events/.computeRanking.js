@@ -6,7 +6,8 @@ module.exports = {
 
     let classement = {}
 
-    let bans = await bot.Bans.findAll({}).map(ban => ban.dataValues.ban_name)
+    let bans = await bot.Bans.findAll({})
+    let bannis = bans.map(ban => ban.dataValues.ban_name)
 
     for (tournament of tournaments) {
 
@@ -17,7 +18,7 @@ module.exports = {
 
         let blader = participant.participant
 
-        if (!(blader.name in bans)){
+        if (!(blader.name in bannis)){
 
           if (classement[blader.name]) classement[blader.name]["participations"] += 1
           else {
